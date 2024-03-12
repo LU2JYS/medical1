@@ -1,0 +1,11 @@
+n1=input("값을 입력하시요")
+n2=input("값을 입력하시요")
+n1,n2=int(n1),int(n2)
+print("나누기: {}\n몫: {}\n나머지: {} ".format(n1/n2,n1//n2,n1&n2))
+
+s1=int(input("숫자를 입력하시요"))
+s2=float(input("숫자를 입력하시요"))
+s3=float(input("숫자를 입력하시요"))
+result=int(s1)+float(s2)+float(s3)
+print("s1,s2,s3".format(s1,s2,s3))
+print("합은{}입니다".format(result))

@@ -6,6 +6,7 @@ for i in range(5):
     aList[i] = 1
 # 3. 랜덤섞기
 random.shuffle(aList)
+
 # 4. 5*5 2차원 리스트에 넣기
 checkList = [[0]*5 for i in range(5)] #5*5의 공간을 생성
 for i in range(5):
@@ -17,6 +18,7 @@ viewList = [["추첨"]*5 for i in range(5)] #5*5의 공간을 생성
 c_count = 1       # 도전횟수
 answer_count = 0  # 정답개수
 my_xy=[]           #내가 입력한 좌표
+
 while True:
     # 5. checkList 출력
     print("\t[ 5*5 checkList 좌표 ]")
@@ -29,6 +31,7 @@ while True:
             print(checkList[i][j],end="\t")
         print()    
     print("-"*40)
+    
     # 6. viewList 출력
     print("\t[ 5*5 viewList 좌표 ]")
     print("-"*40)
@@ -40,6 +43,7 @@ while True:
             print(viewList[i][j],end="\t")
         print()    
     print("-"*40)
+    
     # 7. 좌표입력후 확인
     print("[ 현재 도전횟수 : {} 번 ]".format(c_count))
     x = int(input("가로 좌표를 입력하세요.>> "))

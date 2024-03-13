@@ -18,13 +18,15 @@ num2=int(input("2번째 숫자를 입력하세요"))
 cal(num1,num2)
 
 print("합계 :",sum)
+
+print("-"*45)
     
     
     #함수선언
 def cal(num1,num2):
         sum=0
-        if num1>num2:
-            num1,num2 =num2,
+        # if num1>num2:
+        #     num1,num2 =num2,
         for i in range(num1,num2+1):
             sum+=i
         return sum

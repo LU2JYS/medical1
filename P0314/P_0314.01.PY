@@ -6,7 +6,8 @@
 print("[리스트 출력 프로그램]")
 while True:
     #런타임 오류 : 프로그램 실행 중에 발생하는 오류
-    try:
+    try: #오류가 발생할거같은지점
+        
         num=int(input("숫자를 입력하세요"))        
         a_list=[1,2,3,4,5]
         for i in range(num):
@@ -14,4 +15,3 @@ while True:
     except:
         print("구문에 오류가 났습니다.")
 
-        

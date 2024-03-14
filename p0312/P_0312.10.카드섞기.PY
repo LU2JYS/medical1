@@ -5,31 +5,26 @@ import random
 #카드숫자 : A,2,3,4,5,6,7,8,9,10,J,Q,K 13장 
 #카드 총 수 : 52장
 
-def card_creat(num_list):
-    for i in range(1,14):
-            num_list[i] = i
-            num_list[0] = "A"
-            num_list[10] = "J"
-            num_list[11] = "Q"
-            num_list[12] = "K"
-            print(num_list)
-            card_list = [[0]*2 for i in range(52)]
-    cnt = 0
-    for i in shape_list: # "spade","diamond","heart","clover"
-        for j in range(13):
-            card_list[cnt] = {"shape":i,"num":num_list[j]}
-            cnt+=1
+def card_create():
+    
             
-def card_suffle(card_list):
+def card_suffle():
     pass
 
-def card_share(card_list):
+def card_share():
     pass
 
-def card_print(card_list):
+def card_print():
     pass
 
-
+c_shape=["spade","diamond","heart","clover"]
+c_number=[0]*13
+for i in range(13):
+    c_number[i]=i+1
+c_number[0]="A"
+c_number[11]="J"
+c_number[12]="Q"
+c_number[13]="k"
 #========================================
 num=0
 while True:
@@ -42,26 +37,20 @@ while True:
     print("-"*48)
     choice=int(input("원하는 번호를 입력하세요>>>"))
     card_list=[[0]*2 for i in range(52)]
-    shape_list=["spade","diamond","heart","clover"]
-    num_list=[0]*13
+    
 
     if choice==1:
-        card_creat(num_list)
+        
     
     elif choice ==2:
-        random.shuffle(card_list)
-        card_suffle()
+        
     
     elif choice ==3:
-        for i in range(5):
-            print("모양:{},번호:{}".format(card_list[num]["shape"],card_list[num]["shape"])) #1,2,3,4,5
-            print()
-            num +=1
-        card_share()
+        
     
     elif choice ==4:
         
-        card_print(num_list,card_list,shape_list)
+        
     else:
         print("프로그램을 종료합니다")
         break

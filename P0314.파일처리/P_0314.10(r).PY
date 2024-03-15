@@ -31,17 +31,6 @@ for i in f_list:
 # file.close()
 
 
-
-
-
-
-
-
-
-
-
-
-
 # file =open("str.txt","w",encoding="utf-8")
 
 # file.write("안녕하세요. 반갑습니다.\n")

@@ -31,10 +31,12 @@ while True:
     m[0] = m[0].strip()
     m[1] = m[1].strip()
     if  c_id == m[0] and c_pw == m[1]:
-            success_flag =1
-            break
-            
+        success_flag =1
+        break
     file.close()
+    
+    # 아이디,비밀번호가 일치하면 밑에 있는 
+    # 로그인되어 학생성적프로그램으로 들어갈수있다.
     if success_flag==1:
         print("로그인 되었습니다.")
         print()

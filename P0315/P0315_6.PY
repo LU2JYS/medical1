@@ -1,7 +1,6 @@
-in_file=None
-out_file=None
 
-#파일복사하기>>>>>>>>>>>>>>>>>>>>>>>
+
+#파일복사하기>>>>>>>>>>>>>>>>>>>>>>>해보자
 
 #파일 열기
 in_file=open("C:/workspace/medical1/mem.txt","rb")

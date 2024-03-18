@@ -33,4 +33,3 @@ def stu_save(students):
     
 
 def stu_update():
-    

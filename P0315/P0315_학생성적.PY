@@ -22,7 +22,9 @@ def stu_main_print():
         print('숫자만 입력 가능합니다.')
     choice = int(choice)
     return choice
-# 학생성적입력 함수
+
+
+# 1. 학생성적입력 함수
 def stu_insert(cnt):
     while True :
         name = input(f"{len(students)+1}번째 학생의 이름을 입력하세요.(0.취소)")
@@ -47,7 +49,9 @@ def stu_insert(cnt):
         cnt += 1 #학번증가
         print("입력 데이터 :",student) #list -> dict
         print(students)
-# 학생성적상단출력 함수
+        
+        
+# 2. 학생성적상단출력 함수
 def stu_top_print():
     print('\t[ 학생성적출력 ]')
     print('-'*65)
@@ -62,7 +66,9 @@ def stu_grade_print(stu_list):
         print()
     print('-'*65)
     print()
-# 학생성적검색 함수
+    
+    
+# 3.학생성적검색 함수
 def stu_search():
     # 학생검색 -> 이름으로 검색을 해서 해당하는 학생이 있으면 해당학생 성적출력
     # 1명 출력
@@ -82,7 +88,9 @@ def stu_search():
         # 1명의 학생을 search_students 리스트에 추가
         search_students.append(students[search_cnt])
         stu_grade_print(search_students) # 학생성적출력함수 호출
-# 학생성적수정 - 과목선택부분함수
+        
+        
+# 4. 학생성적수정 - 과목선택부분함수
 def stu_subject_update(s_input,chk,s_1):
     print("[ {} 수정 ]".format(s_title[s_input]))
     print("현재 {}점수 : {}".format(s_title[s_input],students[chk][s_1]))
@@ -94,7 +102,7 @@ def stu_subject_update(s_input,chk,s_1):
     students[chk]["avg"] = float("{:.2f}".format(students[chk]["total"]/3))
     print("{}점수 : {}점으로 수정이 완료되었습니다.".format(s_title[s_input],students[chk][s_1]))
     print(students[chk])
-# 학생성적수정 - 전체부분
+# 4. 학생성적수정 - 전체부분
 def stu_update():
     while True:
         # 찾는 부분 프로그램 작성하시오.
@@ -128,7 +136,8 @@ def stu_update():
                 else:
                     print("과목 수정을 취소합니다.")
                     break
-# 등수처리 함수
+                
+# 5.등수처리 함수
 def stu_rank():
     # 등수처리는 합계를 가지고 처리함.
     for s_dic in students: #enumerate수정함
@@ -139,7 +148,9 @@ def stu_rank():
         s_dic["rank"] = rank_cnt
     print("등수처리가 완료되었습니다.")
     print(students)
-# 학생삭제함수
+    
+    
+# 6. 학생삭제함수
 def stu_delete():
     while True:
         # 찾는 부분 프로그램 작성하시오.
@@ -165,6 +176,10 @@ def stu_delete():
                 del students[chk]
                 print("{} 학생성적이 삭제 되었습니다.".format(search))
                 print(students)
+                
+# 7.학생성적 파일저장
+
+
 #-------------------------------
 # 프로그램 시작
 #-------------------------------
@@ -194,7 +209,7 @@ while True:
     elif choice == 6:
         stu_delete() # 학생삭제함수 호출
         stu_file.stu_save(students) # 학생성적 파일저장 함수 호출
-    # 6. 학생성적 파일저장
+    # 7. 학생성적 파일저장
     elif choice == 7:
         stu_file.stu_save(students) # 학생성적 파일저장 함수 호출
     elif choice == 0:

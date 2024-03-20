@@ -4,11 +4,11 @@
 class Student:
     count = 1 # 클래스 변수 사용
     
-    def __init__(self,name,kor,eng,math,stuNo=0,rank=0):
+    def __init__(self,name,kor,eng,math,stuNo=0,rank=0):#내부의저장되어있는 함수
         if stuNo == 0:
             self.stuNo = Student.count  # 클래스변수 사용
         else:
-            self.stuNo = stuNo    
+            self.stuNo = stuNo   
         self.name = name
         self.kor = kor
         self.eng = eng
@@ -67,7 +67,7 @@ def stu_main_print():
     print('학번\t이름\t국어\t영어\t수학\t합계\t평균\t등수')
     print('-'*65)
 
-def stu_insert():
+def stu_insert(): #초이스 1번
     while True :
         name = input(f"{len(students)+1}번째 학생의 이름을 입력하세요.(0.취소)")
         if(name=="0"):
@@ -81,14 +81,14 @@ def stu_insert():
         students.append(s)
         print("입력 데이터 :",s) 
         
-def stu_print():
+def stu_print(): #초이스 2번
     stu_main_print()
     # 데이터 출력
     for i in students:
         print(i) # 객체를 출력
     print()
     
-def search_title_print():
+def search_title_print(): #초이스 3번
     print("\t[ 학생성적 검색 ]")
     print("-"*40)
     print("1. 학생이름으로 검색")  
@@ -121,7 +121,9 @@ def stu_search(choice):
         for i in s_list:
             print(i)
     else:
-        print("찾고자 하는 학생이 없습니다. 다시 검색하세요. ")              
+        print("찾고자 하는 학생이 없습니다. 다시 검색하세요. ") 
+        
+def stu_(): #초이스 4번(학생수정)
 
 #-----------------------------
 # 메인 프로그램 시작

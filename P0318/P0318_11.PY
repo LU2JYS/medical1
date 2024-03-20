@@ -1,5 +1,5 @@
 class Student:
-    stucount = 0 #클래스변수
+    stucount = 0 #클래스변수 #저장장소가 하나이므로 공통이다.
     stuNo = 0 #인스턴스 변수
     
     

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <title>table,th,td</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+            *{margin: 0; padding: 0;
+                font-family: "Noto Sans KR", sans-serif;
+                font-optical-sizing: auto;
+                font-weight: 400;
+                font-style:normal;}
+            #t1 {border-top:3px solid #8a8a8f; border-bottom:3px solid #8a8a8f;}
+            table{border-collapse:collapse; text-align:center; margin:50px auto;}
+            th,td{border-bottom: 1px solid #e3e3e3; color:#333; font-size : 13px;}
+            td{height: 50px;}
+            th{height: 50px; font-weight: 700;}
+        </style>
+    </head>
+    <body>
+        <table id="t1">
+            <colgroup>
+            <col width="100px">
+            <col width="600px">
+            <col width="200px">
+            <col width="100px">
+            </colgroup>
+        <thead>
+            <tr> 
+                <th>번호</th> <!--th는 제목이므로 자동으로 가운데정렬이 된다.-->
+                <th>제목</th>
+                <th>리조트</th>
+                <th>등록일자</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr> 
+                <td>1</td>
+                <td>수상자 발표</td>
+                <td>리솜 리조트</td>
+                <td>2024.03.25</td>
+                
+            </tr>
+            
+
+            <tr> 
+                <td>2</td>
+                <td>주요 여행지 혜택</td>
+                <td>리솜 리조트</td>
+                <td>2024.03.25</td>
+                
+            </tr>
+
+            <tr> 
+                <td>3</td>
+                <td>제휴 해택</td>
+                <td>리조트</td>
+                <td>2024.03.25</td>
+                
+            </tr>
+
+            <tr> 
+                <td>4</td>
+                <td>당첨자 발표</td>
+                <td>리조트</td>
+                <td>2024.03.25</td>
+                
+            </tr>
+        </tbody>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+            <head>
+                <title>회원가입 form</title>
+                    <style>
+                        span{font-size: 16px; font-weight: 700; color: red; margin-right: 5px;}
+                    </style>
+            </head>
+        <body>
+            <h2>회원가입</h2>
+                <form action="" name="frm" method="get">
+                    <input type="hidden" name="ip" value="192.1.1.1"
+                    <label>아이디<span>*</span></label><br>
+                    <input type="text" name="id" size="7" required autofocus><br> <!--필수항목-->
+                    <label>패스워드<span>*</span> </label><br>
+                    <input type="password" name="pw"><br>
+                    <label>비밀번호 확인<span>*</span></label><br>
+                    <input type="search" name="search" size="7" maxlength="5"><br>
+                    <label>이름<span>*</span></label><br>
+                    <input type="email" name="email" ><br>
+                    <label>이메일<span>*</span></label><br>
+                    <input type="email" name="email" placeholder="xxx@com"><br>
+                    <label>연락처<span>*</span></label><br>
+                    <input type="email" name="email" placeholder="010-xxxx-xxxx"><br>
+                    <br>
+                    <label>성별<span>*</span></label><br>
+                    <input type="radio" name="gender" value="male" checked>
+                    <label for="male">남자</label>
+                    <input type="radio" name="gender"  id="female" value="female">
+                    <label for="male">여자</label>
+                    <br>
+
+                    <br>
+                    <label>수강과목<span>*</span></label><br>
+                    <input type="checkbox" name="hobby" id="game" value="game">
+                    <label for="game">HTML</label>
+                    <input type="checkbox" name="hobby" id="golf" value="golf">
+                    <label for="golf">CSS</label>
+                    <input type="checkbox" name="hobby" id="swim" value="swim">
+                    <label for="swim">JAVASCRIPT</label>
+                    <input type="checkbox" name="hobby" id="run" value="run">
+                    <label for="run">JQUERY</label>
+                    <input type="checkbox" name="hobby" id="book" value="book">
+                    <label for="book">PHP</label>
+
+                    <p>가입하기 다시작성</p>
+                </form>
+        </body>
+</html>

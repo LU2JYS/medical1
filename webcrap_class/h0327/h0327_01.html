@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+        <head>
+            <title>form</title>
+                <script>
+                    function btn(){
+                        alert("경고창을 띄웁니다.");
+                        frm.submit()}
+                </script>
+        </head>
+    <body>
+        <h2>로그인</h2>
+        <!--액션은 주소이동, method:get,post-->
+        <form action="h0327_02.html" method="get" name="frm">
+            <h>성별</h><br>
+            <input type="radio" name="gender" id="male" value="male">
+            <label for="male">남자</label>
+            <input type="radio" name="gender" id="female" value="female">
+            <label for="remale">여자</label><br>
+            <label>아이디 &nbsp&nbsp</label>
+            <input type="text" id="id" name="id" value=""><br>
+            <label>패스워드</label>
+            <input type="password" name="pw"><br>
+            <input type="button" onclick = "btn()" value="로그인">
+        </form>
+    </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+        <head>
+            <title>Document</title>
+                <style>
+                    *{margin: 0;padding: 0;}/* *는 모든객체에 적용*/
+                    h2{width: 1000px; text-align: center; margin: 0 auto;}
+
+                    section{width: 1000px; height: 35px; border: 1px solid black;
+                            margin: 0 auto;}
+
+                    ul{list-style: none; width: 1000px; height: 35px; display: flex;
+                        justify-content: space-around;}
+
+                    a{text-decoration: none; color: black; font-weight: 700;}
+                    a[href]{background: yellow;}/*속성값을 포함해준다*/
+                    a[target="_blank"]{color: red; text-decoration: underline;}/*속성값을 포함해준다*/
+
+                    section a{display: inline-block; width: 170px; height: 34px;
+                                border: 1px solid black; text-align: center;
+                                line-height: 30px;}
+
+                </style>
+        </head>
+    <body>
+        <h2><a>사이트 모음</a></h2>
+        <section>
+            <ul>
+                <li><a href="" target="_blank">구글사이트</a></li>
+                <li><a href="">다음사이트</a></li>
+                <li><a href="">네이버사이트</a></li>
+                <li><a href="" target="_blank">쿠팡사이트</a></li>
+            </ul>
+        </section>
+    </body>
+</html>

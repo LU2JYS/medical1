@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+        <head>
+            <title>Document</title>
+            <style>
+                .c2{display: hidden;}
+                .main{width: 1000px; height: 900px; border: 1px solid black;
+                        margin: 0 auto;}
+                div{font-size: 40px;}
+                .d{width: 300px; height: 200px; border: 10px solid black;
+                        position: relative;}
+                .d01{background: red; left: 100px; z-index: 1;}
+                .d02{background: rgb(238, 234, 7); top: -150px; z-index: 3;}
+                .d03{background: rgb(38, 0, 255); left: 200px; top: -300px; z-index: 3;}
+            </style>
+        </head>
+    <body>
+        <div class="main">
+            <div class="d d01">1</div>
+            <div class="d d02">2</div>
+            <div class="d d03">3</div>
+        </div>
+        <div>
+            <img src="01.jpg">
+            <img src="02.jpg" class="c2">
+            <img src="03.jpg">
+        </div>
+    </body>
+</html>

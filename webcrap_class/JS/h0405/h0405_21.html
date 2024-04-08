@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"> /* 팝업차단이 안되서 어디서나 열린다*/
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>모달창</title>
     <style>
         * {margin:0; padding:0;}
         section{
             width:100%; height:1300px;
-            background: url('img_re_main_slide_n02_1.jpg') no-repeat;
-         background-size:cover;
+            background: url('6.jpg') no-repeat;
+        background-size:cover;
     }
         .modal{position: absolute; top:0;left:0;
-          width:100%; height:100%; background: rgba(0,0,0,0.6);
-          display: flex; justify-content: center;
+        width:100%; height:100%; background: rgba(0,0,0,0.6);
+        display: flex; justify-content: center;
         }
         .modal_pop{
             position:absolute; top:50%;
@@ -24,13 +24,24 @@
             transform:translateY(-50%); /*가운데 정렬*/
         }
         .btn{width:150px; height:40px; font-size:20px; text-align: center;}
+        
     </style>
+    <script>
+        function open_pop(){
+                var open_modal=document.querySelector(".modal");
+                open_modal.style.display="flex";
+        }
+        function close_pop(){
+            var close_modal=document.querySelector(".modal");
+            close_modal.style.display=none;
+        }
+    </script>
 </head>
 <body>
-    <button class="btn">팝업창 열기</button>
+    <button class="btn" onclick="open_pop()">팝업창 열기</button>
     <section>
         <div class="modal">
-            <div class="modal_pop">
+            <div class="modal_pop" onclick="close_pop()">
                 <h2>공지사항</h2>
                 <p>새로운 홈페이지 오픈</p>
             </div>

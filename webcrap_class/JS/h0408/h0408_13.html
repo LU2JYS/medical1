@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>Document</title>
+    <script>
+        var color=["yellow","pink","aqua","purple","green","red","blue"];
+        var num=0;
+        
+        function preBtn(){
+            num=(num - 1 + color.length) % color.length;
+            console.log(num)
+            document.querySelector(".back").style.background=color[num];
+        }
+
+        function nextBtn(){
+            num=(num + 1) % color.length;
+            console.log(num)
+            document.querySelector(".back").style.background=color[num];
+        }
+    </script>
+    <style>
+        *{margin: 0; padding: 0;}
+        section{width: 410px; margin: 50px auto;}
+        div{width: 400px; height: 350px; border: 2px solid black;}
+        button{width: 150px; height: 40px; text-align: center;}
+        .back{background: yellow;}
+    </style>
+</head>
+<body><section>
+    <div class="back"></div>
+    <br>
+    <button onclick="preBtn()">이전</button>
+    <button onclick="nextBtn()">다음</button>
+</section>
+</body>
+</html>

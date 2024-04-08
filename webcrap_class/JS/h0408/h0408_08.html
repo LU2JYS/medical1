@@ -1,10 +1,30 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    
-    <title>Document</title>
+    <title>screen</title>
+    <script>
+        var width1 = screen.width / 2 - 201;
+        var height1 = screen.height / 2 - 151;
+
+        function popupBtn() {
+            var options = {
+                toolbars: "no",
+                status: "no",
+                location: "no",
+                width: "302px",
+                height: "402px",
+                left: width1 + "px",
+                top: height1 + "px"
+            };
+            var features = Object.keys(options).map(function(key) {
+                return key + "=" + options[key];
+            }).join(",");
+
+            window.open("popup.html", "pop", features);
+        }
+    </script>
 </head>
 <body>
-    
+    <button onclick="popupBtn()">팝업창 오픈</button>
 </body>
 </html>

@@ -1,10 +1,48 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    
-    <title>Document</title>
+    <title>윈도우객체</title>
+    <style>
+        *{margin: 0; padding: 0;}
+        div{width: 400px; height: 100px; margin: 50px auto;}
+    </style>
 </head>
 <body>
-    
+    <div>
+        <button onclick="open_popup()">팝업창 열기</button>
+        <br><br>
+        <button onclick="pop_resize()">+팝업창 크기조절(resizeTo)</button>
+        <br><br>
+        <button onclick="pop_resize2()">-팝업창 크기조절(resizeTo)</button>
+    </div>
+    <script>
+        var w; //전역변수
+        var x_size=302;
+        var y_size=402;
+        function open_popup(){
+            w=window.open("","","width=320,height=420,left=300,top=50"); //지역변수
+            //w.document.write("팝업창");
+            w.focus();
+        }
+
+        function pop_resize(){
+            x_size += 100;
+            y_size += 100;
+            w.resizeTo(x_size,y_size);
+            w.focus();
+        }
+
+        function pop_resize2(){
+            x_size -= 100;
+            y_size -= 100;
+            w.resizeTo(x_size,y_size);
+            w.focus();
+        }
+        //window.alert("경고창을 띄움니다")
+        //var input1 = prompt("데이터를 입력하는 창입니다");
+        //document.write("입력데이터 : ",input1);
+        //var result= confirm("삭제하시겠습니까?");
+        //document.write("confirm :",result);
+    </script>
 </body>
 </html>

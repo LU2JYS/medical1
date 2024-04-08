@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>함수</title>
+    <script>
+
+        function sum(arr_num){
+            var sum;
+            for(var i=0;i<arr_num.length;i++){
+                sum += arr_num[i];
+            }
+            document.write("합계 : ",sum);
+        }
+        var arr_num =[1,2,5,7,3,1,16,20];
+        sum(arr_num);
+        /* 매개변수가 있는 함수*/
+        /*
+        function sum(x,y,z){
+            var sum=x+y+z;
+            document.write("합계 : ",sum);
+        }
+        sum(10,20,30);
+        */
+
+
+
+        /*함수선언*/
+        /* 
+        function myFun(){
+            document.write("안녕하세요.","<br>");
+            document.write("반가워요.","<br>");
+        }
+        //함수호출
+        myFun();
+        myFun();
+        myFun();
+        */
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,10 +1,38 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    
-    <title>Document</title>
+    <title>셋 인터벌</title>
+    <style>
+        *{margin: 0; padding: 0;}
+        div{width: 400px; height: 200px; margin: 50px auto;}
+        button{width: 180px; height: 40px; display: block; margin: 0 auto;}
+        h2{font-size: 40px; text-align: center; border: 4px solid black;}
+    </style>
+    <script>
+        var num = 0;
+        var auto1;
+
+        function auto_plus() {
+            auto1 = setInterval(add_num, 1000);
+        }
+
+        function add_num() {
+            num++;
+            document.querySelector(".title").innerText = num;
+            console.log("num :" + num);
+        }
+
+        function auto_stop() {
+            clearInterval(auto1);
+        }
+    </script>
 </head>
 <body>
-    
+    <div>
+        <h2 class="title">0</h2>
+        <br>
+        <button onclick="auto_plus()">더하기(+)</button>
+        <button onclick="auto_stop()">멈춤(stop)</button>
+    </div>
 </body>
 </html>

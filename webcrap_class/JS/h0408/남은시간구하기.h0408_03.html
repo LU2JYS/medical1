@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    
-    <title>날짜정보</title>
+    <title>Document</title>
     <style>
-        * {margin:0; padding:0;}
+        *{margin: 0; padding: 0;}
         
     </style>
-    <script> /* 먼저 날을 선언해준다*/
+    <script>
         var today= new Date(); //현재날짜
         var nowyear=today.getFullYear();
         var nowMonth=today.getMonth();
         var nowDate=today.getDate();
         var nowDay = today.getDay();
-        var nowHour = today.getHours();
-        var nowMinutes = today.getMinutes();
-        var nowsecond = today.getSeconds();
         var f_day;
         switch(nowDay){
             case 0: f_day="일요일";break;
@@ -27,9 +23,8 @@
             case 6: f_day="토요일";break;
         }
         document.write(nowyear,"년", nowMonth+1,"월",nowDate,"일","<br>",f_day,"<br>");
-        document.write(nowHour,"시", nowMinutes,"분",nowsecond,"초","<br>");
-
-        var d_day=new Date(2024,11,31); //특정날짜 지정
+        
+        var d_day = new Date(2024,9,31);
         var nowyear2= d_day.getFullYear();
         var nowMonth2= d_day.getMonth();
         var nowDate2= d_day.getDate();
@@ -45,14 +40,15 @@
             case 6: f_day2="토요일";break;
         }
         document.write(nowyear2,"년", nowMonth2+1,"월",nowDate2,"일","<br>",f_day2,"<br>");
+        
         //두날짜간 차이를 환산해서 리턴
         //두 날짜간 일 간격 확인
         var diffDate = d_day.getTime()-today.getTime();
-        document.write(d_day.getTime(),"<br>");
-        document.write(today.getTime(),"<br>");
-
-        var result=Math.ceil( diffDate/(1000*60*60*24));
-        document.write("현재남은 일자 : ",result,"일<br>");
+        var resultDays = Math.ceil( diffDate/(1000 * 60 * 60 *24)); // 남은 일수
+        var resultHours = Math.floor((diffDate % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); // 남은 시간
+        var resultMinutes = Math.floor((diffDate % (1000 * 60 * 60)) / (1000 * 60)); // 남은 분
+        var resultSeconds = Math.floor((diffDate % (1000 * 60)) / 1000); // 남은 초
+        document.write("<br>"," ★지정한 날짜의 현재 남은 일자★ : ", resultDays, "일 ", resultHours, "시간 ", resultMinutes, "분 ",resultSeconds, "초 남았습니다.");
     </script>
 </head>
 <body>

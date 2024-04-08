@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>배열</title>
+    <script>
+        var obj = new Object();
+        var arr1 = new Array();
+        var arr2 = new Array(1,2,3,4,5);
+        var arr3 = [1,2,3,4,5];
+        var arr_name = ["홍길동","유관순","이순신","김구","강감찬"];
+
+        arr3[2]; //특정위치 출력해보기
+        document.write(arr3[2],"<br>")
+
+        //  for문 사용해서 출력하기 중요!!!!!!!!!!!!
+        for(var i=0; i<5;i++){
+            document.write(arr3[i],"<br>");
+        }
+        //키값이 넘어옴
+        for (var a in arr3){
+            document.write(arr3[a],"<br>");
+        }
+        for(var a_name in arr_name){
+            document.write("주소값 : ",a_name,"<br>");
+            document.write("배열값 : ",arr_name[a_name],"<br>");
+        }
+        
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    
+    <title>Document</title>
+    <script>
+        //12,1,2는 겨울 3,4,5는 여름 6,7,8은 여름 그 외는 가을로 출력해주세요
+        var num = Number(prompt("월을 입력하세요."));
+        
+        if (num >= 12 || num <= 2) {
+            document.write("겨울입니다");
+        } else if (num >= 3 && num <= 5) {
+            document.write("봄입니다");
+        } else if (num >= 6 && num <= 8) {
+            document.write("여름입니다");
+        } else {
+            document.write("가을입니다");
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

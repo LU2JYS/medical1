@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Document</title>
+    <style>
+        .wrap {
+            width: 100%;
+            position: relative;
+            background: #183029;
+            overflow: hidden;
+            z-index: 10;
+            height: 600px;
+             /* 수정된 부분: 세로 중앙 정렬 */
+            justify-content: center;
+        }
+
+        .mem_left {
+            width: 100%;
+            height: auto;
+            position: relative;
+            margin-left:600px;
+            
+        }
+
+        .mem_right {
+            position: absolute;
+            left: 50%;
+            top: 0
+        }
+
+        .img {
+            width: 100%; 
+            height: 100%; 
+            
+        }
+
+        #c1 {
+            font-size: 30px; color:#537c70; 
+        }
+
+        #f1 {
+            font-size: 50px; color: aliceblue;
+        }
+        p{margin-left: 50px; color: aliceblue;}
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="mem_left">
+            <p id="c1">M E M B E R S H I P</p>
+            <br>
+            <p id="f1">리솜리조트 특별회원<i class="fa-solid fa-spinner fa-spin"></i></p>
+            <p>대한민국 단 하나의 원시 자연림 리조트 포레스트 리솜,<br>
+                <br>
+                오감형 웰니스 라이프 리조트, 레스트리,<br>
+                <br>
+                비행 없이 만나는 세계적인 선셋 리조트 아일랜드 리솜<br>
+                <br>
+                사계절 온천 워터파크 리조트 스플라스 리솜,<br>
+                <br>
+                제주 중문 오션뷰 해양레저테마파크 퍼시픽 리솜,<br>
+                <br>
+                숲과 바다, 온천, 액티비티까지 다양한 테마와 콘텐츠를 누리는<br>
+                <br>
+                리솜리조트 회원만의 특권을 경험해 보세요
+            </p>
+        </div>
+                <div class="mem_right">
+                    <img src="6.jpg" class="img">
+                </div>
+        </div>
+    </body>
+</html>

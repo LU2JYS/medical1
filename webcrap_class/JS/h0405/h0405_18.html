@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>title</title>
+    <script>
+        var str1="안녕하세요. 오늘은 불금이에요!!! 소리질럿!!!!";
+        document.write("length 문자열길이 : ",str1.length,"<br>"); //문자열 길이를 알수있다.
+        str1.charAt(2) //한개의 글자만 가져온다.
+        document.write("charAt : ",str1.charAt(2),"<br>")
+        str1.indexOf("오늘");
+        document.write("indexof 문자열 확인 : ",str1.indexOf("오늘"),"<br>");
+        str1.match("불금");
+        document.write("match 문자열 확인 : ",str1.match("불금"),"<br>");
+        document.write("match 문자열 확인 : ",str1.search("불금"),"<br>"); //문자열 있는 위치확인
+        str1.substring(2,5);
+        document.write("match 문자열 확인 : ",str1.substring(2,5),"<br>"); //원하는 문자열을 가져옴
+        
+        document.write("match 문자열 확인 : ",str1.replace("안녕하세요","반가워요"),"<br>");
+        
+        document.write("match 문자열 확인 : ",str1.replaceAll(" ",""),"<br>"); //전체 공백 제거
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

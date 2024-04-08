@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>Document</title>
+        <style>
+            .main{width: 200px; height: 200px; border:1px solid black;}
+            .sub{width: 200px; height: 200px; background: red;
+                animation: rotate 5s infinite, back 5s infinite alternate; }
+
+            img{width: 200px;}
+
+            @keyframes rotate{
+                from{transform: perspective(200px) rotateX(0deg) rotateY(50deg)  
+                    ; backface-visibility: visible;}
+                to{transform: perspective(200px) rotateX(0deg) rotateY(-180deg)
+                    ; backface-visibility: visible;}
+                
+            
+            }
+            @keyframes back{
+                from{background: red;}
+                50%{background: green;}
+                to{background: blue;}
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <div class="sub">
+                <img src="car1.png">
+            </div>
+            
+        </div>
+        
+    </body>
+</html>

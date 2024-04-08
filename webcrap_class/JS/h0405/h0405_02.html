@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>Document</title>
+    <script>
+        var num1 = Number(prompt("숫자을 입력하세요."));
+        var num2= Number(prompt("숫자을 입력하세요."));
+        var operator =prompt("(+ - * / ) 부호를 입력해주세요!");
+        var result;
+        switch (operator) {
+            case '+':
+                result = num1 + num2;
+                break;
+            case '-':
+                result = num1 - num2;
+                break;
+            case '*':
+                result = num1 * num2;
+                break;
+            case '/':
+                result = num1 / num2;
+                break;//브레이크를 꼭 해줘야한다 안하면 계속 밑으로 실행한다.
+        }
+        document.write("결과: " + result + "</br>");
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

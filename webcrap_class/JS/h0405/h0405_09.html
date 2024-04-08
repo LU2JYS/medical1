@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>객체</title>
+    <script>
+        //1. 객체생성후 변수, 함수 추가
+        var tv = new Object(); //객체선언
+        tv.color="white";
+        tv.price=1000000;
+        tv.info=function(){
+            document.write("tv 색상 : "+this.color,"<br>");
+            document.write("tv 가격 : "+this.price,"<br>");
+        }
+
+        //2. 객체생성때 변수, 함수 추가
+        var car={
+            color:"black",
+            price:1000000,
+            info:function(){
+                document.write("tv 색상 : "+this.color,"<br>");
+                document.write("tv 가격 : "+this.price,"<br>");
+            }
+        }
+        document.write("<h1>1. 객체 매소드 출력</h1>")
+        tv.info();
+        document.write("------------------------------<br>")
+        document.write("<h1>2. 객체 매소드 출력</h1>")
+        car.info();
+        car.color="pink";
+        car.info();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

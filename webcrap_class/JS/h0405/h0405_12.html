@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>퀴즈</title>
+</head>
+<body>
+    <script>
+        var num1 = Number(prompt("첫 번째 숫자를 입력하세요"));
+        var num2 = Number(prompt("두 번째 숫자를 입력하세요"));
+        var num3 = Number(prompt("세 번째 숫자를 입력하세요"));
+
+        var numbers = [num1, num2, num3];
+
+        numbers.sort(function(a, b) {
+        return b - a;});
+        document.write("큰 순서대로 출력: " + numbers.join(", "));
+    </script>
+</body>
+</html>
+

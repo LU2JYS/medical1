@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+        <head>
+            <title>if</title>
+            <script>
+                /*math.random() */
+                /*1부터 100까지 형태가 나온다
+                document.write(parseInt( Math.random()*100)+1,"<br>");*/
+                
+                /*0부터 99까지 형태가 나온다
+                document.write(parseInt( Math.random()*100),"<br>");*/
+
+                /*1부터 45까지 형태가 나온다
+                document.write(parseInt( Math.random()*45)+1,"<br>");*/
+
+                //1-100의 랜덤숫자 생성해서 숫자를 입력받아 큰수, 작은수 출력하시요
+                // 1-100의 랜덤 숫자 생성
+                var random = Math.floor(Math.random() * 100) + 1;
+
+                var num = Number(prompt("1부터 100 사이의 숫자를 입력하세요:"));
+                
+                if (num > random) {
+                    document.write("입력하신 "+ num + "은 랜덤 숫자 " + random + "보다 큽니다.");
+                } 
+                else if (num < random) {
+                    document.write("입력하신 "+ num + "은 랜덤 숫자 " + random + "보다 작습니다.");
+                } 
+
+
+
+                /* 2줄 이상은{}넣어야함
+                var num =Number(prompt("숫자를 입력하세요"));
+                if(num<500)document.write("500보다 작은 수 입니다.");
+                else document.write("500보다 큰수입니다");
+                */
+                
+                /*
+                var num =10;
+                if(num<500){
+                document.write("500보다 작은 수 입니다.")
+                }*/
+            </script>
+        </head>
+    <body>
+        
+    </body>
+</html>

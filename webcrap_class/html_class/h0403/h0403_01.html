@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+        <head>
+            <title>변형</title>
+            <style>
+                *{margin: 0; padding: 0;}
+                .main{width: 1000px; display: flex; justify-content: space-around; align-items: center; 
+                    height: 500px;margin: 0 auto; border:1px solid black;}
+
+                .c{width: 200px; height: 200px;}
+
+                .c1:hover{animation: move 5s;}
+                @keyframes move{
+                    from{transform: translate(0,0);}
+                    to{transform: translate(30px,40px);}
+                }
+                .c2{overflow: hidden;}
+                .img01:hover{animation: large 1s; animation-fill-mode: forwards;}
+                @keyframes large{
+                    from{img{width: 200px;}}
+                    to{width: 400px;}
+                }
+
+                .c3{overflow: hidden;}
+                .c3:hover{animation: large 1s; animation-fill-mode: forwards;}
+                @keyframes large{
+                    from{img{width: 800px;}}
+                    to{width: 600px;}
+                }
+
+
+                img{width: 200px;}
+
+
+
+            </style>
+        </head>
+    <body>
+        <div class="main">
+            <div class="c c1">
+                <img src="car1.png" >
+                
+            </div>
+            <div class="c c2">
+                <img class="img01" src="car1.png" >
+                
+            </div>
+            <div class="c c3">
+                <img src="car1.png" >
+            </div>
+        </div>
+    </body>
+</html>

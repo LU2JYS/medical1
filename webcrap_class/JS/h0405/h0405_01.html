@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>switch</title>
+    <script>
+        var site = prompt("1. 네이버 2. 구글 3. 다음 번호 선택");
+        var url; //defined
+        switch(site){
+        case "1":
+            url = "http://www.naver.com";
+            break;
+        case "2":case "7": //다중으로 가능하다
+            url = "http://www.google.com";
+            break;
+        case "3":
+            url = "http://www.daum.net";
+            break;
+            default:
+                alert("번호를 잘못 입력하셨습니다.");
+        }
+        if(url){
+            location.href=url;
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

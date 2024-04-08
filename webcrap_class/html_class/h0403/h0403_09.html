@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Document</title>
+            <style>
+                *{margin: 0; padding: 0; font-size: larger;
+                    align-content: center;}
+                
+                .top{width: 100%; height: 200px; border: 2px solid black;
+                        background: steelblue; }
+
+                #l1{width: 60%; height: 600px; border: 2px solid black;
+                    background: tan;}
+                #l2{width: 60%; height: 600px; border: 2px solid black;
+                    background: tan;}
+                #l3{width: 60%; height: 600px; border: 2px solid black;
+                    background: tan;}
+                .l{display: flex;}
+                .right{width: 390px; height: 600px; border: 2px solid black;
+                    background: khaki; display: flex;}
+                .foot{width: 100%; height: 180px; border: 2px solid black;
+                    background: lavender;}
+
+                @media screen and (max-width:1600px){
+                    .l{background: blue;}
+
+                @media screen and (max-width:1400px){
+                    .right{background: yellow;}
+
+                    @media screen and (max-width:1400px){
+                        #l2{background: yellow;}
+
+                        @media screen and (max-width:1400px){
+                            #l1{background: blue;}
+
+                            @media screen and (max-width:1300px){
+                                #l3{background: blue; width: 50%;
+                                .foot{display: none;}}
+
+                @media screen and (max-width:1400px){
+                        .top{background: greenyellow;}
+                    
+                }
+            </style>
+        </head>
+    <body>
+            <div class="top">top</div>
+            <div class="l">
+                <div id="l1">left1</div>
+                <div id="l2">left2</div>
+                <div id="l3">left3</div>
+                <div class="right">right</div>
+            </div>
+            <footer class="foot">foot</footer>
+    </body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿡킷</title>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+        *{margin:0; padding:0; font-family: "Nanum Gothic", sans-serif;
+            font-weight: 400;  font-style: normal;}
+        
+        div{box-sizing: border-box; justify-content: center; width: 40%; margin: 0 auto; 
+        }
+        table {
+            width: 100%; 
+            border-collapse: collapse;
+            border: 0px solid white;
+            border-top: 1px solid black;
+        }
+
+        th, td {height: 40px;
+            border-bottom: 1px solid #f2f2f2;
+            padding: 10px;
+            text-align: center; color: black; font-weight: 700;
+        }
+        th{background:#f2f2f2 ;}
+        h2{color: #606060; font-weight: 700;}
+        #a{padding: 12px 24px;
+            font-size: 15px;
+            line-height: 23px;
+            color: #101010;
+            font-weight: 2000;}
+        #t{text-align: left;}
+        .sun{height: 3px; background: black;}
+        h1{font-size: 45px; font-weight: 800; color: black;
+            padding-top: 50px; animation: rotate 2s infinite, back 2s infinite alternate;}
+            @keyframes rotate{
+                from{transform: perspective(400px) rotateX(-180deg) rotateY(180px)  
+                    ; backface-visibility: visible;}
+                to{transform: perspective(400px) rotateX(0deg) rotateY(-180deg)
+                    ; backface-visibility: visible;}}
+
+        p{text-align: center; font-size: 25px;}
+        .n1{font-family: "helvetica neue", helvetica, sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-align: center;
+            border: 2px solid rgb(0 0 200 / 0.6);
+            background: rgb(0 0 200 / 0.6);
+            color: rgb(255 255 255 / 1);
+            box-shadow: 1px 1px 20px rgba(253, 249, 7, 0.959);
+            border-radius: 10px;
+            padding: 3px 10px;
+            display: inline-block;
+            cursor: pointer; 
+            text-decoration: none;  }
+        
+        .b{text-align: center; margin-bottom: 50px;}
+
+    </style>
+</head>
+<body>
+    <div>
+        <h1>고객행복센터</h1>
+        <br>
+        <br>
+        <hr class="sun">
+        <br>
+        <br>
+        <h2>FAQ&ensp; 공지사항&ensp; 지정일배송/이용안내</h2>
+        <br>
+        <br>
+        <table>
+        <thead>
+            <tr>
+                <th id="a">번호</th>
+                <th id="a">제목</th>
+                <th id="a">등록일</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 21행 생성 -->
+            <tr>
+                <td>1</td>
+                <td id="t">CJ ONE포인트 및 기프트카드 사용 일시중단 안내 [3/26(화) 02:00~07:00]</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td id="t">택배시스템 서버 점검에 따른 서비스 일시 불가 안내 [3월17일 02:30 ~ 06:30]</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td id="t">쿡킷 서버 점검에 따른 서비스 일시 불가 안내 [2/24(토)00:00~06:00]</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td id="t">[당첨안내] 홀리데이 세일 이벤트 당첨자 공지</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td id="t">CJ제일제당 서비스 이용약관 변경 고지 [2023.12.26 시행]</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td id="t">[당첨안내] 겨울캠핑 이벤트 당첨자 공지</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td id="t">택배추적 일시불가 안내 [12/10(일)03:00~06:00]</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td id="t">주문취소 및 배송지 변경 일시 불가 안내 [11/25(토)22:00~05:00]</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td id="t">기프트카드 서비스 일시중단 안내[2023.11.23(목)04:00~05:00]</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td id="t">주문취소 및 배송지 변경 일시 불가 안내 [11/18 20:00~11/19 03:00]</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td id="t">[당첨안내] 더건강한 닭가슴살 케이준 NEW&HOT 스토리 이벤트 당첨자 안내</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td id="t">[당첨안내] 모둠사리스팸부대전골 신메뉴 리뷰 이벤트 당첨자 고지</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td id="t">CJONE포인트 및 기프트카드 사용 일시중단 안내 [10/17(화) 02:00~07:00]</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td id="t">[당첨안내] 이너비 글루타치온 NEW&HOT 스토리 이벤트 경품이벤트 당첨 안내</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td id="t">[쿡킷] 23년 추석 연휴 배송일 휴무 공지</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>16</td>
+                <td id="t">택배 상품 추적 서비스 일시중단 안내[9/3(일)00:00~05:00]</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>17</td>
+                <td id="t">[쿡킷] 8월 광복절 배송 휴무일 안내</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>18</td>
+                <td id="t">[당첨안내] 양지육수 왕교자 만두전골 신메뉴 '네오플램 전골 냄비' 당첨자 고지</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>19</td>
+                <td id="t">주문취소 및 배송지 변경 일시 불가 안내 [6/30(금)23:30~03:00]</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>20</td>
+                <td id="t">주문취소 및 배송지 변경 일시 불가 안내 [6/30(금)23:30~03:00]</td>
+                <td>2023-06-26</td>
+            </tr>
+            <tr>
+                <td>21</td>
+                <td id="t">주문취소 및 배송지 변경 일시 불가 안내 [6/29(목)22:00~23:00]</td>
+                <td>2023-06-26</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+    <div class="b">
+        <a href="#" class="n1">1</a>&ensp;&ensp;
+        <a href="#" class="n1">2</a>&ensp;&ensp;
+        <a href="#" class="n1">3</a>&ensp;&ensp;
+        <a href="#" class="n1">4</a>&ensp;&ensp;
+        <a href="#" class="n1">5</a>
+    </div>
+</div>
+</body>
+</html>

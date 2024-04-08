@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>Document</title>
+    <script>
+        //1-99999 랜덤숫자5자리
+        // 입력한 숫자와 비교하여 맞는 개수를 출력하시요
+        //00100
+
+        //00100
+        //02457
+        /*
+        var num=5;
+        console.log(String(num).padStart(2,"0"));
+        */
+        var lo =Math.floor(Math.random()*99999)+1;
+        var lotto = String(lo).padStart(5,"0");
+        var in_no=prompt("5자리에 숫자를 입력하세요",lotto);
+        
+        var count=0;
+        for (var i = 0; i < lotto.length; i++) {
+            if (lotto[0]==in_no[0]) {
+                count++;
+                continue;
+            }
+        }
+        document.write("로또 번호 : " + lotto,"<br>");
+        document.write("입력 번호 : " + in_no,"<br>");
+        document.write("입력한 숫자와 맞는 개수: " +count,"<br>");
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

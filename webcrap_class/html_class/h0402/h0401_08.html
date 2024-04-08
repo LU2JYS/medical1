@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .bigbox {
+            width: 1320px;
+            height: 360px; 
+            margin: 0 auto;
+            display: flex; /* 수정된 부분: 요소를 가로로 배치하기 위해 flex 사용 */
+            justify-content: space-between;
+        }
+        .box {
+            width: 1000px; /* 수정된 부분: 간격을 좁히기 위해 너비 조정 */
+            height: 355px; 
+            text-align: center;
+        }
+        .imgs {
+            width: 410px;
+            height: 254px; 
+            text-align: center;
+            position: relative; /* 추가된 부분: 상대 위치 설정 */
+        }
+        .text {
+            width: 410px;
+            height: 98px;
+            text-align: left;
+            margin-top: 38px;
+        }
+        .logo1 {
+            left: 10px; /* 수정된 부분: 로고 위치 조정 */
+            top: 10px; /* 수정된 부분: 로고 위치 조정 */
+            width: 80px;
+            height: 25px;
+            background-color: #907559; 
+            text-align: center;
+            color: white; 
+            font-size: 18px;
+            position: absolute; /* 추가된 부분: 절대 위치 설정 */
+        }
+        div img {
+            margin: 0 auto;
+            width: 410px;
+        }
+        #h1 {
+            font-size: 20px;
+            font-weight: 1000;
+        }
+
+        #h2{color: gray; font-weight: 700;}
+
+        header{font-size: 30px; text-align: center; margin-top: 40px;}
+    </style>
+</head>
+<body>
+    <header>E V E N T</header>
+    <br>
+    <div class="bigbox">
+        <div class="box">
+            <div class="imgs">
+                <img src="3.jpg" >
+                <div class="logo1">이벤트</div>
+            </div>
+            <div class="text">
+                <p id="h1">[4월] 행복이 피어나는 블루밍 리솜</p>
+                <br>
+                <p id="h2"> 이용기간 : 2024.04.05~2024.04.30</p>
+            </div>
+        </div>
+        
+        <div class="box">
+            <div class="imgs">
+                <img src="4.jpg" >
+                <div class="logo1">이벤트</div>
+            </div>
+            <div class="text">
+                <p id="h1">[마묵라운지] 홈메이드 프렌치 토스트</p>
+                <br>
+                <p id="h2"> 이용기간 : 2024.01.29~종료시까지</p>
+            </div>
+        </div>
+        
+        <div class="box">
+            <div class="imgs">
+                <img src="5.jpg" >
+                <div class="logo1">이벤트</div>
+            </div>
+            <div class="text">
+                <p id="h1">[마묵라운지] 홈메이드 프렌치 토스트</p>
+                <br>
+                <p id="h2"> 이용기간 : 2024.07.14~종료시까지</p>
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+    <header>P A C K A G E</header>
+    <br>
+    <div class="bigbox">
+        <div class="box">
+            <div class="imgs">
+                <img src="4.jpg" >
+                <div class="logo1">이벤트</div>
+            </div>
+            <div class="text">
+                <p id="h1">스윗골드 에디션</p>
+                <br>
+                <p id="h2"> 이용기간 : 2024.04.05~2024.04.30</p>
+            </div>
+        </div>
+        
+        <div class="box">
+            <div class="imgs">
+                <img src="5.jpg" >
+                <div class="logo1">이벤트</div>
+            </div>
+            <div class="text">
+                <p id="h1">베이비문 포레스트</p>
+                <br>
+                <p id="h2"> 이용기간 : 2024.01.29~종료시까지</p>
+            </div>
+        </div>
+        
+        <div class="box">
+            <div class="imgs">
+                <img src="3.jpg" >
+                <div class="logo1">이벤트</div>
+            </div>
+            <div class="text">
+                <p id="h1">꼬마 숲 탐험 포레스트</p>
+                <br>
+                <p id="h2"> 이용기간 : 2024.07.14~종료시까지</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

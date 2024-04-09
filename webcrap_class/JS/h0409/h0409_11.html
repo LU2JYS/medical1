@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>제이쿼리</title>
+    <script>
+        //제이쿼리 축약본 >>>>>>>>>>이게 더 간단하고 많이 쓴다.
+        let f_size=10;
+        $(function(){
+            $("#txt").text("반갑습니당.");
+            /*여기서 바로 선언가능하다.*/
+        });
+        function fontBtn(){
+            f_size +=1; 
+            $("#txt").css("font-size",f_size+"px");
+        }
+        //제이쿼리 선택자
+        /*
+        $("#아이디")-아이디 선택자
+        $(".클래스")-클래스 선택자
+        $(".테그")-테그 선택자
+        */
+
+        //document.querySelector("#txt").innerText = "반갑습니다.";
+    </script>
+    <style>
+        #txt{color: red;} /*css이다*/
+    </style>
+</head>
+<body>
+    <div id="txt">안녕하세요.</div>
+    <br>
+    <button onclick=" fontBtn"> 글자확대</button>
+    
+    
+</body>
+</html>

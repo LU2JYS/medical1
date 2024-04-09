@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>리턴</title>
+    <style>
+        
+    </style>
+    <script>
+        function result(num1, num2){
+            let n_total = num1 + num2; //합
+            let n_avg = (num1 + num2) / 2; // 평균
+            let n_sub = num1 - num2; // 빼기
+            let n_mul = num1 * num2; // 곱하기
+            let n_div = num1 / num2; // 나누기
+            let arr_result = [n_total, n_avg, n_sub, n_mul, n_div]; //배열안에 다 넣어준다
+            return arr_result;
+        }
+
+        num1 = Number(prompt("첫번째 숫자를 입력하세요"));
+        num2 = Number(prompt("두번째 숫자를 입력하세요"));
+
+        let arr_result = result(num1, num2);
+
+        //위에 arr_result에 있는 리스트안에 것들을 특정위치값으로 가져와 나타내준다.
+        document.write("두 숫자의 합: ", arr_result[0], "<br>");
+        document.write("두 숫자의 평균: ", arr_result[1], "<br>");
+        document.write("두 숫자의 차: ", arr_result[2], "<br>");
+        document.write("두 숫자의 곱: ", arr_result[3], "<br>");
+        document.write("두 숫자의 나눗셈: ", arr_result[4], "<br>");
+    </script>
+</head>
+<body>
+</body>
+</html>

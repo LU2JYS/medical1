@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>for</title>
+    <style>
+        div{width: 500px; height: 400px; border:3px solid black;}
+    </style>
+    <script>
+    function btn(){
+        document.querySelector("#content").innerText;
+        console.log("content : "+document.querySelector("#content").value);
+        //innnertext 문자로 테그에 입력
+        //document.querySelector("#main").innerText=document.querySelector("#content").value;
+        //innerhtml 태그로 태그안에 입력
+        //document.querySelector("#main").innerHTML="<h2>안녕하세요.</h2>"; //테그로 인식한다.
+        var html_data="";
+        for(var i=1901; i<2025; i++){
+            html_data += "<option value='"+i+"'>"+i+"년</option>";
+        }
+        console.log(html_data);
+        document.querySelector("#year").innerHTML=html_data;
+
+        var html_data2="";
+        for(var i=1; i<=12; i++){
+            html_data2 += "<option value='"+i+"'>"+i+"월</option>";
+        console.log(html_data2);
+        document.querySelector("#day").innerHTML=html_data;
+
+        var html_data3="";
+        for(var i=1; i<31; i++){
+            html_data3 += "<option value='"+i+"'>"+i+"일</option>";
+        console.log(html_data3);
+        document.querySelector("#today").innerHTML=html_data;
+        }
+    }
+}
+
+
+
+
+    </script>
+</head>
+<body>
+    <div id="main">
+
+    </div>
+    <br>
+    <label> 글자를 적으세요</label>
+    <input type="text" name="content" id="content"><br>
+    <button onclick="btn()">저장</button>
+    <br><br>
+    <script>
+        function birthBtn(){
+            document.querySelector("#year").value
+        }
+    </script>
+    <h2>생년월일</h2>
+    <select  id="year">
+        <option value="1901">1901년</option>
+        <option value="1902">1902년</option>
+        <option value="1903">1903년</option>
+        <option value="1904">1904년</option>
+        <option value="1905">1905년</option>
+        <option value="2024">2024년</option>
+    </select>
+    <select  id="month">
+        <option value="1">1월</option>
+        
+    </select>
+    <select  id="day">
+        <option value="1">1일</option>
+        
+    </select>
+    <button onclick="birthBtn()">데이터읽기</button>
+</body>
+</html>

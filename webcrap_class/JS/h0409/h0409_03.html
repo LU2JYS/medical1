@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>리턴</title>
+    <style>
+        
+    </style>
+    <script>
+        function result(num1,num2){
+            let n_total=num1+num2
+            let n_avg = (num1,num2)/2;
+            let arr_result=[n_total,n_avg]; //두개있을땐 배열로 한다0
+            return arr_result;
+        }
+
+
+        num1 = Number (prompt("국어점수를 입력하세요"));
+        num2 = Number (prompt("영어점수를 입력하세요"));
+
+        let arr_result= result(num1,num2);
+
+        document.write("결과값 : ",arr_result,"<br>");
+
+    </script>
+</head>
+<body>
+    <button>평균구하기</button>
+    <div>
+
+    </div>
+    
+</body>
+</html>

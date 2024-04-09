@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>선택자</title>
+    <style>
+        
+    </style>
+    <script>
+        function memBtn(){
+            var txt=document.getElementsByClassName("txt");
+            console.log(txt);
+            console.log(txt[0]);
+            console.log(txt[1]);
+            console.log(txt[2].value);
+            /*
+            var uid=document.getElementById("#id"); //아이디선택자 가능
+            if(uid.value.length<=1){
+                alert("2자리 이상 입력해주세요")
+                uid.focus();
+                return false;
+            }
+            frm.submit(); //아이디 2자리 이상을 입력해야 다음으로 이동
+            */
+    }
+    </script>
+</head>
+<body>
+    <!--중요!!!!!!!!!//아이디 선택자 : document.getelementbyid("아이디")
+                        클래스 선택자 : document.getElementsByClassName("클래스")->
+                            document.queryselectorAll("선택자")은 여러개 선택가능
+                            
+                            >>>>스크립트이벤트
+                            onchange - select
+                            onclick - 클릭할때
+                            onmouseover.onmouseout - 마우스 들어올때, 나갈때
+                            onkeydown,onkeypress,onkeyup - 키보드 다운, 누르는순간,키보드 업등
+                            onload - 웹페이지 로딩시
+                        -->
+    <h2>회원가입</h2>
+    <form action="http://www.naver.com" name="frm" method="get">
+        <label>아이디</label>
+        <input type="text" name="id" id="id"><br>
+        <label>이름</label>
+        <input type="text" name="name" class="txt"><br>
+        <label>전화번호</label>
+        <input type="text" name="tel" class="txt"><br>
+        <label>주소</label>
+        <input type="text" name="address" class="txt"><br>
+
+        <button type="button" onclick="memBtn()">회원가입</button>
+
+    </form>
+</body>
+</html>

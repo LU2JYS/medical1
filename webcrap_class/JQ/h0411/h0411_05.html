@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        section{width:1200px; margin: 50px auto;}
+        h2{text-align:center;}
+        table{border-collapse:collapse; width:1200px;}
+        table,th,td{border:1px solid black; text-align:center;}
+        th{height:45px; background:#969ad3;}
+        td{height:40px;}
+        .delBtn{background: pink; font-size: 15px;}
+    </style>
+    <script>
+    $(function(){
+        let no = [1,2,3,4,5,6,7,8,9,10];
+        let name = ["Malory","Eddy","Donella","Roze","Lief","Byram","Kati","Olimpia","Isabeau","Leda"];
+        let kor = [71,13,90,13,33,86,3,82,12,6];
+        let eng = [8,38,46,34,65,86,46,42,69,14];
+        let math = [3,15,54,73,81,79,82,86,52,3];
+        let total = [82,66,120,179,256,228,226,218,133,23];
+        let avg = [27,22,63,40,59,76,75,72,44,7];
+
+
+        function add(i) {
+            var hdata = "<tr>";
+            hdata += "<td>" + no[i] + "</td>";
+            hdata += "<td>" + name[i] + "</td>";
+            hdata += "<td>" + kor[i] + "</td>";
+            hdata += "<td>" + eng[i] + "</td>";
+            hdata += "<td>" + math[i] + "</td>";
+            hdata += "<td>" + total[i] + "</td>";
+            hdata += "<td>" + avg[i] + "</td>";
+            hdata += "<td><button class='delBtn'>삭제</button></td>";
+            hdata += "</tr>";
+            $("table").append(hdata);
+        }
+            for (let i = 0; i < no.length; i++) {
+                add(i);
+        }
+        $("table").on("click", ".delBtn", function() { //클릭한 요소 
+            if(confirm("정말 삭제할래요?"))
+            $(this).closest("tr").remove();
+        });
+    });
+    </script>
+</head>
+<body>
+    <section>
+        <thead>
+            <h2>★★★학생성적프로그램★★★</h2>
+            <table>
+                <colgroup>
+                    <col width="15%">
+                    <col width="*20%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    
+                </colgroup>
+                <tr>
+                    <th>학번</th>
+                    <th>이름</th>
+                    <th>국어</th>
+                    <th>영어</th>
+                    <th>수학</th>
+                    <th>합계</th>
+                    <th>평균</th>
+                    <th><button class=".delBtn"></button></th>
+                </tr>
+            </thead>
+        </table>
+        <button id="addBtn">게시물 추가</button>
+</section>
+</body>
+</html>

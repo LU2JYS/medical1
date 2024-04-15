@@ -5,16 +5,23 @@
     <title>제이쿼리</title>
     <script>
     $(function(){
-            
+        //html이 모두 로딩이 된 후에 실행
+        $(window).load(function(){
+                var h2 = $(".img1").height();
+                console.log("load : ",h2);
+            });
+            });//jquery
             
 
-            });//jquery
+            
     </script>
     <style>
         
     </style>
 </head>
 <body>
-    
+    <p>
+        <img src="https://place-hold.it/300X300" class="img1">
+    </p>
 </body>
 </html>

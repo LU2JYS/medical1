@@ -5,16 +5,31 @@
     <title>제이쿼리</title>
     <script>
     $(function(){
-            
-            
+            $("#abtn").click(function(){
+            $.ajax({
+                    url:"http://127.0.0.1:5500/JQ/h0415/comment_data.json",       //연결주소
+                    type : "get",
+                    data:{},    //없으면 안넣어도 된다.
+                    dataType:"json",  //요청한 데이터
+                    success:function(data){
+                        alert("ajax 성공");
+                        console.log(data);
+                    },
+                    error:function(){
 
+                        alert("ajax 실패")
+                    }
+            });
+            });
             });//jquery
     </script>
     <style>
-        
+        #content{width: 800px; height: 700px; border: 1px solid black;}
     </style>
 </head>
 <body>
-    
+    <h2>ajax = 비동기 방식</h2>
+    <button id="abtn">확인</button>
+    <div id="content"></div>
 </body>
 </html>

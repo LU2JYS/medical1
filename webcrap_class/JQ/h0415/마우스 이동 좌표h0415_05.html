@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>제이쿼리</title>
+    <script>
+    $(function(){
+            $(document).on("mousemove",function(e){
+                $(".mX").text(e.pageX); //마우스의 X좌표
+                $(".mY").text(e.pageY); //마우스의 Y좌표
+            });
+            });//jquery
+    </script>
+    <style>
+        h1{text-align: center;}
+        *{margin: 0; padding: 0; text-align:center; font-size: 30px;}
+        div{width: 200px; height: 100px; margin:  50px auto; border: 3px solid black;
+            font-size: 20px; text-align: center;background-color: aqua;} 
+    </style>
+</head>
+<body>
+    <h1>마우스 이동</h1>
+    <div>
+        <p>X: <span class="mX">0</span></p>
+        <p>Y: <span class="mY">0</span></p>
+    </div>
+</body>
+</html>

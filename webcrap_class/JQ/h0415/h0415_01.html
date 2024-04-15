@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>제이쿼리</title>
+    <script>
+        $(function(){ 
+        //$("#mbtn").click(function(){
+        //    $("#main").css("background","yellow");            
+        //}); 
+
+        /* 
+        $("#mbtn").on("click",function(){
+            $("#main").css("background","yellow");
+        })
+        */
+
+        //버튼2번
+        /* 
+        $("#mbtn2").on("mouseover focus",function(){
+            $("#main").css("background","yellow");
+        })
+        */
+        $("#mbtn2").on({
+            "mouseover focus" : function(){
+                $("#main").css("background","yellow");
+            },
+                "mouseout blur" : function(){
+                $("#main").css("background","white");
+            }
+        });
+        });//jquery
+    
+    </script>
+    <style>
+        *{margin: 0; padding: 0;}
+        #main{width: 300px; height: 200px; margin:  50px auto; border: 3px solid black;} 
+        #mbtn{display: block; width: 120px; height: 30px; margin: 20px auto;}
+    </style>
+</head>
+<body>
+    <div id="main"></div>
+        <button id="mbtn">확인</button>
+        <button id="mbtn2">버튼2</button>
+
+</body>
+</html>

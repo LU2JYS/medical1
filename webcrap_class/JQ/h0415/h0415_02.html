@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>제이쿼리</title>
+    <script>
+        //mouseover하면 num1,num2가 main에 나타나고, mouseout하면 사라지게 설정하시요
+    $(function(){
+        $("#mbtn").on({
+            "mouseover focus" : function(){
+                var num1 = $("#num1").val();
+                var num2 = $("#num2").val();
+                var sum = Number(num1) +Number(num2) ;
+                $("#main").text(sum);
+            },
+                "mouseout blur" : function(){
+                    $("#main").text(""); //빈공백으로 채우면 제거가 된다.
+            }
+        });
+            
+
+            });//jquery
+    </script>
+    <style>
+        *{margin: 0; padding: 0;}
+        #main{width: 300px; height: 200px; margin:  50px auto; border: 3px solid black;
+                font-size: 20px; text-align: center;} 
+        #mbtn{display: block; width: 120px; height: 30px; margin: 20px auto;}
+    </style>
+</head>
+<body>
+    <div id="main">0</div> 
+    <input type="text" name="num1" id="num1">+<input type="text" name="num2" id="num2">
+    <br>
+    <button id="mbtn">확인</button>
+</body>
+</html>

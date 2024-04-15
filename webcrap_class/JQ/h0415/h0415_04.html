@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>제이쿼리</title>
+    <script>
+        $(function(){
+            $("#yellow").click(function(){    // "노랑" 버튼이벤트를  감지한다
+                if($(this).is(":checked")){   //체크 되었는지 확인
+                $(".main").css("background", "yellow"); //$(".main")는 동시에 지정된 요소이다
+            }
+            });
+            $("#green").click(function(){    // "그린" 버튼이벤트를  감지한다
+                if($(this).is(":checked")){  //체크 되었는지 확인
+                $(".main").css("background", "green"); //$(".main")는 동시에 지정된 요소이다
+            }
+            });
+            $("#pink").click(function(){     // "핑크" 버튼이벤트를  감지한다
+                if($(this).is(":checked")){  //체크 되었는지 확인
+                $(".main").css("background", "pink"); //$(".main")는 동시에 지정된 요소이다
+                }
+            });
+        })//jquery
+    
+    </script>
+    <style>
+        *{margin: 0; padding: 0; text-align:center; font-size: 30px;}
+        .main{width: 500px; height: 300px; margin:  50px auto; border: 3px solid black;
+            font-size: 20px; text-align: center;} 
+    </style>
+</head>
+<body>
+    <h2>원하는 색상을 클릭하시요.</h2>
+    <form>
+        <input type="radio" name="bcolor" id="yellow" value="yellow">
+        <label for="yellow">yellow</label>
+        <input type="radio" name="bcolor" id="green" value="green">
+        <label for="green">green</label>
+        <input type="radio" name="bcolor" id="pink" value="pink">
+        <label for="pink">pink</label>
+    </form>
+    <div class="main"></div>
+</body>
+</html>

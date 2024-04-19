@@ -30,6 +30,48 @@ $(function(){
         error:function() { alert("애러"); }
     });
     
+    //학생입력, 수정, 확인 버튼>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    $("#confirmBtn").on("click",function(){
+        if($("#id").val()==""){ //학생입력창
+            console.log("이름 : "+$("#name").val());
+            //공백확인 tool
+            if($("#name").val().length<2){
+                alert("이름을 입력하셔야 등록이 가능합니다!!")
+                $("#name").focus();
+                return false;
+            }
+            s_count = s_count +1;
+
+            let i_name=$("#name").val();
+            let i_kor=Number($("#kor").val());
+            let i_eng=Number($("#eng").val());
+            let i_math=Number($("#math").val());
+            let i_total=i_kor+i_eng+i_math
+            let i_avg=(i_total/3).toFixed(2); //소수점 2째짜리까지만 출력
+
+            
+
+
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //체크박스 전체 선택,취소>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     $("#allChk").click(function(){
         if($(this).is(":checked")==true){
@@ -50,24 +92,37 @@ $(function(){
             $("#"+$(this).parent().parent().attr("id")).remove();
         }
     });
-    //학생수정버튼 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+    //학생수정버튼 클릭시 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     $("#modifyBtn").click(function(){
     console.log("체크박스에 표시된 개수 : "+$(".stuChk:checked").length);
 
-    if($(".stuChk:checked").length >1){
+    if($(".stuChk:checked").length > 1){
         alert("학생 1명만 선택하셔야 수정이 됩니다");
         return false;
     }
+    //체크된 데이터 가져오기
+    o_id = $(".stuChk:checked").parent();
+    o_no = o_id.next().text();
+    o_name = o_id.next().next().text();
+    o_kor = o_id.next().next().next().text();
+    o_eng = o_id.next().next().next().next().text();
+    o_math = o_id.next().next().next().next().next().text();
+    console.log("학번 : "+o_id.next().text());
+    //수정창 열기
+    $(".p_all").css("display","block");
+    $("#name").prop("readonly",true);
+    //수정창 타이틀 변경
+    $(".p_main h2").text("학생 성적 수정");
+    $("#id").val(o_no);
+    $("#name").val(o_name);
+    $("#kor").val(o_kor);
+    $("#eng").val(o_eng);
+    $("#math").val(o_math);
+
     });//학생수정버튼
-
-
-
-
-
-
-
-
-
 
 
 

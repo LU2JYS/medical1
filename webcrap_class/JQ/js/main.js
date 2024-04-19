@@ -167,7 +167,9 @@ $(function(){
             $("#eng").val("");
             $("#math").val("");
             $(".p_all").css("display","none");
-        }else{ //학생성적수정창 - id value 있는 경우
+        }
+        
+        else{ //학생성적수정창 - id value 있는 경우
             //alert("학생성적수정창 클릭");
             o_no =  $("#id").val();
             o_name =  $("#name").val();

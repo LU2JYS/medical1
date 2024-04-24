@@ -860,6 +860,276 @@ select last_day('2024-02-01') from dual;
 
 
 
+-------------------------------------------------------------------------------
+--24.04.24
+--trunc 버림, round 반올림
+select sysdate,hire_date,trunc(sysdate-hire_date,3) from employees;
+select sysdate,hire_date,3,round(sysdate-hire_date) from employees;
+
+---
+select sysdate-1 어제,  sysdate+1 내일,sysdate 오늘 from dual;
+
+--m_no시퀀스로 저장 1-9999씩증가
+--퀴즈m_yesterday,m_today,m_tomorrow,m_year 날짜컬럼을 가진 테이블을 만들고 m_date
+--어제 오늘 내일 1년후 날짜를 저장하시요
+
+CREATE SEQUENCE seq_m_no
+    INCREMENT BY 1
+    START WITH 1
+    MINVALUE 1
+    MAXVALUE 9999
+    NOCYCLE
+    NOCACHE;
+
+-- Create the table
+CREATE TABLE m_date (
+    m_no number(4),
+    m_yesterday date,
+    m_today date,
+    m_tomorrow date,
+    m_year date
+    );
+
+insert into m_date (m_no, m_yesterday,m_today,m_tomorrow,m_year) values 
+    (seq_m_no.nextval,
+     sysdate-1,
+     sysdate,
+     sysdate+1,
+     sysdate+365
+    );
+
+select * from m_date;
+
+--abs절대값 ceil,round,floor, trunc
+select abs(hire_date-sysdate) from employees;
+
+--날짜의 month기준으로 반올림한다.
+select hire_date,round(hire_date,'month') from employees;
+
+--날짜의 month기준으로 버림한다.
+select hire_date,trunc(hire_date,'month'),round(hire_date,'month') from employees;
+
+select trunc(hire_date,'month')기준일 ,hire_date from employees
+order by hire_date;
+select * from channels;
+
+select period,count(period) from kor_loan_status
+group by period
+order by period;
+
+select period from kor_loan_status
+where period='201111';
+
+select trunc(kor,-1)  t_kor,count(trunc(kor,-1)) from students
+group by trunc(kor,-1)
+order by t_kor;
+
+--날짜의 month기준으로 버림한다.
+select trunc(hire_date,'month') m_hire_date,count(trunc(hire_date,'month')) from employees
+group by trunc(hire_date,'month')
+order by m_hire_date
+;
+
+drop table students;
+drop table stu_score;
+drop table emp01;
+drop table board;
+
+select * from stu_score
+order by no;
+
+update stu_score set name='관순스'
+where no=10;
+
+select * from stu_score
+order by no;
+
+update stu_score set avg=(total/3)
+;
+
+
+--2개의 날짜에서 월 간격을 확인
+select hire_date,floor(months_between(sysdate,hire_date)),trunc(sysdate-hire_date,2) from employees;
+
+--개월 추가
+select hire_date,add_months(hire_date,6) from employees;
+
+--이달의 마지막날
+select hire_date,last_day(hire_date),round(hire_date,'d') from employees;
+
+--한요일의 12시 기준으로 
+select sysdate,round(sysdate,'d') from employees;
+select sysdate,trunc(sysdate,'j') from employees;
+select sysdate,trunc(sysdate,'month') from employees;
+
+select sysdate 현재일,trunc(sysdate,'month') 처음일, last_day(sysdate) 마지막날 from dual;
+
+--특정 요일의 날짜를 확인
+select sysdate,next_day(sysdate,'토요일') from dual;
+
+--요일의 처음일
+  select sysdate,trunc(sysdate,'d'),next_day(sysdate,'토요일') from dual;  
+  
+  --board게시판 테이블 default는 입력시 없을시 지정한 데이터 자동 입력됨
+  create table board(
+    bno number(4) primary key,--중복이 안됨 기본키로 사용됨
+    id varchar2(30),
+    btitle varchar2(1000),
+    bcontent clob, --bcontent varchar2(3000)-무제한 랑 같다
+    bdate date default sysdate,
+    bhit number default 0,
+    bgroup number,
+    bstep number default 0,
+    bindent number default 0,
+    bfile varchar2(100) --파일첨부
+  );
+  
+insert into board values(
+board_seq.nextval,'aaa','제목입니다','내용입니다',sysdate,0,board_seq.currval,0,0,'1.jpg');
+
+
+insert into board (bno,id,btitle,bcontent,bgroup,bfile) values(
+board_seq.nextval,'bbb','이벤트 시청','이벤트를 신청합니다',board_seq.currval,'2.jpg'
+);
+
+select * from board;
+
+
+
+--형변환 -number타입 -character타입 -date타입
+
+select sysdate from dual;
+select sysdate ,to_char(sysdate,'yyyy-mm-dd') from dual;
+select to_char(sysdate,'yyyy-mm-dd') from dual;
+select to_char(sysdate,'yyyy') from dual;
+
+--ko2024001
+select 'Ko' || to_char(sysdate,'yyyy')||trim(to_char(seq_mno.nextval,'0000')) from dual;
+
+select to_char(sysdate,'dy'
+),to_char(sysdate,'day') from dual;
+
+select to_char(sysdate,'yyyy-mm-dd mon day'
+),to_char(sysdate,'day') from dual;
+
+--hire_date, 연,월,일
+select hire_date, to_char(hire_date,'yyyy-mm-dd mon day'
+)from dual;
+
+--am,pm 오전오후 24시간으로 표시
+select to_char(sysdate,'pm hh24:mm:ss') from dual;
+
+select * from stu_score;
+
+select to_char(c_date,'yyyy-mm-dd hh:mm:ss day') from stu_score
+order by c_date;
+
+--날짜별로 몇개의 데이터가 들어가있는지 출력하시요
+
+select c_date,count(c_date) from stu_score
+group by c_date
+order by c_date;
+
+--데이터의 길이 함수
+select length('안녕하세요') from dual;
+select length(1234000) from dual;
+
+--문자형 사칙연산안됨, 자리수표시,쉼표표시,날짜형태 표시
+--숫자형 사직연산 가능 컴럼별 사칙연산, 자리수표시(0001>안됨),쉼표 표시 안됨.
+--날짜형 +,- 연산기능가능,months-between 2개날짜 달 계산, 날짜유형을 지정해서 출력이 안됨.
+
+
+--문자형안에 있는 데이터가 숫자이면 자동으로 형변화해서 계산해줌
+--문자형 안에 문자가 있으면 자동변환 불가
+ select 10 a, 100 b,(10+100) ab,to_char(100),10+to_char(300) from dual;
+ select 10 a, 100 b,(10+100) ab,to_char(100),10+'100원' from dual;
+
+--'0000'빈자리는 0으로 채움, '9999' 빈자리를 빈자리로 둠
+select 12340000,to_char(12340000),length(to_char(12340000,'999,999,999')) from dual;
+
+select length(12340000),to_char(12340000),length(to_char(12340000,'999,999,999')) from dual;
+
+--L은 원화표시
+select 12340000,to_char(12340000,'L999,999,999') from dual;
+--$은 $달러표시
+select 12340000,to_char(12340000,'$999,999,999') from dual;
+--소수점 자리 표시
+select 1234.1234,to_char(1234.1234,'000,999.99') from dual;
+
+--10개자리수 표시
+--공백제거해서 자리수 확인 >>>>>>>>>> trim적용시
+select length(trim(to_char(12345,'0000000000'))),length(trim(to_char(12345,'999,999'))) from dual;
+
+
+--퀴즈
+--123,456,789 + 100,000 =값을 출력 천단위로
+--123,556,789
+SELECT TO_CHAR(
+           TO_NUMBER(REPLACE('123,456,789', ',', '')) + 
+           TO_NUMBER(REPLACE('100,000', ',', ''))
+           , 'L999,999,999') AS result
+FROM dual;
+
+select to_number('0000123') from dual;
+
+--날짜 차이값 만들기
+select '2024-04-24'-'2024-04-01' from dual;
+select to_date('2024-04-24')-to_date('2024-04-01') from dual;
+
+select to_date('20240424') from dual;
+select to_char(to_date('20240424'),'yyyy-mm-dd hh:mm:ss') as 날짜 from dual;
+
+select hire_date from employees;
+where hire_date = '2008/01/01';
+select * from stu_score;
+select c_date from stu_score
+where c_date ='2024/04/05';
+
+
+select sysdate-hire_date from employees;
+
+--퀴즈
+SELECT TO_CHAR(
+           TO_NUMBER('20,000','99,999') - TO_NUMBER('10,000','99,999')
+           ,'99,999') AS result
+FROM dual;
+
+--퀴즈
+select commission_pct from employees;
+
+--실제월급=월급+(월급*커미션) 실제월급해서 출력하시요
+select salary,salary+(salary*nvl(commission_pct,0)) from employees;
+
+select emp_name,commission_pct from employees
+where commission_pct is null  ;
+
+
+--퀴즈 manager_id null이면 0 nvl(데이터,0)
+select nvl(manager_id,0) from employees
+order by manager_id desc;
+
+--null값을 ceo로 대체해서 넣어라
+--문자형은 to_char를 쓴다
+select nvl(to_char(manager_id),'ceo') from employees
+order by manager_id desc;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

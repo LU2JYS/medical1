@@ -1,0 +1,4675 @@
+<!DOCTYPE html>
+<html lang="ko">
+ <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+  <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+  <title>
+   행정동별 연령별 인구현황
+  </title>
+  <script src="js/jquery-3.2.1.min.js" type="text/javascript">
+  </script>
+  <script src="js/re_style.js" type="text/javascript">
+  </script>
+  <script src="js/DataTables/datatables.js" type="text/javascript">
+  </script>
+  <script src="js/DataTables/Scroller-2.0.0/js/dataTables.scroller.js" type="text/javascript">
+  </script>
+  <script src="js/DataTables/Select-1.3.0/js/dataTables.select.js" type="text/javascript">
+  </script>
+  <script src="js/DataTables/FixedHeader-3.1.4/js/dataTables.fixedHeader.js" type="text/javascript">
+  </script>
+  <script src="js/DataTables/FixedColumns-3.2.5/js/dataTables.fixedColumns.js" type="text/javascript">
+  </script>
+  <script src="js/DataTables/RowReorder-1.2.4/js/dataTables.rowReorder.js" type="text/javascript">
+  </script>
+  <link href="css/rcps_style.css" rel="stylesheet" type="text/css"/>
+  <link href="css/re_style.css" rel="stylesheet" type="text/css"/>
+  <link href="css/DataTables/datatables.css" rel="stylesheet" type="text/css"/>
+  <link href="css/DataTables/Scroller-2.0.0/css/scroller.jqueryui.css" rel="stylesheet" type="text/css"/>
+  <link href="css/DataTables/Select-1.3.0/css/select.jqueryui.css" rel="stylesheet" type="text/css"/>
+  <link href="css/DataTables/FixedHeader-3.1.4/css/fixedHeader.jqueryui.css" rel="stylesheet" type="text/css"/>
+  <link href="css/DataTables/FixedColumns-3.2.5/css/fixedColumns.jqueryui.css" rel="stylesheet" type="text/css"/>
+  <style type="text/css">
+   body {
+	width: 1px;
+	min-width: 100%
+}
+  </style>
+  <script type="text/javascript">
+   var table;
+$(function(){
+	
+	//tab
+	/* var tableChart = 'T'; */
+	var tableChart = 'T';
+	var hicheck = '';
+	$(".ye_month").hide();
+	
+	// .xls 다운로드
+	var checkStatExcel;
+
+	  $("#csvDown").click(function(){
+		   checkStatExcel = $(':radio[name="state"]:checked').val();
+		   if(!chkExcel()){
+			   return false;
+		   }
+		   alert('통계자료의 양에 따라 소요시간이 10~30초 소요됩니다.\n\n엑셀 파일 [저장] 후 [파일열기]를 권장합니다.');
+		   if(checkStatExcel == "1"){
+		    $("#formXlsDown").attr("action", "downloadCsvAge.do?searchYearMonth="+$("input[name=category]").val()+"&xlsStats=1").submit();
+		   }else if(checkStatExcel == "2"){
+			   $("#formXlsDown").attr("action", "downloadCsvAge.do?searchYearMonth="+$("input[name=category]").val()+"&xlsStats=2").submit();
+		   }else if(checkStatExcel == "3"){
+			   $("#formXlsDown").attr("action", "downloadCsvAge.do?searchYearMonth="+$("input[name=category]").val()+"&xlsStats=3").submit();
+		   }
+
+		  });
+
+	  $("#xlsDown").click(function(){
+	   checkStatExcel = $(':radio[name="state"]:checked').val();
+	   if(!chkExcel()){
+		   return false;
+	   }
+	   alert('통계자료의 양에 따라 소요시간이 10~30초 소요됩니다.\n\n엑셀 파일 [저장] 후 [파일열기]를 권장합니다.');
+	   if(checkStatExcel == "1"){
+	    $("#formXlsDown").attr("action", "downloadExcelAge.do?searchYearMonth="+$("input[name=category]").val()+"&xlsStats=1").submit();
+	   }else if(checkStatExcel == "2"){
+		   $("#formXlsDown").attr("action", "downloadExcelAge.do?searchYearMonth="+$("input[name=category]").val()+"&xlsStats=2").submit();
+	   }else if(checkStatExcel == "3"){
+		   $("#formXlsDown").attr("action", "downloadExcelAge.do?searchYearMonth="+$("input[name=category]").val()+"&xlsStats=3").submit();
+	   }
+	  });
+
+	  $("#xlsxDown").click(function(){
+		  checkStatExcel = $(':radio[name="state"]:checked').val();
+		   if(!chkExcel()){
+			   return false;
+		   }
+		   alert('통계자료의 양에 따라 소요시간이 10~30초 소요됩니다.\n\n엑셀 파일 [저장] 후 [파일열기]를 권장합니다.');
+		   if(checkStatExcel == "1"){
+		    $("#formXlsDown").attr("action", "downloadExcelAge2.do?searchYearMonth="+$("input[name=category]").val()+"&xlsStats=1").submit();
+		   }else if(checkStatExcel == "2"){
+			   $("#formXlsDown").attr("action", "downloadExcelAge2.do?searchYearMonth="+$("input[name=category]").val()+"&xlsStats=2").submit();
+		   }else if(checkStatExcel == "3"){
+			   $("#formXlsDown").attr("action", "downloadExcelAge2.do?searchYearMonth="+$("input[name=category]").val()+"&xlsStats=3").submit();
+		   }
+	  });
+
+	var checkStatExcelMobile;
+	  $("#xlsDownMobile").click(function(){
+	   checkStatExcelMobile = $('select[name=stateMobile]').val();
+	   if(!chkExcel()){
+		   return false;
+	   }
+	   alert('통계자료의 양에 따라 소요시간이 10~30초 소요됩니다.\n\n엑셀 파일 [저장] 후 [파일열기]를 권장합니다.');
+	   if(checkStatExcelMobile == "1"){
+	   	$("#formXlsDown").attr("action", "downloadExcelAge.do?searchYearMonth="+$("input[name=category]").val()+"&xlsStats=1").submit();
+	   }else if(checkStatExcelMobile == "2"){
+		   $("#formXlsDown").attr("action", "downloadExcelAge.do?searchYearMonth="+$("input[name=category]").val()+"&xlsStats=2").submit();
+	   }else if(checkStatExcelMobile == "3"){
+		   $("#formXlsDown").attr("action", "downloadExcelAge.do?searchYearMonth="+$("input[name=category]").val()+"&xlsStats=3").submit();
+	   }
+
+	  });
+	//연간월간 구분
+	  	$("input[name=searchYearMonth]").change(function(){
+	  		var rdoValue=$(this).val();
+	  		var nowYear=$("#nowYear").val();
+	  		if (rdoValue=="month"){
+	  			$("#searchMonthStart").attr("disabled",false);
+	  			$("#searchMonthEnd").attr("disabled",false);
+	  			if($("#searchYearStart option:eq(0)").val() != nowYear){
+	  				$("#searchYearStart").prepend("<option value='"+nowYear+"'>"+nowYear+"년</option>");	  				
+		  			$("#searchYearEnd").prepend("<option value='"+nowYear+"'>"+nowYear+"년</option>");	  				
+	  			}
+	  		}else{
+	  			$("#searchMonthStart").attr("disabled",true);
+	  			$("#searchMonthEnd").attr("disabled",true);
+	  			$("#searchMonthStart").val(12);
+	  			$("#searchMonthEnd").val(12);
+	  			$("#searchYearStart option:first").remove();
+	  			$("#searchYearEnd option:first").remove();
+	  			$("#searchYearStart option:eq(0)").attr("selected","selected");
+	  			$("#searchYearEnd option:eq(0)").attr("selected","selected");
+	  		}
+	  	});
+	
+
+	var shType = "10";
+	var stDt = "1";
+	var edDt = "101";
+	//1세단위 검색에 따른 show
+// 	if(shType == 1){ }
+// 	else //5세단위 검색
+	if(shType == 5){
+		for(var i=1; i<102; i += 5){
+
+			if(i >= stDt && i <= edDt){
+
+			}else{
+				$("th[headers='ageFiveTmw"+i+"']").hide();
+				$("th[headers='ageFiveTm"+i+"']").hide();
+				$("th[headers='ageFiveTw"+i+"']").hide();
+				$("td[headers='ageFiveMWA"+i+"']").hide();
+				$("td[headers='ageFiveM"+i+"']").hide();
+				$("td[headers='ageFiveW"+i+"']").hide();
+			}
+		}
+
+	}
+	//10세단위 검색
+	else{
+
+		for(var i=1; i<102; i += 10){
+
+			if(i >= stDt && i <= edDt){
+
+			}else{
+				$("th[headers='ageTenTmw"+i+"']").hide();
+				$("th[headers='ageTenTm"+i+"']").hide();
+				$("th[headers='ageTenTw"+i+"']").hide();
+				$("td[headers='ageTenMWAS"+i+"']").hide();
+				$("td[headers='ageTenMA"+i+"']").hide();
+				$("td[headers='ageTenWA"+i+"']").hide();
+			}
+		}
+
+	}
+	
+	// 연령 조회 범위 변경 시 텍스트 변경( 세-> 세(이상))
+	$('#sltArgTypeB').change(function(e) {
+		var selectVal = $('#sltArgTypeB option:selected').val();
+		if(selectVal == 100){
+			$("#ageChange").text('세(이상)');
+		}else{
+			$("#ageChange").text('세');
+		}
+	});
+});
+
+//도움말 토글
+function toggle(){
+	$(".info_box").toggle();
+}
+
+//시도 시군구 선택시 ajax로 지역가져오는 곳
+function selectSidonm(){
+	$.ajax({
+		type: "post",
+		url : "selectHangkikcdListAjax.do;jsessionid=iXzSZQqXhURncjsPzZVlQmTo.homepage02",
+		dataType:"json",
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		success : function(data) {
+			loadSidonm($("#sltOrgLvl1"), data.locations);
+		}
+	});
+}
+
+function loadSidonm(target, data) {
+	var dataArr = [];
+	var inx = 0;
+	target.empty();
+
+	$(data).each( function() {
+		if(this.levels == 1){
+			if("A" == this.hangkikcd){
+				dataArr[inx++] = "<option value='" + this.hangkikcd + "' selected >" + this.sidonm + "</option> ";
+			}else{
+				dataArr[inx++] = "<option value='" + this.hangkikcd + "' >" + this.sidonm + "</option> ";
+			}
+		}
+	});
+	target.append("<option value='A' >"+"전국"+"</option>");
+	target.append(dataArr);
+
+	selectSikunkunm();
+
+}
+
+function selectSikunkunm(){
+	$.ajax({
+		type: "post",
+		url : "selectHangkikcdListAjax.do;jsessionid=iXzSZQqXhURncjsPzZVlQmTo.homepage02",
+		dataType:"json",
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		success : function(data) {
+			loadSikunkunm($("#sltOrgLvl2"), data.locations);
+		}
+	});
+}
+
+function loadSikunkunm(target, data) {
+	var dataArr = [];
+	var inx = 0;
+	target.empty();
+	$(data).each( function() {
+		if(this.levels == 2){
+
+			if(this.sidonm == $("#sltOrgLvl1 option:selected").text()){ //상위 시군 값으로 구를 찾아온다.
+
+				if("" == this.hangkikcd){
+					dataArr[inx++] = "<option value=" + this.hangkikcd + " selected>" + this.sikunkunm + "</option> ";
+				} else {
+					dataArr[inx++] = "<option value=" + this.hangkikcd + " >" + this.sikunkunm + "</option> ";
+				}
+			}
+		}
+	});
+	target.append("<option value='A' selected='selected'>"+"시·군·구"+"</option>");
+	target.append(dataArr);
+}
+
+/* <!-- 차트관련   --> */
+function selectSidoG(){
+	$.ajax({
+		type: "post",
+		url : "selectHangkikcdListAjax.do;jsessionid=iXzSZQqXhURncjsPzZVlQmTo.homepage02",
+		dataType:"json",
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		success : function(data) {
+			loadSidoG($("#sltOrgLvl1G"), data.locations);
+
+			if($("#sltOrgTypeG").val() != undefined){
+				if($("#sltOrgTypeG").val()=="2"){
+					document.frmSido.sltOrgLvl2G.style.display = "block";
+				} else {
+					document.frmSido.sltOrgLvl2G.style.display = "none";
+				}
+			}
+		}
+	});
+	changeSearchYearMonth();
+}
+
+function loadSidoG(target, data) {
+	var dataArr = [];
+	var inx = 0;
+	target.empty();
+
+	$(data).each( function() {
+		if(this.levels == 1){
+			if("" == this.hangkikcd){
+				dataArr[inx++] = "<option value='" + this.hangkikcd + "' selected >" + this.sidonm + "</option> ";
+			}else{
+				dataArr[inx++] = "<option value='" + this.hangkikcd + "' >" + this.sidonm + "</option> ";
+			}
+		}
+	});
+	target.append("<option value='A' >"+"전국"+"</option>");
+	target.append(dataArr);
+
+	selectSikunkuG();
+
+}
+
+function selectSikunkuG(){
+	$.ajax({
+		type: "post",
+		url : "selectHangkikcdListAjax.do;jsessionid=iXzSZQqXhURncjsPzZVlQmTo.homepage02",
+		dataType:"json",
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		success : function(data) {
+			loadSikunkuG($("#sltOrgLvl2G"), data.locations);
+		}
+	});
+}
+
+function loadSikunkuG(target, data) {
+	var dataArr = [];
+	var inx = 0;
+	target.empty();
+	$(data).each( function() {
+		if(this.levels == 2){
+
+			if(this.sidonm == $("#sltOrgLvl1G option:selected").text()){ //상위 시군 값으로 구를 찾아온다.
+
+				if("" == this.hangkikcd){
+					dataArr[inx++] = "<option value=" + this.hangkikcd + " selected>" + this.sikunkunm + "</option> ";
+				} else {
+					dataArr[inx++] = "<option value=" + this.hangkikcd + " >" + this.sikunkunm + "</option> ";
+				}
+			}
+		}
+	});
+	target.append("<option value='A' selected='selected'>"+"시·군·구"+"</option>");
+	target.append(dataArr);
+}
+
+//데이타 없을때 차트 클릭시 누르기 전으로
+function noData(){
+	alert("해당 기간에는 데이터가 없습니다. 다시검색해주세요");
+	history.go(0);
+}
+
+//20161213 추가 테이블 클릭시 검색버튼 클릭한 기능
+function searchClick(){
+	document.search.submit();
+}
+
+// 검색시 유효성 검사
+function goSearch(){
+	var frm = document.search;
+	/* 
+	sltOrgType = '1' 시도 선택
+	sltOrgType = '2' 시군구 선택 */			
+	
+	if(frm.sltOrgLvl1.value == 'A'){
+		frm.sltOrgType.value = '1';
+	}else if(frm.sltOrgLvl1.value != 'A'){
+		frm.sltOrgType.value = '2';
+	}
+
+	if (eval(frm.sltArgTypeB.value) <  eval(frm.sltArgTypeA.value) ) {
+		alert("연령 구분단위의 시작값이 마지막값보다 클 수 없습니다.");
+		frm.sltArgTypeB.focus();
+		return false;
+	}
+
+	if (frm.searchYearStart.value > frm.searchYearEnd.value) {
+		alert('조회 기간이 잘못 되었습니다.');
+		frm.searchYearStart.focus();
+		return false;
+	}
+
+	if(frm.searchYearStart.value == frm.searchYearEnd.value){
+		if (frm.searchMonthStart.value > frm.searchMonthEnd.value) {
+			alert('조회 기간이 잘못 되었습니다.');
+			frm.searchMonthStart.focus();
+			return false;
+		}
+	}
+
+	if (frm.sltOrgType.value == '2' && frm.sltOrgLvl1.value == 'A') {
+		alert("해당 시군구를 먼저 선택 하시기 바랍니다.");
+		frm.sltOrgLvl1.focus();
+		return false;
+	}
+
+	/* 20181128 거주자 관련 추가  */
+	if($("select[name=sltUndefType]").val() == "Y"){
+		if(frm.searchYearStart.value+frm.searchMonthStart.value < 201010){					
+			alert("거주자는 2010년 10월부터 있습니다. ");
+			frm.searchYearStart.focus();
+			return false;										
+		}
+	}
+	
+	/* 20181128 거불자 관련 추가  */
+	if($("select[name=sltUndefType]").val() == "N"){
+		if(frm.searchYearStart.value+frm.searchMonthStart.value < 201010){					
+			alert("거주불명자는 2010년 10월부터 있습니다. ");
+			frm.searchYearStart.focus();
+			return false;										
+		}
+	}
+	
+	/* 20161130 재외국민 관련 추가  */
+	if($("select[name=sltUndefType]").val() == "O"){
+		if(frm.searchYearStart.value < 2015){
+			alert("재외국민은 2015년 1월부터 있습니다. ");
+			frm.searchYearStart.focus();
+			return false;
+		}
+	}
+
+	var startDate = new Date($("select[name=searchYearStart]").val(),$("select[name=searchMonthStart]").val());
+	var endDate = new Date($("select[name=searchYearEnd]").val(),$("select[name=searchMonthEnd]").val());
+	var startYear = $("select[name=searchYearStart]").val();
+	var endYear = $("select[name=searchYearEnd]").val();
+	var diffYear = endYear - startYear;
+	var interval = endDate -startDate
+	var month = 24*60*60*1000*30;
+	var diffMonth=parseInt(interval/month);
+	
+	if($("input:radio[name=searchYearMonth]:checked").val() == "year") {
+		if(frm.sltArgTypes.value == '1') {
+			if (diffYear>="3"){
+				alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 3년과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+				return false;
+			}
+		} else if(frm.sltArgTypes.value == '5'){ // 3년까지
+			if (diffYear>="3"){
+				alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 3년과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+				return false;
+			}
+		<!-- 전성현 2023.12.06 6년으로 변경 START -->
+		} else if(frm.sltArgTypes.value == '10'){ // 5년 -> 6년으로 변경
+			if (diffYear>="6"){
+				alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 6년과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+				return false;
+			}
+		}
+		<!-- 전성현 2023.12.06 6년으로 변경 START -->
+	}else{
+		if(frm.sltArgTypes.value == '1') { 
+			if (diffMonth>="3"){
+				alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 3개월과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+				return false;
+			}
+		} else if(frm.sltArgTypes.value == '5'){ // 3개월까지
+			if (diffMonth>="3"){
+				alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 3개월과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+				return false;
+			}
+		<!-- 전성현 2023.12.06 6개월로 변경 START -->
+		} else if(frm.sltArgTypes.value == '10'){ // 12개월 -> 6개월로 변경
+			if (diffMonth>="6"){
+				alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 6개월과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+				return false;
+			}
+		}
+		<!-- 전성현 2023.12.06 6개월로 변경 END -->
+	}
+	
+	if($("input:radio[name=searchYearMonth]:checked").val() == "year") {
+		$("#searchMonthStart").attr("disabled",false);
+			$("#searchMonthEnd").attr("disabled",false);	  			
+	}
+	
+	if(document.getElementById('sum').checked==false && document.getElementById('gender').checked==false){
+		alert("구분을 선택해주시기 바랍니다.");
+		return false;
+	}
+}
+
+//초기화 버튼 클릭시
+function goReset(){
+	location.href = 'ageStatMonth.do';
+}
+
+//연간 월간 라디오버튼 선택에 따른 이벤트
+function changeSearchYearMonth(){
+	var nowYear=$("#nowYear").val();	
+	if($("input:radio[name=searchYearMonth]:checked").val() == "year") {
+		$("#searchMonthStart").attr("disabled",true);
+			$("#searchMonthEnd").attr("disabled",true);
+			$("#searchYearStart option:first").remove();
+			$("#searchYearEnd option:first").remove();
+			//$("#searchMonthStart").val(2024);
+	}else if($("input:radio[name=searchYearMonth]:checked").val() == "month") {
+		$("#searchMonthStart").attr("disabled",false);
+			$("#searchMonthEnd").attr("disabled",false);	  			
+			if($("#searchYearStart option:eq(0)").val() != nowYear){
+				$("#searchYearStart").prepend("<option value='"+nowYear+"'>"+nowYear+"년</option>");
+  				$("#searchYearEnd").prepend("<option value='"+nowYear+"'>"+nowYear+"년</option>");
+			}	  			
+	}
+}
+  </script>
+  <script type="text/javascript">
+   // $(document).ready(function(){
+//   	var beforeRdoValue = "1"; 
+// });
+
+//엑셀 출력 제한 체크
+function chkExcel(){
+	var yearDB = '2024';
+	var monthDB = '03';
+
+	if('month' == 'month'){
+		document.formXlsDown.category.value = 'month'; //시군구이상 월간
+	}else{
+		document.formXlsDown.category.value = 'year'; //시군구이상 연간
+	}
+	
+	if(yearDB == 0001 && monthDB == 01){
+		alert("해당 데이터가 없습니다.");
+		return false;
+	}
+
+	//var startDate = new Date($("select[name=searchYearStart]").val(),$("select[name=searchMonthStart]").val());
+	//var endDate = new Date($("select[name=searchYearEnd]").val(),$("select[name=searchMonthEnd]").val());
+	var startDate = new Date(2024,03);
+	var endDate = new Date(2024,03);
+	var startYear = 2024;
+	var endYear = 2024;
+	var yearMonthGbn = "month";
+	var interval = endDate -startDate
+	var diffYear = endYear - startYear;
+	var month = 24*60*60*1000 * 30;
+	var diffMonth=parseInt(interval/month);
+	var sltArgTypeA = $("select[name=sltArgTypeA]").val();
+	var sltArgTypeB = $("select[name=sltArgTypeB]").val();
+	var sltArgTypes = $("select[name=sltArgTypes]").val();
+	var monthColSltbetween = (Number(sltArgTypeB)-Number(sltArgTypeA))+Number(sltArgTypes);
+	var monthColSltSum = 2+Number(monthColSltbetween/sltArgTypes);
+
+	$("input:hidden[name=gender]").val("");
+	$("input:hidden[name=sum]").val("");
+
+	var chkShowSexValue = $("input:checkbox[name=gender]").is(":checked");
+	var chkShowSexTotValue = $("input:checkbox[name=sum]").is(":checked");
+
+	if (chkShowSexValue) {chkShowSexValue=2; $("input:hidden[name=gender]").val("gender"); }else{chkShowSexValue=0;}
+	if (chkShowSexTotValue) {chkShowSexTotValue=1; $("input:hidden[name=sum]").val("sum"); }else{chkShowSexTotValue=0;}
+	var monthColSum = monthColSltSum*Number(chkShowSexValue+chkShowSexTotValue);
+// 	var colsize = (diffMonth+1)*monthColSum;
+	var radioState = $("input[type='radio'][name='state']:checked").val();
+	
+	<!-- 전성현 2023.12.06 조회기간 수정 START -->
+	if(yearMonthGbn == "year"){  //연간일경우
+		if ($("select[name=sltArgTypes]").val()==10){
+			if (diffYear>="6"){
+				alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 6년과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+				return false;
+			}
+		}else if ($("select[name=sltArgTypes]").val()==5){
+			if (diffYear>="3"){
+				alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 3년과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+				return false;
+			}
+		}else{
+			if ((diffYear=="0")&&(chkShowSexValue=="2")&&(chkShowSexTotValue=="1")){
+				alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n연령구분단위가 1세일때는 1년 총계 또는 남여 한 가지만 출력 할 수 있습니다.");
+				return false;
+			}
+			if (diffYear>="1"){
+				alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 1년과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+				return false;
+			}
+		}
+	}else{
+		if(radioState == "3") { //월간이고 전체읍면동현황일 경우
+			if ($("select[name=sltArgTypes]").val()==10){
+				if (diffMonth>="6"){
+					alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 6개월과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+					return false;
+				}
+			}else if ($("select[name=sltArgTypes]").val()==5){
+				if (diffMonth>="3"){
+					alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 3개월과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+					return false;
+				}
+			}else{
+				if (diffMonth>="1"){
+					alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 1개월과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+					return false;
+				}
+//	 			if ((diffMonth=="0")&&(chkShowSexValue=="2")&&(chkShowSexTotValue=="1")){
+//	 				alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n연령구분단위가 1세일때는 1개월 총계 또는 남여 한 가지만 출력 할 수 있습니다.");
+//	 				return false;
+//	 			}
+//	 			if (diffMonth>="1"){
+//	 				alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 1개월과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+//	 				return false;
+//	 			}
+			}
+		}else if(radioState == "2") { //월간이고 전체시군구현황일 경우
+			if ($("select[name=sltArgTypes]").val()==10){
+				if (diffMonth>="6"){
+					alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 6개월과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+					return false;
+				}
+			}else if ($("select[name=sltArgTypes]").val()==5){
+				if (diffMonth>="3"){
+					alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 3개월과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+					return false;
+				}
+			}else{
+				if(diffMonth >= "3"){
+					alert("주민등록인구통계 시스템의 원활한 서비스 제공을 위해 \n검색기간을 3개월과 같이 제한합니다. \n기간 조정 후 다시 검색하여 주시기 바랍니다.");
+					return false;
+				}
+			}
+		}
+		
+	}
+	<!-- 전성현 2023.12.06 조회기간 수정 END -->
+	
+	if ((chkShowSexValue=="0")&&(chkShowSexTotValue=="0")){
+		alert("계, 남여 구분 둘중에 한 가지를 선택하셔야합니다.");
+		return false;
+	}
+
+	return true;
+
+}
+  </script>
+  <script type="text/javascript">
+   var ageTemp1;
+var ageTemp2;
+var ageGroups1;
+var ageGroup1;
+var ageGroups2;
+var ageGroup2;
+
+function load2() {
+
+	ageGroups1 = document.search.sltArgTypes.options.length;
+	ageGroup1 = new Array(ageGroups1);
+
+	for (i=0; i<ageGroups1; i++) {
+		ageGroup1[i] = new Array();
+	}
+
+	ageGroup1[0][0 ]=new Option("0","0");
+	ageGroup1[0][1 ]=new Option("10","10");
+	ageGroup1[0][2 ]=new Option("20","20");
+	ageGroup1[0][3 ]=new Option("30","30");
+	ageGroup1[0][4 ]=new Option("40","40");
+	ageGroup1[0][5 ]=new Option("50","50");
+	ageGroup1[0][6 ]=new Option("60","60");
+	ageGroup1[0][7 ]=new Option("70","70");
+	ageGroup1[0][8 ]=new Option("80","80");
+	ageGroup1[0][9 ]=new Option("90","90");
+	ageGroup1[0][10 ]=new Option("100","100");
+
+	ageGroup1[1][0 ]=new Option("0","0");
+	ageGroup1[1][1 ]=new Option("5","5");
+	ageGroup1[1][2 ]=new Option("10","10");
+	ageGroup1[1][3 ]=new Option("15","15");
+	ageGroup1[1][4 ]=new Option("20","20");
+	ageGroup1[1][5 ]=new Option("25","25");
+	ageGroup1[1][6 ]=new Option("30","30");
+	ageGroup1[1][7 ]=new Option("35","35");
+	ageGroup1[1][8 ]=new Option("40","40");
+	ageGroup1[1][9 ]=new Option("45","45");
+	ageGroup1[1][10]=new Option("50","50");
+	ageGroup1[1][11]=new Option("55","55");
+	ageGroup1[1][12]=new Option("60","60");
+	ageGroup1[1][13]=new Option("65","65");
+	ageGroup1[1][14]=new Option("70","70");
+	ageGroup1[1][15]=new Option("75","75");
+	ageGroup1[1][16]=new Option("80","80");
+	ageGroup1[1][17]=new Option("85","85");
+	ageGroup1[1][18]=new Option("90","90");
+	ageGroup1[1][19]=new Option("95","95");
+	ageGroup1[1][20]=new Option("100","100");
+
+	ageGroup1[2][0 ]=new Option("0","0");
+	ageGroup1[2][1 ]=new Option("1","1");
+	ageGroup1[2][2 ]=new Option("2","2");
+	ageGroup1[2][3 ]=new Option("3","3");
+	ageGroup1[2][4 ]=new Option("4","4");
+	ageGroup1[2][5 ]=new Option("5","5");
+	ageGroup1[2][6 ]=new Option("6","6");
+	ageGroup1[2][7 ]=new Option("7","7");
+	ageGroup1[2][8 ]=new Option("8","8");
+	ageGroup1[2][9 ]=new Option("9","9");
+	ageGroup1[2][10 ]=new Option("10","10");
+	ageGroup1[2][11 ]=new Option("11","11"); 
+	ageGroup1[2][12 ]=new Option("12","12");
+	ageGroup1[2][13 ]=new Option("13","13");
+	ageGroup1[2][14 ]=new Option("14","14");
+	ageGroup1[2][15 ]=new Option("15","15");
+	ageGroup1[2][16 ]=new Option("16","16");
+	ageGroup1[2][17 ]=new Option("17","17");
+	ageGroup1[2][18 ]=new Option("18","18");
+	ageGroup1[2][19 ]=new Option("19","19");
+	ageGroup1[2][20 ]=new Option("20","20");
+	ageGroup1[2][21 ]=new Option("21","21");
+	ageGroup1[2][22 ]=new Option("22","22");
+	ageGroup1[2][23 ]=new Option("23","23");
+	ageGroup1[2][24 ]=new Option("24","24");
+	ageGroup1[2][25 ]=new Option("25","25");
+	ageGroup1[2][26 ]=new Option("26","26");
+	ageGroup1[2][27 ]=new Option("27","27");
+	ageGroup1[2][28 ]=new Option("28","28");
+	ageGroup1[2][29 ]=new Option("29","29");
+	ageGroup1[2][30 ]=new Option("30","30");
+	ageGroup1[2][31 ]=new Option("31","31");
+	ageGroup1[2][32 ]=new Option("32","32");
+	ageGroup1[2][33 ]=new Option("33","33");
+	ageGroup1[2][34 ]=new Option("34","34");
+	ageGroup1[2][35 ]=new Option("35","35");
+	ageGroup1[2][36 ]=new Option("36","36");
+	ageGroup1[2][37 ]=new Option("37","37");
+	ageGroup1[2][38 ]=new Option("38","38");
+	ageGroup1[2][39 ]=new Option("39","39");
+	ageGroup1[2][40 ]=new Option("40","40");
+	ageGroup1[2][41 ]=new Option("41","41");
+	ageGroup1[2][42 ]=new Option("42","42");
+	ageGroup1[2][43 ]=new Option("43","43");
+	ageGroup1[2][44 ]=new Option("44","44");
+	ageGroup1[2][45 ]=new Option("45","45");
+	ageGroup1[2][46 ]=new Option("46","46");
+	ageGroup1[2][47 ]=new Option("47","47");
+	ageGroup1[2][48 ]=new Option("48","48");
+	ageGroup1[2][49 ]=new Option("49","49");
+	ageGroup1[2][50 ]=new Option("50","50");
+	ageGroup1[2][51 ]=new Option("51","51");
+	ageGroup1[2][52 ]=new Option("52","52");
+	ageGroup1[2][53 ]=new Option("53","53");
+	ageGroup1[2][54 ]=new Option("54","54");
+	ageGroup1[2][55 ]=new Option("55","55");
+	ageGroup1[2][56 ]=new Option("56","56");
+	ageGroup1[2][57 ]=new Option("57","57");
+	ageGroup1[2][58 ]=new Option("58","58");
+	ageGroup1[2][59 ]=new Option("59","59");
+	ageGroup1[2][60 ]=new Option("60","60");
+	ageGroup1[2][61 ]=new Option("61","61");
+	ageGroup1[2][62 ]=new Option("62","62");
+	ageGroup1[2][63 ]=new Option("63","63");
+	ageGroup1[2][64 ]=new Option("64","64");
+	ageGroup1[2][65 ]=new Option("65","65");
+	ageGroup1[2][66 ]=new Option("66","66");
+	ageGroup1[2][67 ]=new Option("67","67");
+	ageGroup1[2][68 ]=new Option("68","68");
+	ageGroup1[2][69 ]=new Option("69","69");
+	ageGroup1[2][70 ]=new Option("70","70");
+	ageGroup1[2][71 ]=new Option("71","71");
+	ageGroup1[2][72 ]=new Option("72","72");
+	ageGroup1[2][73 ]=new Option("73","73");
+	ageGroup1[2][74 ]=new Option("74","74");
+	ageGroup1[2][75 ]=new Option("75","75");
+	ageGroup1[2][76 ]=new Option("76","76");
+	ageGroup1[2][77 ]=new Option("77","77");
+	ageGroup1[2][78 ]=new Option("78","78");
+	ageGroup1[2][79 ]=new Option("79","79");
+	ageGroup1[2][80 ]=new Option("80","80");
+	ageGroup1[2][81 ]=new Option("81","81");
+	ageGroup1[2][82 ]=new Option("82","82");
+	ageGroup1[2][83 ]=new Option("83","83");
+	ageGroup1[2][84 ]=new Option("84","84");
+	ageGroup1[2][85 ]=new Option("85","85");
+	ageGroup1[2][86 ]=new Option("86","86");
+	ageGroup1[2][87 ]=new Option("87","87");
+	ageGroup1[2][88 ]=new Option("88","88");
+	ageGroup1[2][89 ]=new Option("89","89");
+	ageGroup1[2][90 ]=new Option("90","90");
+	ageGroup1[2][91 ]=new Option("91","91");
+	ageGroup1[2][92 ]=new Option("92","92");
+	ageGroup1[2][93 ]=new Option("93","93");
+	ageGroup1[2][94 ]=new Option("94","94");
+	ageGroup1[2][95 ]=new Option("95","95");
+	ageGroup1[2][96 ]=new Option("96","96");
+	ageGroup1[2][97 ]=new Option("97","97");
+	ageGroup1[2][98 ]=new Option("98","98");
+	ageGroup1[2][99 ]=new Option("99","99");
+	ageGroup1[2][100 ]=new Option("100","100");
+
+	ageTemp1 = document.search.sltArgTypeA;
+
+	ageGroups2 = document.search.sltArgTypes.options.length;
+	ageGroup2 = new Array(ageGroups2);
+
+	for (i=0; i<ageGroups2; i++) {
+		ageGroup2[i] = new Array();
+	}
+
+	ageGroup2[0][0 ]=new Option("9","0");
+	ageGroup2[0][1 ]=new Option("19","10");
+	ageGroup2[0][2 ]=new Option("29","20");
+	ageGroup2[0][3 ]=new Option("39","30");
+	ageGroup2[0][4 ]=new Option("49","40");
+	ageGroup2[0][5 ]=new Option("59","50");
+	ageGroup2[0][6 ]=new Option("69","60");
+	ageGroup2[0][7 ]=new Option("79","70");
+	ageGroup2[0][8 ]=new Option("89","80");
+	ageGroup2[0][9 ]=new Option("99","90");
+	ageGroup2[0][10 ]=new Option("100","100");
+
+	ageGroup2[1][0 ]=new Option("4","0");
+	ageGroup2[1][1 ]=new Option("9","5");
+	ageGroup2[1][2 ]=new Option("14","10");
+	ageGroup2[1][3 ]=new Option("19","15");
+	ageGroup2[1][4 ]=new Option("24","20");
+	ageGroup2[1][5 ]=new Option("29","25");
+	ageGroup2[1][6 ]=new Option("34","30");
+	ageGroup2[1][7 ]=new Option("39","35");
+	ageGroup2[1][8 ]=new Option("44","40");
+	ageGroup2[1][9 ]=new Option("49","45");
+	ageGroup2[1][10]=new Option("54","50");
+	ageGroup2[1][11]=new Option("59","55");
+	ageGroup2[1][12]=new Option("64","60");
+	ageGroup2[1][13]=new Option("69","65");
+	ageGroup2[1][14]=new Option("74","70");
+	ageGroup2[1][15]=new Option("79","75");
+	ageGroup2[1][16]=new Option("84","80");
+	ageGroup2[1][17]=new Option("89","85");
+	ageGroup2[1][18]=new Option("94","90");
+	ageGroup2[1][19]=new Option("99","95");
+	ageGroup2[1][20]=new Option("100","100");
+
+	ageGroup2[2][0 ]=new Option("0","0");
+	ageGroup2[2][1 ]=new Option("1","1");
+	ageGroup2[2][2 ]=new Option("2","2");
+	ageGroup2[2][3 ]=new Option("3","3");
+	ageGroup2[2][4 ]=new Option("4","4");
+	ageGroup2[2][5 ]=new Option("5","5");
+	ageGroup2[2][6 ]=new Option("6","6");
+	ageGroup2[2][7 ]=new Option("7","7");
+	ageGroup2[2][8 ]=new Option("8","8");
+	ageGroup2[2][9 ]=new Option("9", "9");
+	ageGroup2[2][10]=new Option("10","10");
+	ageGroup2[2][11]=new Option("11","11");
+	ageGroup2[2][12]=new Option("12","12");
+	ageGroup2[2][13]=new Option("13","13");
+	ageGroup2[2][14]=new Option("14","14");
+	ageGroup2[2][15]=new Option("15","15");
+	ageGroup2[2][16]=new Option("16","16");
+	ageGroup2[2][17]=new Option("17","17");
+	ageGroup2[2][18]=new Option("18","18");
+	ageGroup2[2][19]=new Option("19","19");
+	ageGroup2[2][20]=new Option("20","20");
+	ageGroup2[2][21]=new Option("21","21");
+	ageGroup2[2][22]=new Option("22","22");
+	ageGroup2[2][23]=new Option("23","23");
+	ageGroup2[2][24]=new Option("24","24");
+	ageGroup2[2][25]=new Option("25","25");
+	ageGroup2[2][26]=new Option("26","26");
+	ageGroup2[2][27]=new Option("27","27");
+	ageGroup2[2][28]=new Option("28","28");
+	ageGroup2[2][29]=new Option("29","29");
+	ageGroup2[2][30]=new Option("30","30");
+	ageGroup2[2][31]=new Option("31","31");
+	ageGroup2[2][32]=new Option("32","32");
+	ageGroup2[2][33]=new Option("33","33");
+	ageGroup2[2][34]=new Option("34","34");
+	ageGroup2[2][35]=new Option("35","35");
+	ageGroup2[2][36]=new Option("36","36");
+	ageGroup2[2][37]=new Option("37","37");
+	ageGroup2[2][38]=new Option("38","38");
+	ageGroup2[2][39]=new Option("39","39");
+	ageGroup2[2][40]=new Option("40","40");
+	ageGroup2[2][41]=new Option("41","41");
+	ageGroup2[2][42]=new Option("42","42");
+	ageGroup2[2][43]=new Option("43","43");
+	ageGroup2[2][44]=new Option("44","44");
+	ageGroup2[2][45]=new Option("45","45");
+	ageGroup2[2][46]=new Option("46","46");
+	ageGroup2[2][47]=new Option("47","47");
+	ageGroup2[2][48]=new Option("48","48");
+	ageGroup2[2][49]=new Option("49","49");
+	ageGroup2[2][50]=new Option("50","50");
+	ageGroup2[2][51]=new Option("51","51");
+	ageGroup2[2][52]=new Option("52","52");
+	ageGroup2[2][53]=new Option("53","53");
+	ageGroup2[2][54]=new Option("54","54");
+	ageGroup2[2][55]=new Option("55","55");
+	ageGroup2[2][56]=new Option("56","56");
+	ageGroup2[2][57]=new Option("57","57");
+	ageGroup2[2][58]=new Option("58","58");
+	ageGroup2[2][59]=new Option("59","59");
+	ageGroup2[2][60]=new Option("60","60");
+	ageGroup2[2][61]=new Option("61","61");
+	ageGroup2[2][62]=new Option("62","62");
+	ageGroup2[2][63]=new Option("63","63");
+	ageGroup2[2][64]=new Option("64","64");
+	ageGroup2[2][65]=new Option("65","65");
+	ageGroup2[2][66]=new Option("66","66");
+	ageGroup2[2][67]=new Option("67","67");
+	ageGroup2[2][68]=new Option("68","68");
+	ageGroup2[2][69]=new Option("69","69");
+	ageGroup2[2][70]=new Option("70","70");
+	ageGroup2[2][71]=new Option("71","71");
+	ageGroup2[2][72]=new Option("72","72");
+	ageGroup2[2][73]=new Option("73","73");
+	ageGroup2[2][74]=new Option("74","74");
+	ageGroup2[2][75]=new Option("75","75");
+	ageGroup2[2][76]=new Option("76","76");
+	ageGroup2[2][77]=new Option("77","77");
+	ageGroup2[2][78]=new Option("78","78");
+	ageGroup2[2][79]=new Option("79","79");
+	ageGroup2[2][80]=new Option("80","80");
+	ageGroup2[2][81]=new Option("81","81");
+	ageGroup2[2][82]=new Option("82","82");
+	ageGroup2[2][83]=new Option("83","83");
+	ageGroup2[2][84]=new Option("84","84");
+	ageGroup2[2][85]=new Option("85","85");
+	ageGroup2[2][86]=new Option("86","86");
+	ageGroup2[2][87]=new Option("87","87");
+	ageGroup2[2][88]=new Option("88","88");
+	ageGroup2[2][89]=new Option("89","89");
+	ageGroup2[2][90]=new Option("90","90");
+	ageGroup2[2][91]=new Option("91","91");
+	ageGroup2[2][92]=new Option("92","92");
+	ageGroup2[2][93]=new Option("93","93");
+	ageGroup2[2][94]=new Option("94","94");
+	ageGroup2[2][95]=new Option("95","95");
+	ageGroup2[2][96]=new Option("96","96");
+	ageGroup2[2][97]=new Option("97","97");
+	ageGroup2[2][98]=new Option("98","98");
+	ageGroup2[2][99]=new Option("99","99");
+	ageGroup2[2][100]=new Option("100","100");
+
+	ageTemp2 = document.search.sltArgTypeB;
+
+	redirects(document.search.sltArgTypes.options.selectedIndex);
+	
+}
+
+function redirects(x) {
+	
+	for (m = ageTemp1.options.length-1;m>0;m--) {
+		ageTemp1.options[m]=null;
+	}
+
+    for (i=0;i<ageGroup1[x].length;i++) {
+        ageTemp1.options[i]=new Option(ageGroup1[x][i].text,ageGroup1[x][i].value);
+        //console.log(ageGroup1[x][i].text);
+    }
+
+	ageTemp1.options[0].selected = true;
+
+	for (m = ageTemp2.options.length-1;m>0;m--) {
+		ageTemp2.options[m]=null;
+	}
+
+    for (i=0;i<ageGroup2[x].length;i++) {
+        ageTemp2.options[i]=new Option(ageGroup2[x][i].text,ageGroup2[x][i].value);
+    }
+
+	ageTemp2.options[0].selected = true;
+	
+	$('#sltArgTypes').change(function(e) {
+		var selectVal = $('#sltArgTypeB option:selected').val();
+		if(selectVal == 100){
+			$("#ageChange").text('세(이상)');
+		}else{
+			$("#ageChange").text('세');
+		}
+	});
+	
+}
+//페이지 로딩시 연령별 선택박스 10으로 변경
+function init2() {
+	var frm = document.search;
+	selInitial(frm.sltArgTypes,'10');
+	redirects(frm.sltArgTypes.options.selectedIndex);
+	selInitial(frm.sltArgTypeA,'0');
+	selInitial(frm.sltArgTypeB,'100');
+}
+function selInitial(selName,selValue){
+	var temp = selValue;
+	for (i=0; i < selName.length; i++)
+	{
+		if (selName.options[i].value == temp)
+		{
+			selName.options[i].selected = true;
+			break;
+		}
+	}
+	return;
+}
+  </script>
+ </head>
+ <body onload="selectSidonm(); load2(); init2(); selectSidoG();">
+  <!-- content_wrap -->
+  <div id="content_wrap">
+   <div id="location">
+    <ul>
+     <li class="icon_home">
+      <span>
+       HOME
+      </span>
+     </li>
+     <li>
+      <span>
+       업무안내
+      </span>
+     </li>
+     <li>
+      <span>
+       창조정부조직실
+      </span>
+     </li>
+     <li class="current">
+      <span>
+       행정제도 개선
+      </span>
+     </li>
+    </ul>
+   </div>
+   <!-- content_main -->
+   <div id="content_main">
+    <div class="content_top">
+     <h4>
+      행정동별 연령별 인구현황
+     </h4>
+    </div>
+    <div class="content">
+     <!-- 월간현황, 연간현황 tab -->
+     <div class="tab_menu">
+      <!-- 전성현 2023.10.11 그래프,통계 위치 변경 START -->
+      <ul>
+       <li class="on">
+        <a href="ageStatMonth.do">
+         통계표
+        </a>
+       </li>
+       <li>
+        <a href="ageStatGraphLayer.do">
+         그래프
+        </a>
+       </li>
+      </ul>
+      <!-- 전성현 2023.10.11 그래프,통계 위치 변경 END -->
+     </div>
+     <!-- //월간현황, 연간현황 tab -->
+     <!-- tab_content -->
+     <div class="tab_content">
+      <!-- tab_content -->
+      <div class="tab_content">
+       <!-- 검색조건 table -->
+       <div class="section1">
+        <form action="ageStatMonth.do" method="post" name="search">
+         <input name="tableChart" type="hidden" value="T"/>
+         <input name="sltOrgType" type="hidden" value="1"/>
+         <fieldset>
+          <legend>
+           월간현황
+          </legend>
+          <div class="tbl_form_box">
+           <div class="dl_group">
+            <dl>
+             <dt>
+              <label for="organ1">
+               행정구역
+              </label>
+              <!-- 행정구역 tooltip mobile -->
+              <span class="popover-btn">
+               <span class="hide">
+                행정구역
+               </span>
+              </span>
+              <div class="popover-layer">
+               <p class="pHeader">
+                행정구역
+               </p>
+               <p class="pContent">
+                <span>
+                 조회결과는 선택한 행정구역의 산하 행정구역들이 조회됩니다.
+                 <br/>
+                 (예를들어, 서울특별시 선택시 종로구, 중구, 용산구등 해당 구 자료가 조회됩니다)
+                </span>
+                <span>
+                 아래 5개의 면은 인구가 없는 지역이므로 통계현황에서 제외됩니다.
+                 <br/>
+                 (강원도 철원군 근동면, 원동면, 원남면, 임남면, 고성군 수동면)
+                </span>
+                <span style="position: inherit;">
+                 ※ 2021년 6월까지, 경기도 파주시 장단면, 진서면은 인구가 없는 지역으로 통계에서 제외됩니다.(경기도 파주시 장단출장소 인구는 경기도 파주시 군내면 인구를 의미합니다.)
+                </span>
+               </p>
+               <p class="pFooter">
+                <span>
+                 닫기
+                </span>
+               </p>
+              </div>
+             </dt>
+             <!-- <dd class="td3"> -->
+             <dd class="td3">
+              <select id="sltOrgLvl1" name="sltOrgLvl1" onchange="selectSikunkunm();">
+              </select>
+             </dd>
+             <!-- <dd class="td4"> -->
+             <dd class="td3">
+              <select id="sltOrgLvl2" name="sltOrgLvl2">
+              </select>
+             </dd>
+             <!-- 행정기관 tooltip PC -->
+             <dd class="td_popover">
+              <div class="popoverWrap">
+               <span>
+                <span class="hide">
+                 행정구역
+                </span>
+               </span>
+               <div class="popoverBox pop1">
+                <p class="pHeader">
+                 행정구역
+                 <span class="close">
+                  <img alt="닫기" src="images/btn_close.png"/>
+                 </span>
+                </p>
+                <p class="pContent">
+                 <span>
+                  조회결과는 선택한 행정구역의 산하 행정구역들이 조회됩니다.
+                  <br/>
+                  (예를들어, 서울특별시 선택시 종로구, 중구, 용산구등 해당 구 자료가 조회됩니다)
+                 </span>
+                 <span>
+                  아래 5개의 면은 인구가 없는 지역이므로 통계현황에서 제외됩니다.
+                  <br/>
+                  (강원도 철원군 근동면, 원동면, 원남면, 임남면, 고성군 수동면)
+                 </span>
+                 <span style="position: inherit;">
+                  ※ 2021년 6월까지, 경기도 파주시 장단면, 진서면은 인구가 없는 지역으로 통계에서 제외됩니다.(경기도 파주시 장단출장소 인구는 경기도 파주시 군내면 인구를 의미합니다.)
+                 </span>
+                </p>
+               </div>
+              </div>
+             </dd>
+            </dl>
+            <dl>
+             <dt>
+              <label for="register">
+               등록구분
+              </label>
+              <!-- 등록구분 tooltip mobile -->
+              <span class="popover-btn">
+               <span class="hide">
+                등록구분
+               </span>
+              </span>
+              <div class="popover-layer">
+               <div class="pHeader">
+                등록구분
+               </div>
+               <div class="pContent tbl">
+                <table>
+                 <colgroup>
+                  <col style="width:76px;"/>
+                  <col style=""/>
+                 </colgroup>
+                 <tbody>
+                  <tr>
+                   <th>
+                    전체
+                   </th>
+                   <!-- <td>등록구분의 "전체"는 "거주자", "거주불명자", "재외국민"이 포함된 자료입니다.</td> -->
+                   <td>
+                    전체는 "거주자", "거주불명자", "재외국민"이 포함된 자료입니다. 단, 외국인은 제외
+                   </td>
+                  </tr>
+                  <tr>
+                   <th>
+                    거주자
+                   </th>
+                   <td>
+                    거주지가 분명한 사람 (재외국민 제외)
+                   </td>
+                  </tr>
+                  <tr>
+                   <th>
+                    거주불명자
+                   </th>
+                   <td>
+                    거주사실이 불분명하여 거주불명으로 등록된 사람 (2010년 10월부터 통계에 포함)
+                   </td>
+                  </tr>
+                  <tr>
+                   <th>
+                    재외국민
+                   </th>
+                   <td>
+                    외국의 영주권을 취득한 (영주목적으로 외국거주 포함) 대한민국 국민으로 주민등록을 한 사람 (2015년 1월부터 통계에 포함)
+                   </td>
+                  </tr>
+                 </tbody>
+                </table>
+               </div>
+               <div class="pFooter">
+                <span>
+                 닫기
+                </span>
+               </div>
+              </div>
+             </dt>
+             <dd class="td5">
+              <select id="register" name="sltUndefType">
+               <option selected="" value="">
+                전체
+               </option>
+               <option value="Y">
+                거주자
+               </option>
+               <option value="N">
+                거주불명자
+               </option>
+               <option value="O">
+                재외국민
+               </option>
+              </select>
+             </dd>
+             <!-- 등록구분 tooltip PC -->
+             <dd class="td_popover">
+              <div class="popoverWrap">
+               <span>
+                <span class="hide">
+                 등록구분
+                </span>
+               </span>
+               <div class="popoverBox pop2">
+                <div class="pHeader">
+                 등록구분
+                 <span class="close">
+                  <img alt="닫기" src="images/btn_close.png"/>
+                 </span>
+                </div>
+                <div class="pContent tbl">
+                 <table>
+                  <colgroup>
+                   <col style="width:66px;"/>
+                   <col style=""/>
+                  </colgroup>
+                  <tbody>
+                   <tr>
+                    <th>
+                     전체
+                    </th>
+                    <!-- <td>등록구분의 "전체"는 "거주자", "거주불명자", "재외국민"이 포함된 자료입니다.</td> -->
+                    <td>
+                     전체는 "거주자", "거주불명자", "재외국민"이 포함된 자료입니다. 단, 외국인은 제외
+                    </td>
+                   </tr>
+                   <tr>
+                    <th>
+                     거주자
+                    </th>
+                    <td>
+                     거주지가 분명한 사람 (재외국민 제외)
+                    </td>
+                   </tr>
+                   <tr>
+                    <th>
+                     거주불명자
+                    </th>
+                    <td>
+                     거주사실이 불분명하여 거주불명으로 등록된 사람 (2010년 10월부터 통계에 포함)
+                    </td>
+                   </tr>
+                   <tr>
+                    <th>
+                     재외국민
+                    </th>
+                    <td>
+                     외국의 영주권을 취득한 (영주목적으로 외국거주 포함) 대한민국 국민으로 주민등록을 한 사람 (2015년 1월부터 통계에 포함)
+                    </td>
+                   </tr>
+                  </tbody>
+                 </table>
+                </div>
+               </div>
+              </div>
+             </dd>
+            </dl>
+           </div>
+           <div class="dl_group">
+            <input id="nowYear" name="nowYear" type="hidden" value="2024"/>
+            <dl>
+             <dt>
+              <label for="year1">
+               조회기간
+              </label>
+              <!-- 조회기간 tooltip mobile -->
+              <span class="popover-btn">
+               <span class="hide">
+                조회기간
+               </span>
+              </span>
+              <div class="popover-layer">
+               <p class="pHeader">
+                조회기간
+               </p>
+               <p class="pContent">
+                <span>
+                 주민등록 인구통계는 2008년부터 시스템으로 집계하여 공표하고 있습니다.
+                </span>
+                <span>
+                 2008년 이전 자료는 통계청 자료(www.kosis.kr)를 이용하시기 바랍니다.
+                </span>
+                <span>
+                 작성기준 : 매월 말일 /공표일시 : 매월 1일 12시 이후(공표일이 주말, 공휴일인 경우에는 다음 평일에 공표)
+                </span>
+               </p>
+               <p class="pFooter">
+                <span>
+                 닫기
+                </span>
+               </p>
+              </div>
+             </dt>
+             <dd class="td_period">
+              <div>
+               <input checked="" class="i_radio" id="searchYearMonth" name="searchYearMonth" type="radio" value="month"/>
+               <label for="period_select1">
+                월간
+               </label>
+              </div>
+              <div>
+               <input class="i_radio" id="searchYearMonth" name="searchYearMonth" type="radio" value="year"/>
+               <label for="period_select2">
+                연간
+               </label>
+              </div>
+             </dd>
+             <dd class="td1_2">
+              <select id="searchYearStart" name="searchYearStart">
+               <option selected="" value="2024">
+                2024년
+               </option>
+               <option value="2023">
+                2023년
+               </option>
+               <option value="2022">
+                2022년
+               </option>
+               <option value="2021">
+                2021년
+               </option>
+               <option value="2020">
+                2020년
+               </option>
+               <option value="2019">
+                2019년
+               </option>
+               <option value="2018">
+                2018년
+               </option>
+               <option value="2017">
+                2017년
+               </option>
+               <option value="2016">
+                2016년
+               </option>
+               <option value="2015">
+                2015년
+               </option>
+               <option value="2014">
+                2014년
+               </option>
+               <option value="2013">
+                2013년
+               </option>
+               <option value="2012">
+                2012년
+               </option>
+               <option value="2011">
+                2011년
+               </option>
+               <option value="2010">
+                2010년
+               </option>
+               <option value="2009">
+                2009년
+               </option>
+               <option value="2008">
+                2008년
+               </option>
+              </select>
+              <select id="searchMonthStart" name="searchMonthStart">
+               <option value="12">
+                12월
+               </option>
+               <option value="11">
+                11월
+               </option>
+               <option value="10">
+                10월
+               </option>
+               <option value="09">
+                09월
+               </option>
+               <option value="08">
+                08월
+               </option>
+               <option value="07">
+                07월
+               </option>
+               <option value="06">
+                06월
+               </option>
+               <option value="05">
+                05월
+               </option>
+               <option value="04">
+                04월
+               </option>
+               <option selected="" value="03">
+                03월
+               </option>
+               <option value="02">
+                02월
+               </option>
+               <option value="01">
+                01월
+               </option>
+              </select>
+             </dd>
+             <span class="dash">
+              ~
+             </span>
+             <dd class="td1_2">
+              <select id="searchYearEnd" name="searchYearEnd">
+               <option selected="" value="2024">
+                2024년
+               </option>
+               <option value="2023">
+                2023년
+               </option>
+               <option value="2022">
+                2022년
+               </option>
+               <option value="2021">
+                2021년
+               </option>
+               <option value="2020">
+                2020년
+               </option>
+               <option value="2019">
+                2019년
+               </option>
+               <option value="2018">
+                2018년
+               </option>
+               <option value="2017">
+                2017년
+               </option>
+               <option value="2016">
+                2016년
+               </option>
+               <option value="2015">
+                2015년
+               </option>
+               <option value="2014">
+                2014년
+               </option>
+               <option value="2013">
+                2013년
+               </option>
+               <option value="2012">
+                2012년
+               </option>
+               <option value="2011">
+                2011년
+               </option>
+               <option value="2010">
+                2010년
+               </option>
+               <option value="2009">
+                2009년
+               </option>
+               <option value="2008">
+                2008년
+               </option>
+              </select>
+              <select id="searchMonthEnd" name="searchMonthEnd">
+               <option value="12">
+                12월
+               </option>
+               <option value="11">
+                11월
+               </option>
+               <option value="10">
+                10월
+               </option>
+               <option value="09">
+                09월
+               </option>
+               <option value="08">
+                08월
+               </option>
+               <option value="07">
+                07월
+               </option>
+               <option value="06">
+                06월
+               </option>
+               <option value="05">
+                05월
+               </option>
+               <option value="04">
+                04월
+               </option>
+               <option selected="" value="03">
+                03월
+               </option>
+               <option value="02">
+                02월
+               </option>
+               <option value="01">
+                01월
+               </option>
+              </select>
+             </dd>
+             <!-- 조회기간 tooltip pc -->
+             <dd class="td_popover">
+              <div class="popoverWrap">
+               <span>
+                <span class="hide">
+                 조회기간
+                </span>
+               </span>
+               <div class="popoverBox pop3">
+                <p class="pHeader">
+                 조회기간
+                 <span class="close">
+                  <img alt="닫기" src="images/btn_close.png"/>
+                 </span>
+                </p>
+                <!-- <p class="pContent">2008년 이전의 통계는 통계청 국가통계포털 KOSIS(www.kosis.kr)을 이용하시기 바랍니다. </p> -->
+                <p class="pContent">
+                 <span>
+                  주민등록 인구통계는 2008년부터 시스템으로 집계하여 공표하고 있습니다.
+                 </span>
+                 <span>
+                  2008년 이전 자료는 통계청 자료(www.kosis.kr)를 이용하시기 바랍니다.
+                 </span>
+                 <span>
+                  작성기준 : 매월 말일 /공표일시 : 매월 1일 12시 이후(공표일이 주말, 공휴일인 경우에는 다음 평일에 공표)
+                 </span>
+                </p>
+               </div>
+              </div>
+             </dd>
+             <dd>
+              <p class="searchMsg">
+               ※ 매월 말일 작성 / 공표일시 : 매월 1일 12시 이후(공표일이 주말, 공휴일인 경우에는 다음 평일에 공표)
+              </p>
+             </dd>
+            </dl>
+           </div>
+           <div class="dl_group">
+            <dl class="label_txt">
+             <dt>
+              구분
+             </dt>
+             <dd>
+              <input checked="" class="i_check" id="sum" name="sum" type="checkbox" value="sum"/>
+              <label for="sum">
+               계
+              </label>
+             </dd>
+             <dd>
+              <input checked="" class="i_check" id="gender" name="gender" type="checkbox" value="gender"/>
+              <label for="gender">
+               남·여 구분
+              </label>
+             </dd>
+            </dl>
+            <!-- <dl>
+							<dt><label for="range">정렬순서</label></dt>
+							<dd class="td2">
+								<select name="sltOrderType" id="sltOrderType">
+			            			<option value="1">행정기관코드</option>
+			            		</select>
+							</dd>
+							<dd class="td2">
+								<select name="sltOrderValue" id="sltOrderValue">
+			            			<option value="ASC" selected>오름차순</option>
+			            			<option value="DESC" >내림차순</option>
+			            		</select>
+							</dd>
+						</dl> -->
+           </div>
+           <div class="dl_group">
+            <dl>
+             <dt>
+              <label for="age_unit">
+               연령 구분 단위
+              </label>
+             </dt>
+             <dd class="td7">
+              <select id="sltArgTypes" name="sltArgTypes" onchange="redirects(this.options.selectedIndex);">
+               <option selected="" value="10">
+                10세
+               </option>
+               <option value="5">
+                5세
+               </option>
+               <option value="1">
+                1세
+               </option>
+              </select>
+             </dd>
+            </dl>
+            <dl>
+             <dt>
+              <label for="age_sec">
+               연령 조회 범위
+              </label>
+             </dt>
+             <dd class="td8">
+              <select id="sltArgTypeA" name="sltArgTypeA">
+              </select>
+             </dd>
+             <span class="dash">
+              세 ~
+             </span>
+             <dd class="td8">
+              <select id="sltArgTypeB" name="sltArgTypeB">
+              </select>
+             </dd>
+             <dd>
+              <span class="dash" id="ageChange">
+               세(이상)
+              </span>
+             </dd>
+            </dl>
+           </div>
+          </div>
+          <div class="btn_box">
+           <input class="btn_search" onclick="return goSearch();" type="submit" value="검색"/>
+           <input class="btn_reset" onclick="return goReset();" type="reset" value="초기화"/>
+          </div>
+         </fieldset>
+        </form>
+       </div>
+       <!-- //검색조건 table -->
+       <!-- 설명 section -->
+       <!-- //설명 section -->
+       <form id="formXlsDown" method="post" name="formXlsDown">
+        <div class="down_group">
+         <input name="sltOrgType" type="hidden" value="1"/>
+         <input name="sltOrgLvl1" type="hidden" value="A"/>
+         <input name="sltOrgLvl2" type="hidden" value=""/>
+         <input name="gender" type="hidden" value="gender"/>
+         <input name="sum" type="hidden" value="sum"/>
+         <input name="sltUndefType" type="hidden" value=""/>
+         <input name="searchYearStart" type="hidden" value="2024"/>
+         <input name="searchMonthStart" type="hidden" value="03"/>
+         <input name="searchYearEnd" type="hidden" value="2024"/>
+         <input name="searchMonthEnd" type="hidden" value="03"/>
+         <input name="sltOrderType" type="hidden" value="1"/>
+         <input name="sltOrderValue" type="hidden" value="ASC"/>
+         <input name="sltArgTypes" type="hidden" value="10"/>
+         <input name="sltArgTypeA" type="hidden" value="0"/>
+         <input name="sltArgTypeB" type="hidden" value="100"/>
+         <input name="category" type="hidden" value="month"/>
+         <fieldset>
+          <legend>
+           월간현황
+          </legend>
+          <div class="down_group_radio">
+           <input checked="" class="i_radio" id="down1" name="state" type="radio" value="1"/>
+           <label for="down1">
+            현재화면
+           </label>
+           <input class="i_radio" id="down2" name="state" type="radio" value="2"/>
+           <label for="down2">
+            전체시군구현황
+           </label>
+           <input class="i_radio" id="down3" name="state" type="radio" value="3"/>
+           <label for="down3">
+            전체읍면동현황
+           </label>
+          </div>
+          <div class="down_group_btn">
+           <a class="btn_down cdown" href="#none" id="csvDown" name="csvDown">
+            csv 파일 다운로드
+           </a>
+           <!-- <a href="#none" class="btn_down" name="xlsDown" id="xlsDown">xls 파일 다운로드</a> -->
+           <a class="btn_down" href="#none" id="xlsxDown" name="xlsxDown">
+            xlsx 파일 다운로드
+           </a>
+          </div>
+         </fieldset>
+        </div>
+        <div class="mobie_down_group">
+         <div class="down_group_btn">
+          <select name="stateMobile" title="조회 연도 선택">
+           <option value="1">
+            현재화면
+           </option>
+           <option value="2">
+            전체시군구현황
+           </option>
+           <option value="3">
+            전체읍면동현황
+           </option>
+          </select>
+          <a class="btn_file" href="#" id="xlsDownMobile" name="xlsDownMobile">
+           파일 다운로드
+          </a>
+         </div>
+        </div>
+       </form>
+       <!-- 주민등록 현황 -->
+       <div class="section3">
+        <div class="current_title" style="margin-top: 9px; float: left;">
+         <strong>
+          <span>
+           행정동별 연령별 인구현황
+          </span>
+         </strong>
+        </div>
+        <div class="headerFix" id="fixBtn">
+         <span class="">
+         </span>
+         <a onclick="fixedHeader();">
+          틀 고정
+         </a>
+        </div>
+        <div class="tab_section current_table title_table_div">
+         <!-- 검색조건에 따른 갯수 구하는 부분 -->
+         <!-- table -->
+         <table class="tbl_type1" id="contextTable">
+          <caption>
+           해당 연도와 월의 행정기관별로  세대의 인구수를 확인 할 수 있는 연령별 인구현황 (월간)
+          </caption>
+          <thead>
+           <tr>
+            <!-- th부분에 넓이 부분을 위한 class="th1"추가  -->
+            <th rowspan="3" style="display:none;">
+             행정기관코드
+            </th>
+            <th class="th1" rowspan="3" scope="col">
+             행정기관
+            </th>
+            <!-- 경우에 따라 테이블의 컬럼명과 갯수를 조정한다. -->
+            <th colspan="39">
+             2024년 03월
+            </th>
+           </tr>
+           <tr>
+            <!-- 경우에따라 여러달을 표시한다 -->
+            <th colspan="13" scope="col">
+             계
+            </th>
+            <th colspan="13" scope="col">
+             남
+            </th>
+            <th colspan="13" scope="col">
+             여
+            </th>
+           </tr>
+           <tr>
+            <!-- 경우에따라 여러달을 표시한다 -->
+            <th class="th1" scope="col">
+             총 인구수
+            </th>
+            <th class="th1" scope="col">
+             연령구간인구수
+            </th>
+            <th class="th1" headers="ageTenTmw1" scope="col">
+             0-9세
+            </th>
+            <th class="th1" headers="ageTenTmw11" scope="col">
+             10-19세
+            </th>
+            <th class="th1" headers="ageTenTmw21" scope="col">
+             20-29세
+            </th>
+            <th class="th1" headers="ageTenTmw31" scope="col">
+             30-39세
+            </th>
+            <th class="th1" headers="ageTenTmw41" scope="col">
+             40-49세
+            </th>
+            <th class="th1" headers="ageTenTmw51" scope="col">
+             50-59세
+            </th>
+            <th class="th1" headers="ageTenTmw61" scope="col">
+             60-69세
+            </th>
+            <th class="th1" headers="ageTenTmw71" scope="col">
+             70-79세
+            </th>
+            <th class="th1" headers="ageTenTmw81" scope="col">
+             80-89세
+            </th>
+            <th class="th1" headers="ageTenTmw91" scope="col">
+             90-99세
+            </th>
+            <th class="th1" headers="ageTenTmw101" scope="col">
+             100세 이상
+            </th>
+            <th class="th1" scope="col">
+             남 인구수
+            </th>
+            <th class="th1" scope="col">
+             연령구간인구수
+            </th>
+            <th class="th1" headers="ageTenTm1" scope="col">
+             0-9세
+            </th>
+            <th class="th1" headers="ageTenTm11" scope="col">
+             10-19세
+            </th>
+            <th class="th1" headers="ageTenTm21" scope="col">
+             20-29세
+            </th>
+            <th class="th1" headers="ageTenTm31" scope="col">
+             30-39세
+            </th>
+            <th class="th1" headers="ageTenTm41" scope="col">
+             40-49세
+            </th>
+            <th class="th1" headers="ageTenTm51" scope="col">
+             50-59세
+            </th>
+            <th class="th1" headers="ageTenTm61" scope="col">
+             60-69세
+            </th>
+            <th class="th1" headers="ageTenTm71" scope="col">
+             70-79세
+            </th>
+            <th class="th1" headers="ageTenTm81" scope="col">
+             80-89세
+            </th>
+            <th class="th1" headers="ageTenTm91" scope="col">
+             90-99세
+            </th>
+            <th class="th1" headers="ageTenTm101" scope="col">
+             100세 이상
+            </th>
+            <th class="th1" scope="col">
+             여 인구수
+            </th>
+            <th class="th1" scope="col">
+             연령구간인구수
+            </th>
+            <th class="th1" headers="ageTenTw1" scope="col">
+             0-9세
+            </th>
+            <th class="th1" headers="ageTenTw11" scope="col">
+             10-19세
+            </th>
+            <th class="th1" headers="ageTenTw21" scope="col">
+             20-29세
+            </th>
+            <th class="th1" headers="ageTenTw31" scope="col">
+             30-39세
+            </th>
+            <th class="th1" headers="ageTenTw41" scope="col">
+             40-49세
+            </th>
+            <th class="th1" headers="ageTenTw51" scope="col">
+             50-59세
+            </th>
+            <th class="th1" headers="ageTenTw61" scope="col">
+             60-69세
+            </th>
+            <th class="th1" headers="ageTenTw71" scope="col">
+             70-79세
+            </th>
+            <th class="th1" headers="ageTenTw81" scope="col">
+             80-89세
+            </th>
+            <th class="th1" headers="ageTenTw91" scope="col">
+             90-99세
+            </th>
+            <th class="th1" headers="ageTenTw101" scope="col">
+             100세 이상
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <!-- 행정기관을 중복없이 나열한다. -->
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             0000000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             전국
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             51,293,934
+            </td>
+            <td title="2024년 03월 / 계">
+             51,293,934
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             3,276,777
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             4,637,563
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             6,130,341
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             6,562,325
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             7,877,433
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             8,717,794
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             7,692,991
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             4,016,683
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             2,062,979
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             310,292
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             8,756
+            </td>
+            <td title="2024년 03월 / 남">
+             25,547,370
+            </td>
+            <td title="2024년 03월 / 남">
+             25,547,370
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             1,679,295
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             2,385,417
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             3,199,405
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             3,417,525
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             4,005,950
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             4,396,807
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             3,787,260
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             1,844,918
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             757,695
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             71,556
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             1,542
+            </td>
+            <td title="2024년 03월 / 여">
+             25,746,564
+            </td>
+            <td title="2024년 03월 / 여">
+             25,746,564
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             1,597,482
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             2,252,146
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             2,930,936
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             3,144,800
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             3,871,483
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             4,320,987
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             3,905,731
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             2,171,765
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             1,305,284
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             238,736
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             7,214
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             1100000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             서울특별시
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             9,384,739
+            </td>
+            <td title="2024년 03월 / 계">
+             9,384,739
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             504,805
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             733,051
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             1,348,801
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             1,426,416
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             1,412,882
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             1,496,980
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             1,321,940
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             747,041
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             344,599
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             46,724
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             1,500
+            </td>
+            <td title="2024년 03월 / 남">
+             4,536,128
+            </td>
+            <td title="2024년 03월 / 남">
+             4,536,128
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             258,848
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             374,512
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             638,347
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             713,489
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             699,164
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             735,830
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             625,662
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             337,871
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             139,521
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             12,538
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             346
+            </td>
+            <td title="2024년 03월 / 여">
+             4,848,611
+            </td>
+            <td title="2024년 03월 / 여">
+             4,848,611
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             245,957
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             358,539
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             710,454
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             712,927
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             713,718
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             761,150
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             696,278
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             409,170
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             205,078
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             34,186
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             1,154
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             2600000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             부산광역시
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             3,287,292
+            </td>
+            <td title="2024년 03월 / 계">
+             3,287,292
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             191,016
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             263,231
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             372,557
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             389,014
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             481,477
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             541,515
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             561,841
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             324,655
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             143,693
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             17,851
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             442
+            </td>
+            <td title="2024년 03월 / 남">
+             1,601,773
+            </td>
+            <td title="2024년 03월 / 남">
+             1,601,773
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             97,953
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             134,880
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             191,223
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             200,505
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             243,257
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             264,621
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             264,551
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             146,311
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             54,321
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             4,084
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             67
+            </td>
+            <td title="2024년 03월 / 여">
+             1,685,519
+            </td>
+            <td title="2024년 03월 / 여">
+             1,685,519
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             93,063
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             128,351
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             181,334
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             188,509
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             238,220
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             276,894
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             297,290
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             178,344
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             89,372
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             13,767
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             375
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             2700000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             대구광역시
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             2,369,962
+            </td>
+            <td title="2024년 03월 / 계">
+             2,369,962
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             148,196
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             212,813
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             277,660
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             279,784
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             353,187
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             420,314
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             368,979
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             197,510
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             98,251
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             13,001
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             267
+            </td>
+            <td title="2024년 03월 / 남">
+             1,163,911
+            </td>
+            <td title="2024년 03월 / 남">
+             1,163,911
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             76,048
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             109,628
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             146,392
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             149,152
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             175,064
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             205,126
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             176,553
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             87,225
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             35,630
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             3,058
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             35
+            </td>
+            <td title="2024년 03월 / 여">
+             1,206,051
+            </td>
+            <td title="2024년 03월 / 여">
+             1,206,051
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             72,148
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             103,185
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             131,268
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             130,632
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             178,123
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             215,188
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             192,426
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             110,285
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             62,621
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             9,943
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             232
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             2800000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             인천광역시
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             3,006,045
+            </td>
+            <td title="2024년 03월 / 계">
+             3,006,045
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             200,674
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             271,951
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             360,948
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             415,021
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             480,309
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             517,390
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             447,137
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             201,172
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             95,633
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             15,323
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             487
+            </td>
+            <td title="2024년 03월 / 남">
+             1,502,956
+            </td>
+            <td title="2024년 03월 / 남">
+             1,502,956
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             102,900
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             139,536
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             186,890
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             216,421
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             247,079
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             257,746
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             220,854
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             93,402
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             34,733
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             3,295
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             100
+            </td>
+            <td title="2024년 03월 / 여">
+             1,503,089
+            </td>
+            <td title="2024년 03월 / 여">
+             1,503,089
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             97,774
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             132,415
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             174,058
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             198,600
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             233,230
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             259,644
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             226,283
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             107,770
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             60,900
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             12,028
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             387
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             2900000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             광주광역시
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             1,415,774
+            </td>
+            <td title="2024년 03월 / 계">
+             1,415,774
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             97,796
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             146,461
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             188,068
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             173,205
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             226,246
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             242,026
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             186,340
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             99,969
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             48,397
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             7,064
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             202
+            </td>
+            <td title="2024년 03월 / 남">
+             699,084
+            </td>
+            <td title="2024년 03월 / 남">
+             699,084
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             50,058
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             75,559
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             98,209
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             89,524
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             112,823
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             119,709
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             89,213
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             44,220
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             18,148
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             1,600
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             21
+            </td>
+            <td title="2024년 03월 / 여">
+             716,690
+            </td>
+            <td title="2024년 03월 / 여">
+             716,690
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             47,738
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             70,902
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             89,859
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             83,681
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             113,423
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             122,317
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             97,127
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             55,749
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             30,249
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             5,464
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             181
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             3000000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             대전광역시
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             1,441,689
+            </td>
+            <td title="2024년 03월 / 계">
+             1,441,689
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             95,166
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             137,355
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             198,149
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             188,008
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             218,227
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             244,042
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             203,459
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             100,496
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             49,259
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             7,314
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             214
+            </td>
+            <td title="2024년 03월 / 남">
+             718,943
+            </td>
+            <td title="2024년 03월 / 남">
+             718,943
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             49,023
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             70,690
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             103,676
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             99,581
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             109,060
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             121,603
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             98,734
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             46,232
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             18,489
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             1,817
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             38
+            </td>
+            <td title="2024년 03월 / 여">
+             722,746
+            </td>
+            <td title="2024년 03월 / 여">
+             722,746
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             46,143
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             66,665
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             94,473
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             88,427
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             109,167
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             122,439
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             104,725
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             54,264
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             30,770
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             5,497
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             176
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             3100000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             울산광역시
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             1,101,336
+            </td>
+            <td title="2024년 03월 / 계">
+             1,101,336
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             77,349
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             108,897
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             120,852
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             136,211
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             176,874
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             204,714
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             171,150
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             73,090
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             28,286
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             3,827
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             86
+            </td>
+            <td title="2024년 03월 / 남">
+             566,352
+            </td>
+            <td title="2024년 03월 / 남">
+             566,352
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             39,713
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             56,834
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             68,921
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             74,180
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             91,239
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             102,734
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             86,407
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             35,229
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             10,329
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             755
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             11
+            </td>
+            <td title="2024년 03월 / 여">
+             534,984
+            </td>
+            <td title="2024년 03월 / 여">
+             534,984
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             37,636
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             52,063
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             51,931
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             62,031
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             85,635
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             101,980
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             84,743
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             37,861
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             17,957
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             3,072
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             75
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             3600000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             세종특별자치시
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             387,411
+            </td>
+            <td title="2024년 03월 / 계">
+             387,411
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             43,007
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             51,004
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             37,316
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             59,020
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             77,389
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             55,276
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             37,729
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             16,805
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             8,275
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             1,551
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             39
+            </td>
+            <td title="2024년 03월 / 남">
+             192,907
+            </td>
+            <td title="2024년 03월 / 남">
+             192,907
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             21,884
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             25,725
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             18,937
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             29,156
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             38,242
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             28,872
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             18,783
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             7,991
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             2,987
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             326
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             4
+            </td>
+            <td title="2024년 03월 / 여">
+             194,504
+            </td>
+            <td title="2024년 03월 / 여">
+             194,504
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             21,123
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             25,279
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             18,379
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             29,864
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             39,147
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             26,404
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             18,946
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             8,814
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             5,288
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             1,225
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             35
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             4100000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             경기도
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             13,642,451
+            </td>
+            <td title="2024년 03월 / 계">
+             13,642,451
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             974,722
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             1,316,957
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             1,666,674
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             1,877,819
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             2,247,421
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             2,346,496
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             1,856,355
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             860,695
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             428,054
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             65,324
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             1,934
+            </td>
+            <td title="2024년 03월 / 남">
+             6,860,823
+            </td>
+            <td title="2024년 03월 / 남">
+             6,860,823
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             498,871
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             674,014
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             876,362
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             979,958
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             1,146,366
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             1,182,313
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             926,333
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             398,475
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             161,745
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             15,958
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             428
+            </td>
+            <td title="2024년 03월 / 여">
+             6,781,628
+            </td>
+            <td title="2024년 03월 / 여">
+             6,781,628
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             475,851
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             642,943
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             790,312
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             897,861
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             1,101,055
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             1,164,183
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             930,022
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             462,220
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             266,309
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             49,366
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             1,506
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             5100000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             강원특별자치도
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             1,524,198
+            </td>
+            <td title="2024년 03월 / 계">
+             1,524,198
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             89,419
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             128,054
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             161,073
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             157,984
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             206,369
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             262,422
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             276,822
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             143,763
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             84,887
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             12,987
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             418
+            </td>
+            <td title="2024년 03월 / 남">
+             766,562
+            </td>
+            <td title="2024년 03월 / 남">
+             766,562
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             45,644
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             66,408
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             90,313
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             84,481
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             105,101
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             135,423
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             138,724
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             66,642
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             30,871
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             2,852
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             103
+            </td>
+            <td title="2024년 03월 / 여">
+             757,636
+            </td>
+            <td title="2024년 03월 / 여">
+             757,636
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             43,775
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             61,646
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             70,760
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             73,503
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             101,268
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             126,999
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             138,098
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             77,121
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             54,016
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             10,135
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             315
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             4300000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             충청북도
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             1,591,044
+            </td>
+            <td title="2024년 03월 / 계">
+             1,591,044
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             101,487
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             143,847
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             179,085
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             186,865
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             229,153
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             273,128
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             259,603
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             130,235
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             75,733
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             11,630
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             278
+            </td>
+            <td title="2024년 03월 / 남">
+             809,472
+            </td>
+            <td title="2024년 03월 / 남">
+             809,472
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             52,054
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             74,314
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             99,238
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             102,424
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             118,863
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             140,425
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             131,404
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             61,226
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             26,965
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             2,511
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             48
+            </td>
+            <td title="2024년 03월 / 여">
+             781,572
+            </td>
+            <td title="2024년 03월 / 여">
+             781,572
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             49,433
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             69,533
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             79,847
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             84,441
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             110,290
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             132,703
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             128,199
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             69,009
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             48,768
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             9,119
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             230
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             4400000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             충청남도
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             2,132,745
+            </td>
+            <td title="2024년 03월 / 계">
+             2,132,745
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             141,520
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             202,012
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             223,842
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             250,588
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             323,134
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             352,303
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             328,147
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             180,208
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             111,045
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             19,437
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             509
+            </td>
+            <td title="2024년 03월 / 남">
+             1,093,684
+            </td>
+            <td title="2024년 03월 / 남">
+             1,093,684
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             72,483
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             104,570
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             124,616
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             136,340
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             172,037
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             187,174
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             167,019
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             85,017
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             39,671
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             4,687
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             70
+            </td>
+            <td title="2024년 03월 / 여">
+             1,039,061
+            </td>
+            <td title="2024년 03월 / 여">
+             1,039,061
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             69,037
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             97,442
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             99,226
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             114,248
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             151,097
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             165,129
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             161,128
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             95,191
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             71,374
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             14,750
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             439
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             5200000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             전북특별자치도
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             1,749,376
+            </td>
+            <td title="2024년 03월 / 계">
+             1,749,376
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             100,383
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             163,077
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             187,448
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             171,910
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             242,848
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             302,211
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             286,226
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             173,265
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             104,051
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             17,474
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             483
+            </td>
+            <td title="2024년 03월 / 남">
+             870,857
+            </td>
+            <td title="2024년 03월 / 남">
+             870,857
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             51,294
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             84,383
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             101,699
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             89,626
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             124,373
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             156,985
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             142,921
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             79,630
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             36,029
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             3,858
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             59
+            </td>
+            <td title="2024년 03월 / 여">
+             878,519
+            </td>
+            <td title="2024년 03월 / 여">
+             878,519
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             49,089
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             78,694
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             85,749
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             82,284
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             118,475
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             145,226
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             143,305
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             93,635
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             68,022
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             13,616
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             424
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             4600000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             전라남도
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             1,798,435
+            </td>
+            <td title="2024년 03월 / 계">
+             1,798,435
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             105,660
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             157,609
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             175,021
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             168,348
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             239,312
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             310,826
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             307,294
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             190,848
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             123,082
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             19,832
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             603
+            </td>
+            <td title="2024년 03월 / 남">
+             906,995
+            </td>
+            <td title="2024년 03월 / 남">
+             906,995
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             53,948
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             81,141
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             98,027
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             89,029
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             126,846
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             167,683
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             157,808
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             88,093
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             40,384
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             3,958
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             78
+            </td>
+            <td title="2024년 03월 / 여">
+             891,440
+            </td>
+            <td title="2024년 03월 / 여">
+             891,440
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             51,712
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             76,468
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             76,994
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             79,319
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             112,466
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             143,143
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             149,486
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             102,755
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             82,698
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             15,874
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             525
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             4700000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             경상북도
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             2,546,960
+            </td>
+            <td title="2024년 03월 / 계">
+             2,546,960
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             148,400
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             216,772
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             243,452
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             257,331
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             353,615
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             444,901
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             451,823
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             255,895
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             150,584
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             23,611
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             576
+            </td>
+            <td title="2024년 03월 / 남">
+             1,287,412
+            </td>
+            <td title="2024년 03월 / 남">
+             1,287,412
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             76,318
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             113,589
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             139,606
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             140,203
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             184,008
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             230,660
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             227,931
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             118,931
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             51,095
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             5,017
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             54
+            </td>
+            <td title="2024년 03월 / 여">
+             1,259,548
+            </td>
+            <td title="2024년 03월 / 여">
+             1,259,548
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             72,082
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             103,183
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             103,846
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             117,128
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             169,607
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             214,241
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             223,892
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             136,964
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             99,489
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             18,594
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             522
+            </td>
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             4800000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             경상남도
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             3,241,374
+            </td>
+            <td title="2024년 03월 / 계">
+             3,241,374
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             206,857
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             314,361
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             316,808
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             347,146
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             501,048
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             584,181
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             533,217
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             272,918
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             142,170
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             22,226
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             442
+            </td>
+            <td title="2024년 03월 / 남">
+             1,632,685
+            </td>
+            <td title="2024년 03월 / 남">
+             1,632,685
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             106,474
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             163,329
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             178,277
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             184,088
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             257,561
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             298,328
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             266,923
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             126,254
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             47,104
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             4,283
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             64
+            </td>
+            <td title="2024년 03월 / 여">
+             1,608,689
+            </td>
+            <td title="2024년 03월 / 여">
+             1,608,689
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             100,383
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             151,032
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             138,531
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             163,058
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             243,487
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             285,853
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             266,294
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             146,664
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             95,066
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             17,943
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             378
+            </td>
+            <!-- forEach Level_01 Start -->
+           </tr>
+           <!-- forEach Level_00 Start -->
+           <tr>
+            <!-- break -->
+            <!-- 컬럼명과 갯수에 따라 데이터내용을 조정한다. -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- forEach Level_01 Start -->
+            <!-- 행정기관 코드와 일치하는 리스트만 출력 -->
+            <td style="display:none;">
+             5000000000
+            </td>
+            <!-- 레벨값에 따라서 시도인지 시군구인지 구별  -->
+            <!-- 20180824 변경 -->
+            <td class="td_admin th1">
+             제주특별자치도
+            </td>
+            <!-- 리스트 데이터 가로로 여러달 출력을 위한 구문 -->
+            <td title="2024년 03월 / 계">
+             673,103
+            </td>
+            <td title="2024년 03월 / 계">
+             673,103
+            </td>
+            <td headers="ageTenMWAS1" title="2024년 03월 / 계">
+             50,320
+            </td>
+            <td headers="ageTenMWAS11" title="2024년 03월 / 계">
+             70,111
+            </td>
+            <td headers="ageTenMWAS21" title="2024년 03월 / 계">
+             72,587
+            </td>
+            <td headers="ageTenMWAS31" title="2024년 03월 / 계">
+             77,655
+            </td>
+            <td headers="ageTenMWAS41" title="2024년 03월 / 계">
+             107,942
+            </td>
+            <td headers="ageTenMWAS51" title="2024년 03월 / 계">
+             119,069
+            </td>
+            <td headers="ageTenMWAS61" title="2024년 03월 / 계">
+             94,929
+            </td>
+            <td headers="ageTenMWAS71" title="2024년 03월 / 계">
+             48,118
+            </td>
+            <td headers="ageTenMWAS81" title="2024년 03월 / 계">
+             26,980
+            </td>
+            <td headers="ageTenMWAS91" title="2024년 03월 / 계">
+             5,116
+            </td>
+            <td headers="ageTenMWAS101" title="2024년 03월 / 계">
+             276
+            </td>
+            <td title="2024년 03월 / 남">
+             336,826
+            </td>
+            <td title="2024년 03월 / 남">
+             336,826
+            </td>
+            <td headers="ageTenMA1" title="2024년 03월 / 남">
+             25,782
+            </td>
+            <td headers="ageTenMA11" title="2024년 03월 / 남">
+             36,305
+            </td>
+            <td headers="ageTenMA21" title="2024년 03월 / 남">
+             38,672
+            </td>
+            <td headers="ageTenMA31" title="2024년 03월 / 남">
+             39,368
+            </td>
+            <td headers="ageTenMA41" title="2024년 03월 / 남">
+             54,867
+            </td>
+            <td headers="ageTenMA51" title="2024년 03월 / 남">
+             61,575
+            </td>
+            <td headers="ageTenMA61" title="2024년 03월 / 남">
+             47,440
+            </td>
+            <td headers="ageTenMA71" title="2024년 03월 / 남">
+             22,169
+            </td>
+            <td headers="ageTenMA81" title="2024년 03월 / 남">
+             9,673
+            </td>
+            <td headers="ageTenMA91" title="2024년 03월 / 남">
+             959
+            </td>
+            <td headers="ageTenMA101" title="2024년 03월 / 남">
+             16
+            </td>
+            <td title="2024년 03월 / 여">
+             336,277
+            </td>
+            <td title="2024년 03월 / 여">
+             336,277
+            </td>
+            <td headers="ageTenWA1" title="2024년 03월 / 여">
+             24,538
+            </td>
+            <td headers="ageTenWA11" title="2024년 03월 / 여">
+             33,806
+            </td>
+            <td headers="ageTenWA21" title="2024년 03월 / 여">
+             33,915
+            </td>
+            <td headers="ageTenWA31" title="2024년 03월 / 여">
+             38,287
+            </td>
+            <td headers="ageTenWA41" title="2024년 03월 / 여">
+             53,075
+            </td>
+            <td headers="ageTenWA51" title="2024년 03월 / 여">
+             57,494
+            </td>
+            <td headers="ageTenWA61" title="2024년 03월 / 여">
+             47,489
+            </td>
+            <td headers="ageTenWA71" title="2024년 03월 / 여">
+             25,949
+            </td>
+            <td headers="ageTenWA81" title="2024년 03월 / 여">
+             17,307
+            </td>
+            <td headers="ageTenWA91" title="2024년 03월 / 여">
+             4,157
+            </td>
+            <td headers="ageTenWA101" title="2024년 03월 / 여">
+             260
+            </td>
+           </tr>
+          </tbody>
+         </table>
+         <!-- //table -->
+        </div>
+       </div>
+       <!-- //주민등록 현황 -->
+      </div>
+      <!-- tab_content -->
+     </div>
+     <!-- tab_content -->
+    </div>
+   </div>
+   <!-- //content_main -->
+  </div>
+  <!-- //content_wrap -->
+ </body>
+ <script type="text/javascript">
+  var nowTable=null;
+var options = {
+		info:false
+		,scroller:true
+		,scrollY:500
+		,scrollX:true
+		,searching:false
+		,fixedHeader:true
+		,select:{
+			style:'single'
+		}
+		,autoWidth:true
+};
+if(document.getElementById('sum').checked==false || document.getElementById('gender').checked==false){
+	if(false && true){
+		options['columnDefs']=[{'width':'100px', targets:0}, {'width':'169px', targets:1},
+		                       {'width':'190px', targets:2}, {'width':'190px', targets:3}, {'width':'190px', targets:4}, {'width':'190px', targets:5},{'width':'190px', targets:6},
+		                       {'width':'190px', targets:7}, {'width':'190px', targets:8}, {'width':'190px', targets:9}, {'width':'190px', targets:10},{'width':'190px', targets:11},
+		                       {'width':'190px', targets:12},{'width':'190px', targets:12},{'width':'190px', targets:13}]
+	}
+}
+function tableResize(){
+	$("#contextTable").css('background-color', 'white');
+	$("#contextTable thead").css('display', 'none');
+	$(".DTFC_LeftBodyLiner").css('height', '490px').css('max-height', '490px');
+}
+function windowResize(){
+	var offsetWidth= document.body.offsetWidth;
+	if(offsetWidth < 251){ // 0~220
+		$(".dataTables_scrollBody").css('max-height', "140px");
+		$(".dataTables_scrollBody").css('height', "140px");
+	}
+	else if(offsetWidth>250 && offsetWidth<782 ){ //221~781
+		$(".dataTables_scrollBody").css('max-height', "250px");
+		$(".dataTables_scrollBody").css('height', "250px");
+	}
+	else if (offsetWidth>781){ //782~
+		$(".dataTables_scrollBody").css('max-height', "500px");
+		$(".dataTables_scrollBody").css('height', "500px");
+	}
+}
+function fixedHeader(){
+	$(".current_table").css("width", "100%").css("max-height", "").css("overflow-y", "").css("overflow-x", "");
+	nowTable = $("#contextTable").DataTable(options);
+	new $.fn.dataTable.FixedColumns(nowTable, {leftColumns:2});
+	tableResize();
+	nowTable.columns.adjust().draw();
+	// 윈도우 사이즈 변경 시 통계표 사이즈 변경
+	$(window).resize(function(){
+		windowResize();
+	});
+	$("#contextTable tbody tr").click(function (e){
+		$("#contextTable tbody tr").removeClass('selected');
+		$(this).toggleClass('selected');
+	});
+	$(".DTFC_LeftWrapper table thead tr:first-child th:nth-child(2)").click(function (e){
+		$("div.dataTables_scrollHead table thead tr:first-child th:first-child").trigger('click');
+		tableResize();
+		nowTable.columns.adjust().draw();
+		e.preventDefault();
+	});
+	$(".dataTables_scrollHeadInner table thead tr th").click(function (e){
+		tableResize();
+		nowTable.columns.adjust().draw();
+	});
+	$(".current_title").css("margin-top", "").css("float","");
+	$("#fixBtn").remove();
+}
+$(document).ready(function (){
+	$(".current_table").css("width", "100%").css("max-height", "500px").css("overflow-y", "scroll").css("overflow-x", "scroll");
+});
+ </script>
+ <style>
+  .DTFC_LeftBodyLiner {
+	height: 490px;max-height: 490px;
+}
+ </style>
+</html>

@@ -862,6 +862,7 @@ select last_day('2024-02-01') from dual;
 
 -------------------------------------------------------------------------------
 --24.04.24
+
 --trunc 버림, round 반올림
 select sysdate,hire_date,trunc(sysdate-hire_date,3) from employees;
 select sysdate,hire_date,3,round(sysdate-hire_date) from employees;
@@ -961,6 +962,8 @@ select hire_date,last_day(hire_date),round(hire_date,'d') from employees;
 select sysdate,round(sysdate,'d') from employees;
 select sysdate,trunc(sysdate,'j') from employees;
 select sysdate,trunc(sysdate,'month') from employees;
+
+-------------------------중요----------------------------------------
 
 select sysdate 현재일,trunc(sysdate,'month') 처음일, last_day(sysdate) 마지막날 from dual;
 
@@ -1072,6 +1075,7 @@ FROM dual;
 
 select to_number('0000123') from dual;
 
+
 --날짜 차이값 만들기
 select '2024-04-24'-'2024-04-01' from dual;
 select to_date('2024-04-24')-to_date('2024-04-01') from dual;
@@ -1112,6 +1116,337 @@ order by manager_id desc;
 --문자형은 to_char를 쓴다
 select nvl(to_char(manager_id),'ceo') from employees
 order by manager_id desc;
+
+
+
+
+-------------------------------------------------------------------------------
+--24.04.25
+
+-----------------중요 중요-----------------------------------------
+--어제 오늘 내일
+select sysdate-1, sysdate, sysdate+1 from dual;
+
+--달에 있는 첫번째 일
+select sysdate, trunc(sysdate,'month'),last_day(sysdate) from dual;
+
+--두날짜간 일수
+select round(sysdate-hire_date,3),trunc(months_between(sysdate,hire_date),2) from employees;
+
+--trunc 일단위 버림(십단위로 출력)
+select trunc(kor,-1) kor,count(trunc(kor,-1))  from stu_score
+group by trunc(kor,-1)
+order by kor;
+
+--hire_date에서  월만 출력하시요
+
+select to_char(hire_date,'yyyy-mm-dd') from employees;
+select to_char(hire_date,'mm') from employees;
+
+select to_char(hire_date,'mm') hire_date,count(to_char(hire_date,'mm')) from employees
+group by to_char(hire_date,'mm')
+order by hire_date;
+
+--퀴즈, hire_date yyyy년도 년도별 인원수를 출력하시요
+
+select to_char(hire_date,'yyyy') hire_date,count(to_char(hire_date,'yyyy')) from employees
+group by to_char(hire_date,'yyyy')
+order by hire_date;
+
+
+
+--  형변환 -number, character, date
+--  number 사칙연산 가능 ,쉼표표시안됨,원화표시
+--  char 사직연산(+,-)안됨, 쉼표 표시가능, 원화표시가능
+--  date +,- 가능 날짜출력형태는 변경 불가
+
+
+-------------------------------중요 중요-----------------------------------------
+--시퀀스,날짜의 년도를 가지고 학번을 부여하시요.
+--stu_seq시퀀스를 가지고 5개 학번을 출력
+--ko+2024+0001
+create sequence stu_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 99999
+nocycle
+nocache
+;
+
+--trim() 공백제거 자동으로 번호 생성
+select 'ko' || to_char(sysdate,'yyyy')||trim(to_char(stu_seq.nextval,'0000'))as stu_no from dual;
+
+SELECT TO_CHAR(
+           TO_NUMBER(REPLACE('123,456,789', ',','')) + 
+           TO_NUMBER(REPLACE('100,000', ',',''))
+           , '999,999,999') AS result
+FROM dual;
+
+--숫자형태를 날짜타입으로 변경
+select 20240425+3 from dual;
+select to_char(20240425+3) from dual;
+select to_date(20240425+3) from dual;
+
+
+--숫자타입을 날짜 타입으로 변경
+select emp_name,hire_date from employees
+where hire_date > to_date(20070101)
+order by hire_date;
+
+
+--퀴즈
+--8월에만 입사한,사원이름 2번째 a 가 들어간 사람 출력
+select hire_date from employees
+where to_char(hire_date,'mm')='01'or to_char(hire_date,'mm')='05' or to_char(hire_date,'mm')='08'
+order by  hire_date ;
+
+
+
+
+--사원이름 2번재에 a가 들어있는 사람을 출력하시요 2017년 이후로 출력
+select emp_name,hire_date from employees
+where hire_date > to_date(20070101)
+and emp_name like '_a%'
+order by hire_date;
+
+select sysdate-to_date('20240401') from dual;
+
+select * from m_date;
+
+insert into m_date(m_no,m_yesterday) values(
+seq_mno.nextval,'2024-04-01'
+);
+
+create table eventDate(
+eno number,
+e_today date,
+e_choice_day date,
+e_period number
+);
+
+--입력시 날짜타입에 문자를 입력해도 저장됨
+--날짜와 문자를 빼기는 불가능, 그래서 문자를 날짜타입으로 변경해야함 
+insert into eventDate values(
+seq_mno.nextval,sysdate,'2024-04-01',sysdate-to_date('2024-04-01')
+);
+
+select * from eventDate;
+
+select to_number('20,000','99,999')-to_number('10,000','99,999') from dual;
+
+select salary,salary+(salary*nvl(commission_pct,0)) from employees;
+
+select manager_id from employees
+order by manager_id desc;
+
+--숫자타입이 문자타입으로 변경
+select nvl(to_char(manager_id),'ceo') from employees
+order by manager_id desc;
+
+
+--그룹함수 : sum,avg,count(),count(*),min,max
+
+
+--그룹함수 count
+select count * from employees;
+
+select count(emp_name) from employees;
+
+select count(manager_id) from employees;
+
+select emp_name,manager_id from employees;
+
+
+--sum :총합
+select sum(salary) from employees;
+
+--avg : 평균
+select avg(salary) avg_sal from employees;
+
+--min : 최소값
+select min(salary) from employees;
+
+--max : 최대값
+select max(salary) from employees;
+
+
+
+--퀴즈 6461달러보다 높은사람을 출력하시요 <<이중쿼리>>
+select * from employees
+where salary > (select avg(salary) avg_sal from employees);
+
+select min (salary) from employees;
+
+--최소월급 받는사람의 사번,이름을 출력하시요
+select employee_id ,emp_name,salary from employees
+where salary=(select min (salary) from employees);
+
+--최대월급 받는사람의 사번,이름을 출력하시요
+select employee_id ,emp_name,salary from employees
+where salary=(select max (salary) from employees);
+
+--부서 번호가 50번인 사원만 전체 월급
+select department_id,salary from employees;
+
+select sum(salary) from employees
+where department_id= 50;
+
+select count (*) from stu_score;
+
+--퀴즈 kor점수가 80점이상인 사람만 출력하시요
+select kor from stu_score
+where kor >= 80;
+
+--국어점수 평균이상, 영어점수 평균 이상만 출력하시요
+select name,kor,eng from stu_score
+where kor >= (select avg(kor) avg_kor from stu_score) and
+eng >= (select avg(eng) avg_eng from stu_score);
+
+
+create table s_info(
+sno number,
+s_count number
+);
+
+insert into s_info values(
+stu_seq.nextval,1000);
+
+insert into s_info values(
+stu_seq.nextval,(select count(*) from stu_score
+where kor >= (select avg(kor) avg_kor from stu_score) and
+eng >= (select avg(eng) avg_eng from stu_score)));
+
+select * from s_info;
+
+--퀴즈
+--월급이 최대인 사람과 최소인 사람 출력
+
+select  emp_name,salary from employees
+where salary=(select min (salary) from employees)
+or salary=(select max (salary) from employees)
+or salary=(select avg (salary) from employees);
+
+
+--최대값
+select emp_name,salary from employees
+where salary=(select max(salary) from employees);
+
+
+--이게 하나의 테이블로 생각한다
+--평균보다 작은값
+select emp_name,salary from employees
+where salary >= (select avg(salary) from employees)
+order by salary;
+
+
+--평균보다 작은 사원중에 최대값인 사원을 출력하시요
+select emp_name from employees
+where salary = 6400;
+
+SELECT emp_name, salary 
+FROM employees 
+WHERE salary = (
+    SELECT MAX(salary) 
+    FROM (
+        SELECT emp_name, salary 
+        FROM employees 
+        WHERE salary >= (SELECT AVG(salary) FROM employees)
+        ORDER BY salary DESC
+    )
+);
+
+--문자함수
+--lpad,rpad빈 공백 채우기
+select emp_name,lpad(emp_name,15,'#')from employees;
+select emp_name,rpad(emp_name,50,'@')from employees;
+
+
+-- ltrim,rtrim 특정 지정 문자를 잘라내고 출력
+select emp_name,ltrim(emp_name,'Do') from employees;
+
+
+
+--ko20240001
+select 'ko20240001', ltrim('ko20240001','ko2024') from dual;
+
+--substr(데이터,순서,개수)
+select emp_name,substr(emp_name,3,4) from employees;
+
+select job_id from employees;
+
+--퀴즈.  job_id에 있는 앞에 sh와 사원번호를 겹합해서 출력시키시요
+select  substr(job_id,0,2)|| employee_id  from employees;
+
+--length
+select emp_name,length(emp_name) from employees
+where length(emp_name)>15;
+
+--날짜끼리 빼는건 된다.
+select sysdate-hire_date from employees;
+
+--날짜끼리 더하는건 안된다.
+select sysdate+hire_date from employees;
+
+--다음달의 첫째날
+select round(sysdate,'month') from dual;
+
+select round(sysdate,'year') from dual;
+
+--원하는 달로 이동
+select sysdate,add_months(sysdate,-2) from dual;
+
+
+--ceil나머지 floor버림 mod나머지 power제곱
+select ceil(-4.2),floor(-4.2),mod(8,3),power(2,10) from dual;
+
+select emp_name || to_char(hire_date,' yyyy "년" mm "월"dd "일"') from employees;
+
+----------------------------퀴즈 사원명 월급*1400원 앞에 원화 표시와 쉼표를 넣어 출력
+select salary,to_char(salary*1400,'L000,000,000') from employees;
+
+--자신의 생일과 자신의 생일이 속한 달의 마지막날짜
+
+select trunc(to_date('2010-10-10'),'month'),'2010-10-10' ,last_day('2010-10-01') from dual;
+
+
+
+select  * from member;
+
+desc member;
+
+alter table member drop column phone;
+
+
+--ddl(data) 컬럼 추가해주기
+--위에있는 ddl은 커밋,롤백이 없다
+alter table member add gender varchar2(6) default 'Female' not null;
+select  * from member;
+
+update member set gender='male';
+
+commit;
+
+--컬럼수정 : 이름변경
+alter table member rename column name to stu_name
+;
+
+--컬럼수정 : 타입변경
+alter table member modify(stu_name varchar2(50));
+
+--기존의 데이터가 변경하려는 크기보다 작을때만 가능
+update member set stu_name='';
+alter table member modify(stu_name varchar2(6));
+
+alter table member modify(stu_name varchar2(4));
+desc member;
+select stu_name from member;
+
+--자리수 초과 오류
+alter table member modify(stu_name number(100));
+desc member;
+
+select  * from member;
 
 
 

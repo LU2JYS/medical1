@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <title>Document</title>
+    <script>
+        $(function(){
+            let s_height=0;
+            let screenHeight = $(window).height();
+            console.log("화면 높이: "+$(window).height())
+            console.log("스크롤 높이: "+document.body.scrollHeight)
+            //스크롤 이동을 div에 입력
+            $(window).scroll(function(){
+                $("#main").text($(document).scrollTop());
+            });
+            //top으로 스크롤 이동
+            $("#sbtn").click(function(){
+                window.scrollTo({top:0, behaviour:'smooth'})
+            });
+            //버튼을 클릭할 때마다화면 높이만큼 스크롤 이동
+            $("#mbtn").click(function(){
+                console.log("이동높이: ",)
+                window.scrollTo({top:s_height, behaviour:'smooth'});
+                s_height += $(window).height() //화면 높이 만큼 추가
+            });
+        }); //jquery
+    </script>
+    <style>
+        *{margin:0; padding:0;}
+        body{height:5000px;}
+        #main{width:200px; height:150px; border:1px solid black;
+        position:fixed; top:20px; left:20px;}
+        #sub{width:200px;height:150px; border:1px solid black;
+        position:fixed; top:200px; left:20px;}
+        #sbtn{position:fixed;top:500px; left:800px;width:120px; height:60px;}
+        #mbtn{position:fixed;top:500px; left:930px;width:120px; height:60px;}
+    </style>
+</head>
+<body>
+    <div id="main">스크롤: 0px</div>
+    <div id="sub">0px</div>
+    <button id="sbtn">TOP</button>
+    <button id="mbtn">스크롤이동</button>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

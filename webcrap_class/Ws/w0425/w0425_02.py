@@ -11,16 +11,7 @@ url="https://www.naver.com/"
 browser=webdriver.Chrome()
 browser.get(url)
 
-elem = browser.find_element(By.XPATH,'//*[@id="shortcutArea"]/ul/li[6]/a')
-elem.click() 
 
-#새창으로 페이지 이동 원본창[0] 새창1번째[1], 새창2번째[2]
-browser.switch_to.window(browser.window_handles[1])
-time.sleep(3)
-#새창에있는 선택
-elem = browser.find_element(By.XPATH,'//*[@id="container"]/div[2]/div/div[3]/a')
-elem.click() 
-time.sleep(100)
 
 
 

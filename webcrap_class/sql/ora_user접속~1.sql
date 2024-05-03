@@ -1454,7 +1454,811 @@ select  * from member;
 
 
 
+-------------------------------------------------------------------------------
+--24.04.26
+-- 데이블 생성
+create table emp01 (
+emp_id number(6),
+emp_name varchar2(80),
+hire_date date
+);
 
+-- ????????? - ????????? ?? ?????? ??? ????
+create table emp02 as
+select * from employees;
+
+-- ????? ?????? ???????
+create table emp03 as
+select * from employees where 1=2;
+
+-- ????? ?????? ?????, ??????? ??????? ( 3?? -> 14?? )
+insert into emp01(emp_id,emp_name,hire_date)
+select employee_id,emp_name,hire_date from employees;
+
+-- 1?? ?????? ???
+insert into emp01 values (
+ 207,'??浿','2024-04-26'
+);
+
+-- ??????? ?????? ?????? ??????? ???? ( ?????? ???? ??? )
+insert into emp03
+select * from employees;
+
+-- ?÷? ??????
+alter table member
+modify(stu_name varchar2(30));
+
+-- ?÷? ????
+alter table member
+drop column pw;
+
+-- ?÷? ???
+alter table member
+add (pw varchar2(30));
+
+select * from member;
+
+select mno,id,pw,stu_name,gender from member;
+select * from member;
+
+insert into member values (
+ seq_mno.nextval,'fff','??????','male','1111'
+);
+
+-- ?÷????? ????
+-- ?÷??????
+alter table member modify stu_name invisible;
+alter table member modify gender invisible;
+-- ?÷????????
+alter table member modify stu_name visible;
+alter table member modify gender visible;
+
+-- ?÷? ????? ??? ????
+alter table member
+set unused(id);
+
+-- ??? ???? ????
+alter table member
+drop unused columns;
+
+
+-- ????? ????
+--drop table s_info;
+-- drop table m_date;
+drop table emp03;
+
+-- ????? ??? ????
+rename emp01 to employees01;
+
+-- [ ???? ???????? ]
+-- foreign key?? ??? ????????? ?????? ??½? 
+-- ?????? ??? ???? ??????? ???????? ??????? ????? ???
+
+-- drop table employees01;
+-- drop table emp02;
+-- drop table member;
+-- drop table board;
+
+create table member (
+id varchar2(30) primary key,
+pw varchar2(30) not null,
+name varchar2(30),
+gender varchar2(6)
+);
+
+insert into member values(
+'aaa','1111','??浿','male'
+);
+
+insert into member(id,pw,name) values(
+'bbb','1111','??????'
+);
+
+insert into member(id,pw) values(
+'ccc','1111'
+);
+
+--????
+insert into member(id) values(
+'ddd'
+);
+insert into member(id,pw) values(
+'ddd','1111'
+);
+
+insert into member(id,pw,name) values(
+'a','1111','??浿'
+);
+
+-- ???????? : not null -  null???? ????
+create table emp02(
+empno number(4) not null,
+ename varchar2(10) not null,
+job varchar2(9),
+deptno number(2)
+);
+
+insert into emp02 values(
+1,'??????','1',1
+);
+
+-- ???????? : unique -  ????? ????, null???
+create table emp03(
+empno number(4) unique,
+ename varchar2(10) not null,
+job varchar2(9),
+deptno number(2)
+);
+
+insert into emp03 values(
+'1','??浿','1',1
+);
+
+insert into emp03 values(
+null,'??浿','1',1
+);
+
+insert into emp03 values(
+'3','?????','2',2
+);
+
+insert into emp03 values(
+null,'??????','2',2
+);
+
+insert into emp03 values(
+1,'??','3',3
+);
+
+-- ????. 1 ??浿 ???????.
+select * from emp03
+where empno='1';
+
+-- ????. null ??浿 ???????.
+select * from emp03
+where empno is null and ename='??浿';
+-- ????. null?? ??? ????? ???????.
+select * from emp03
+where empno is null;
+
+select * from emp03
+where empno is not null;
+
+select * from emp03;
+
+Create table emp01 (
+Empno number(4) primary key,
+Ename varchar2(20) not null,
+Job varchar(9),
+Deptno number(2)
+);
+
+-- 5?? null,1,2,3,1
+insert into emp01 values(
+1,'??浿','0001',1
+);
+insert into emp01 values(
+null,'??浿','0001',1
+);
+
+select * from emp01;
+
+select * from emp01
+where empno=3;
+
+-- foreign key (????)
+-- drop table emp01;
+
+-- emp01 ????? ????
+create table emp01 (
+empno number(4) primary key,
+ename varchar2(20) not null,
+job varchar2(9),
+deptno number(6)
+);
+
+insert into emp01 values(
+1,'??浿','0001',10
+);
+
+insert into emp01 values(
+2,'??????','0002',20
+);
+
+insert into emp01 values(
+3,'?????','0002',30
+);
+
+-- deptno 10-270
+insert into emp01 values(
+4,'??','0003',270
+);
+
+-- ?????? ?????? ???, deptno?? ???? ??????? ????? ??? ?????? ??.
+-- error
+insert into emp01 values(
+5,'??????','0004',1
+);
+
+-- foreign key ????
+alter table emp01
+drop constraint fk_deptno;
+
+commit;
+
+-- emp01 foreign key ???
+-- fk_deptno ???
+-- add constraint ??? foreign key(?????÷?) references ????????(?÷????)
+alter table emp01
+add constraint fk_deptno foreign key(deptno)
+references dept01(deptno)
+;
+
+
+select * from dept01;
+
+alter table emp01
+modify(deptno number(6));
+
+-- dept01 ????? ????
+create table dept01(
+deptno number(6) primary key,
+dept_name varchar2(80)
+);
+
+-- ?÷??? ???????
+insert into dept01 (deptno,dept_name)
+select department_id,department_name from departments;
+
+-- ?÷??? ??? ????
+alter table dept01
+modify ( dept_name varchar2(80));
+
+desc dept01;
+
+desc member;
+-- 
+create table board (
+bno number(4) primary key,
+id varchar2(30),
+btitle varchar2(1000),
+bcontent varchar2(3000)
+);
+
+insert into board values(
+1,'aaa','????1','????1'
+);
+insert into board values(
+8,'bbb','????8','????8'
+);
+
+commit;
+
+select * from board;
+
+alter table board
+add constraint fk_id foreign key (id)
+references member(id);
+
+-- comment ????? ????????
+
+create table comments(
+ cno number(4) primary key,
+ bno number(4),
+ cpw varchar2(20),
+ ccontent varchar2(1000),
+ constraint fk_bno foreign key(bno)
+ references board(bno)
+);
+-- ?????
+insert into comments values (
+5,5,'1111','??????4'
+);
+
+-- fk?? ?????? ???? 
+-- fk??? ????? ??? ??? ??????? ????????? ??.
+-- fk??? ????? ??? ??????? ??? ???? ????? ??.
+
+delete board where bno=5;
+
+commit;
+
+select * from board;
+select * from comments;
+
+select * from board;
+
+-- ???? ????
+alter table board drop constraints fk_id;
+alter table comments drop constraints fk_bno;
+
+select * from board;
+select * from comments;
+
+delete board where bno=1;
+
+alter table board
+add constraint fk_id foreign key (id)
+references member(id);
+
+-- fk_cno?? ?????? ????? ??.
+alter table comments 
+add contraint fk_bno foreign key(bno)
+references comments(bno) on delete cascade;
+
+delete comments where cno=2;
+
+--- check ???????? ??????? ????, ??????? ??????? ??.
+create table emp(
+empno number(4) primary key,
+ename varchar2(20) not null,
+job varchar2(9) default '0001', -- ?÷??? ??????? ???? ?????? ??????? 0001?? ?????.
+sal number(7,2) check(sal between 2000 and 20000),
+gender varchar2(6) check(gender in('????','????'))
+);
+
+insert into emp(empno,ename,job,sal,gender) values(
+1,'??浿','0002',3000,'????'
+);
+
+insert into emp(empno,ename,job,sal,gender) values(
+2,'??????','0003',4000,'????'
+);
+
+-- ???? ????,????? ??°???
+insert into emp(empno,ename,job,sal,gender) values(
+3,'?????','0004',5000,'??'
+);
+
+insert into emp(empno,ename,job,sal,gender) values(
+3,'?????','0004',5000,'????'
+);
+
+insert into emp(empno,ename,job,sal,gender) values(
+4,'??????','0005',2000,'????'
+);
+
+-- ???? 2000~20000
+insert into emp(empno,ename,job,sal,gender) values(
+5,'??','0006',30000,'????'
+);
+
+-- check 2000-20000
+insert into emp(empno,ename,job,sal,gender) values(
+5,'??','0006',20000,'????'
+);
+
+-- job default '0001' - job ????? ?????? '0001'
+insert into emp(empno,ename,sal,gender) values(
+6,'??????',10000,'????'
+);
+
+select * from emp;
+
+
+
+
+-------------------------------------------------------------------------------
+--24.04.29
+
+
+--무결성 제약조건 : 부적합한 자료가 입력되지 않도록 하기 위한 규칙
+--not null, uniaue,primary key ,foreign key,check
+create table member(
+memNo number(4) not null,
+id varchar2(30) primary key,
+pw varchar2(30) not null,
+name varchar2(30) ,
+gender varchar2(6) check(gender in('남자','여자')),
+mdate date default sysdate 
+);
+
+
+--데이터에 입력, 출력,수정, 삭제 부분
+insert into member(memNo,id,pw,name,gender,mdate) values(
+member_seq.nextval,'aaa','1111','홍길동','남자',sysdate
+);
+
+select * from member;
+
+insert into member(memNo,id,pw,name,gender,mdate) values(
+member_seq.nextval,'bbb','1111','유관순','female');
+
+insert into member values(
+member_seq.nextval,'ccc','1111','이순신','남자',sysdate);
+
+select * from member;
+
+
+create table board(
+bno number(4)  primary key,
+id varchar2(30),
+btitle varchar2(1000),
+bcontent varchar2(4000) ,
+bdate date default sysdate, 
+bgroup number(4),
+bstep number default 0 ,
+bindent number default 0,
+bhit number default 1,
+bfile varchar2(100) default '', 
+constraint fk_board_id foreign key(id)
+reference member(id)
+);
+
+select*from member;
+
+insert into board(bno,id,btitle,bcontent,bdate,bgroup,bstep,bindent,bhit,bfile) values
+(board_seq.nextval,'aaa','제목입니다.','내용입니다.',sysdate,board_seq.currval,0,0,1,''
+
+);
+
+--primary key를 삭제하려면foreignr key등록되어있는 데이터를 우선 삭제해야함
+--primary key를 삭제하려면 데이터를 우선 삭제해야함-on delete cascade
+
+insert into board values
+(board_seq.nextval,'aaa','제목입니다2.','내용입니다2.',sysdate,board_seq.currval,0,0,1,''
+
+);
+
+insert into board(bno,id,btitle,bcontent,bgroup) values
+(board_seq.nextval,'aaa','제목입니다3.','내용입니다3.',board_seq.currval
+
+);
+
+select * from board;
+
+delect member where id='aaa';
+
+
+
+--decode 조건문
+select emp_name,department_id,
+decode(department_id,
+10,'총무기획부',
+20,'마케팅',
+30,'구매생산부',
+40,'인사부'
+)
+from employees
+order by department_id asc;
+
+
+select avg,
+decode(avg,
+90,'A',
+80,'B',
+70,'C'
+)
+from stu_score
+order by avg desc;
+--90점-a 80점-b 70점-c
+
+--월급
+--sh_clerk salary *15%, ad_asst *10%, mk_rep *5% 인상을 해준다
+--decode
+select job_id,salary,
+decode(job_id,
+'SH_CLERK',salary+(salary * 0.15),
+'AD_ASST',salary+(salary * 0.1),
+'MK_REP',salary+(salary * 0.05)
+)
+as salary_up from employees;
+
+
+--job_id,clerk이 들어가 있는 아이디를 겁색하시요. --대문자로 검색
+select job_id from employees
+where job_id like '%CLERK%';
+
+
+--평균대를 등급별로 나타내시요
+select department_id,department_name from departments;
+select name,avg from stu_score;
+select name,avg,
+
+case 
+    when avg>=90 then 'A'
+    when avg>=80 then 'B'
+    when avg>=70 then 'C'
+    else 'F'
+end as grade
+
+from stu_score;
+
+
+--
+
+select department_id from employees;
+select 
+case
+    when department_id=10 then '총무'
+    when department_id=20 then '마케팅'
+    when department_id=30 then '구매'
+    when department_id=30 then '인사부'
+end as depert_name
+from employees;
+order by department_id asc;
+
+--월급
+--CLERK salary *15%, ad_asst *10%, rep *5% ,MAM *2%   인상을 해준다
+select job_id,salary from employees;
+select job_id,salary,
+
+    case
+         when job_id like '%CLERK%' then salary+(salary * 0.15)
+         when job_id like '%AD_ASST%'then salary+(salary * 0.10)
+         when job_id like '%REP%' then salary+(salary * 0.05)
+         when job_id like '%MAN%'then salary+(salary * 0.02)
+    end as salary_up
+
+from employees
+order by job_id asc;
+
+-------------------------------------------------------------------------------
+--월급 평균이하인 사람은 0.15 평균이상은 0.05 인상해서 출력
+select avg(salary) from employees;
+select emp_name,salary,
+    case
+        when salary>=(select avg(salary) from employees) then salary+(salary * 0.15)
+        when salary<(select avg(salary) from employees) then salary+(salary * 0.05)
+    end as salary_up
+from employees
+order by salary_up asc;    
+
+select emp_name,salary,
+    case
+        when salary>=6461 then 'down'
+        when salary<6461 then 'up'
+    end as salary_updown
+from employees
+order by salary_updown asc;    
+    
+        
+
+
+
+
+--케이스 두개사용
+select emp_name,salary,
+
+    case
+        when salary>=(select avg(salary) from employees) then 'up'
+        when salary<(select avg(salary) from employees) then 'down'
+    end as salary_updown
+    ,
+    case
+        when salary >= (select avg(salary) from employees) then salary+(salary * 0.15)
+        when salary < (select avg(salary) from employees) then salary+(salary * 0.05)
+end as salary_up
+
+from employees
+order by salary_up asc; 
+------------------------------------------------------------------------------
+
+
+
+select * from stu_score;
+
+select total,rank from stu_score
+order by total desc;
+
+--rank() 함수 컬럼을 새롭게 만든거다.
+select total,rank() over (order by total desc) as ranks from stu_score;
+select no, rank() over (order by total desc) as  rank from stu_score;
+
+select total, rank from stu_score
+order by total desc;
+
+update stu_score set rank = 1
+where total =291;
+
+
+--중요-----------------------------------------------------------------
+--1000명의 있는 순위를 각각 입력
+update stu_score a
+set rank=(
+select ranks from(
+select no,rank() over (order by total desc) as  ranks from stu_score
+)b
+where a.no =b.no
+);
+
+
+select no,rank from stu_score
+order by no;
+
+
+--컬림이 두개 no,ranks >>>>이러면 애러난다.
+select no,rank() over (order by total desc) as  ranks from stu_score;
+
+--컬럼이 한개
+select ranks from(
+select no,rank() over (order by total desc) as  ranks from stu_score
+);
+
+
+select emp_name,department_id from employees;
+select department_id,department_name from departments
+;
+
+--두 테이블 조인시키기
+select emp_name,employees.department_id,department_name from employees,departments
+where employees.department_id =departments.department_id;
+
+
+
+--그룹함수 sum,avg,count,max,min stddev표준편차, variance분산
+
+--월급의 총합
+select sum(salary) from employees;
+--국어점수의 총합
+select sum(kor) from stu_score;
+
+select count(*) from employees;
+
+--커미션을 받는 사원의수를 구하시요
+select count (*) from employees
+where commission_pct is not null;
+
+--커미션을 있는 사원의수를 구하시요
+select emp_name,commission_pct from employees
+where commission_pct is not null;
+
+
+
+
+
+--group by 절
+--전체 사원수
+ select count(*) from employees;
+ 
+ 
+ --부서번호 50번인 사원수
+ select count(*) from employees
+ where  department_id=50;
+ 
+ select department_id, count(department_id) from employees
+ group by  department_id
+ order by department_id;
+ 
+ 
+ 
+ -- stu_score 90점이상 a,80점 이상 b, 70점 이상 c 60점 이상은 미만은 f
+ 
+select name,avg, 
+case
+    when avg>=90 then 'A'
+    when avg>=80 then 'B'
+    when avg>=70 then 'C'
+    when avg>=60 then 'D'
+ELSE 'F'
+END AS grade
+from stu_score
+;
+
+--A학점이 몇명인지 출력하시요
+select count(grade) from
+(
+select avg,
+case
+    when avg>=90 then 'A'
+    when avg>=80 then 'B'
+    when avg>=70 then 'C'
+    when avg>=60 then 'D'
+ELSE 'F'
+END AS grade
+from stu_score
+)
+group by grade
+order by grade asc
+;
+
+--kor 점수를 100>>100으로, 91,92,93,94.....99>>90점으로 변경, 81,82.....>>80점으로
+--출력시키요
+select trunc(kor,-1),count(*) from stu_score
+--where trunc(kor,1)=100 --지정 점수를 설정가능
+group by trunc(kor,-1)
+order by trunc(kor,-1) asc
+; 
+------------------------------------------------------------------------------
+-- having group by 조건절, where 일반 컬럼의 조건절
+select department_id,round(avg(salary),2) from employees
+group by department_id
+order by avg(salary);
+
+-- emp_name 두번째 글자가 a로 시작하는것은 제외
+select emp_name from employees
+where emp_name not like '_a%'
+;
+
+select department_id,round(avg(salary),2) 
+from employees
+where emp_name not like '_a%' 
+group by department_id
+having avg(salary) >= 6000
+order by avg(salary)
+;
+
+select avg(salary) from employees;
+
+select department_id,round(avg(salary),2) 
+from employees
+where emp_name not like '_a%' 
+group by department_id
+having avg(salary) >= (select avg(salary) from employees)
+order by avg(salary)
+;
+
+-- 부서별 최대월급이 8000이상인 부서,최대월급을 출력하시오.
+select department_id,max(salary) 
+from employees
+group by department_id
+having max(salary) >= 8000
+order by max(salary)
+;
+
+-- 조인
+
+select emp_name,department_id,department_name,salary from employees;
+
+select department_id, department_name from departments;
+
+select count(*) from employees; --107
+select count(*) from departments; -- 27
+
+-- 테이블 2개 연결한것을 조인이라고 함.
+-- 107*27 = 2889
+select count(*) from employees,departments;
+
+-- equi join
+-- 두 테이블간 같은 컬럼을 가지고 비교해서 해당되는 데이터를 출력
+-- 107 * 27 = 2889
+-- equi join - 106개, null 1개 검색되지 않음.
+select employee_id,emp_name,employees.department_id,department_name,salary 
+from employees, departments
+where employees.department_id = departments.department_id
+;
+
+select department_id,department_name from departments;
+
+select * from board;
+select id,name from member;
+select id,btitle,bcontent from board;
+
+update member set name='홍길자'
+where id = 'aaa';
+select * from member;
+
+-- equi join 
+select bno,name,gender,btitle,bcontent,bdate,bgroup,bstep,bindent,bhit,bfile from board,member
+where member.id = board.id
+;
+
+
+
+
+
+
+-------------------------------------------------------------------------------
+--24.04.30
+
+
+
+
+select avg(salary),max(salary),min(salary) from employees;
+
+
+select department_id,max(salary) 
+from employees
+group by department_id
+having max(salary) >= 8000
+order by max(salary)
+;
+
+select department_id,max(salary)
+from employees
+group by department_id
+having max(salary)>= 8000
+order by max(salary);
 
 
 

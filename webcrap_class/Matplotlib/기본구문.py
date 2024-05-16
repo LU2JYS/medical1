@@ -55,11 +55,25 @@ df
 df['키'] = df['키'].astype(str)
 df['키'] = df['키'] + 'cm'
 df
+----------------------------------------------------------------
+
+# 색상분리  cmap='viridis'
+# 컬러바  ticks=[1,2,3]
+
+
+#합쳐지게 도와준다
+fig, ax1=plt.subplots(figsize=(10,7))
+ax1.bar(df.index,df['출생아 수'],color='#ff812d')
+
+ax2=ax1.twinx() #합쳐지게 도와준다
+ax2.plot(df.index,df['합계 출산율'],color='blue')
 
 
 
-
-
+# http 으로 실행하기 >> https는 보안키가 적용되어 데이터가 넘어와서 열수없다...
+url='http:'
+res=requests.get(url)
+type(res.text)
 
 
 

@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib
 import numpy as np
+import pandas as pd
+import seaborn as sns
 matplotlib.rcParams['axes.unicode_minus'] = False  # 마이너스 표시 해결
 matplotlib.rcParams['font.family'] = 'Malgun Gothic' # windows 사용자
 matplotlib.rcParams['font.size'] = '10' # 글자크기
@@ -67,6 +69,8 @@ wedgeprops={'width':0.6 ,'edgecolor':'w','linewidth':2}
 # counterclock : 그래프 내 데이터 배치 -시계방향
 # wedgeprops : 도넛형태,그래프 테두리색상
 
-pplt.grid(axis='y',alpha=0.7,linestyle='--',linewidth=2) #그래프에 밑줄이 그어진다
+plt.grid(axis='y',alpha=0.7,linestyle='--',linewidth=2) #그래프에 밑줄이 그어진다
 
-
+#위에 점수표시 방법
+for i,txt in enumerate(y): 
+        plt.text(x[i],y[i]+0.1,txt,ha='center',color='blue')

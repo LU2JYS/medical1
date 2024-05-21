@@ -12,3 +12,18 @@ QuadraticDiscriminantAnalysis(),
 ]
 
 #---------------------------------------------------------------------------------
+
+# random_state=1 자동으로 훈련세트,테스트세트가 섞이지 않도록 도와준다..
+# stratify= : 설정데이터를 가지고 랜덤으로 데이터를 섞어줌.
+
+# 자동으로 섞어준다>>>>>>>>>>>>>>>>>>>>>>굿굿
+train_input,test_input,train_target,test_target=train_test_split(
+    datas,results,stratify=results,random_state=1
+)
+train_input
+
+freq = list(map(lambda n : n/total,cnt)) #map,zip 많이 사용한다
+
+#---------------------------------------------------------------------------------
+#선형회귀 모델
+# lr.coef_  : 기울기 , lr.intercept_ : y절편

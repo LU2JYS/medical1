@@ -1,14 +1,21 @@
+from sklearn.neighbors import KNeighborsClassifier # 분류
+from sklearn.neighbors import KNeighborsRegressor  # 회귀-예측
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+import pandas as pd
+import numpy as np
+import random
 import matplotlib.pyplot as plt
 import matplotlib
-import numpy as np
-import pandas as pd
-import seaborn as sns
+
 matplotlib.rcParams['axes.unicode_minus'] = False  # 마이너스 표시 해결
+# 한글설정
 matplotlib.rcParams['font.family'] = 'Malgun Gothic' # windows 사용자
 matplotlib.rcParams['font.size'] = '10' # 글자크기
 
-x=[1,2,3]
-y=[2,4,8]
+
+#------------------------------------------------------------------------------------
 
 plt.plot(x,y,linewidth=3,color='blue', label='국어',marker='o',
         markeredgecolor='blue',markerfacecolor='red',ms=15,alpha=0.5,ls=':')
@@ -74,3 +81,7 @@ plt.grid(axis='y',alpha=0.7,linestyle='--',linewidth=2) #그래프에 밑줄이 
 #위에 점수표시 방법
 for i,txt in enumerate(y): 
         plt.text(x[i],y[i]+0.1,txt,ha='center',color='blue')
+
+
+#####  random_state=1 자동으로 훈련세트,테스트세트가 섞이지 않도록 도와준다..
+#####  stratify= : 설정데이터를 가지고 랜덤으로 데이터를 섞어줌.

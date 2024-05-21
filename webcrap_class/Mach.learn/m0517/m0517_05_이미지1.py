@@ -1,27 +1,45 @@
-import urllib.request as req
-import gzip, os, os.path
-savepath = "./mnist"
-baseurl = "https://github.com/golbin/TensorFlow-MNIST/raw/master/mnist/data/"
-files = [
-    "train-images-idx3-ubyte.gz",
-    "train-labels-idx1-ubyte.gz",
-    "t10k-images-idx3-ubyte.gz",
-    "t10k-labels-idx1-ubyte.gz"]
-# 다운로드
-if not os.path.exists(savepath): os.mkdir(savepath)
-for f in files:
-    url = baseurl + "/" + f
-    loc = savepath + "/" + f
-    print("download:", url)
-    if not os.path.exists(loc):
-        req.urlretrieve(url, loc)
-# GZip 압축 해제
-for f in files:
-    gz_file = savepath + "/" + f
-    raw_file = savepath + "/" + f.replace(".gz", "")
-    print("gzip:", f)
-    with gzip.open(gz_file, "rb") as fp:
-        body = fp.read()
-        with open(raw_file, "wb") as w:
-            w.write(body)
-print("ok")
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn import svm,metrics\n",
+    "from sklearn.model_selection import train_test_split\n",
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "import matplotlib.pyplot as plt\n",
+    "import matplotlib\n",
+    "import random\n",
+    "matplotlib.rcParams['axes.unicode_minus'] = False  # 마이너스 표시 해결\n",
+    "# 한글설정\n",
+    "matplotlib.rcParams['font.family'] = 'Malgun Gothic' # windows 사용자\n",
+    "# matplotlib.rcParams['font.family'] = 'AppleGothic Gothic' # Mac사용자\n",
+    "matplotlib.rcParams['font.size'] = '10' # 글자크기"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.12.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

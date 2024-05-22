@@ -8,6 +8,8 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 import matplotlib
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import Ridge
 
 matplotlib.rcParams['axes.unicode_minus'] = False  # 마이너스 표시 해결
 # 한글설정
